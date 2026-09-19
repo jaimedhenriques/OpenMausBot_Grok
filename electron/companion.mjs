@@ -404,7 +404,7 @@ export async function companionState() {
 }
 
 /** Re-read Tailscale without restarting the sidecar or dropping connected
- * phones. Tailscale may be installed, signed in, or enabled after Softbots
+ * phones. Tailscale may be installed, signed in, or enabled after Squadbots
  * starts, so startup-only detection makes an otherwise healthy route look
  * permanently unavailable. */
 export async function companionRefreshTailscale() {

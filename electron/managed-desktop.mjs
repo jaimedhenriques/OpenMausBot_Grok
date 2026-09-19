@@ -163,7 +163,7 @@ export function createManagedDesktopClient({ store, applyConnection, openBrowser
       if (persisted.status === "fulfilled") { cleanupGrant = null; cleanupNeeded = false; }
       if (!current(stamp)) return snapshot();
       const warnings = [];
-      if (runtime.status === "rejected") warnings.push("The local runtime did not confirm stopping Company tasks. Quit and reopen Softbots before using Company models again.");
+      if (runtime.status === "rejected") warnings.push("The local runtime did not confirm stopping Company tasks. Quit and reopen Squadbots before using Company models again.");
       if (revoked.status === "rejected") warnings.push("The portal was unreachable; ask your administrator to revoke this device there too.");
       if (persisted.status === "rejected") return publish({ status: "unavailable", message: [
         "The saved company sign-in could not be cleared. Unlock your system keychain and Disconnect again before reconnecting.", ...warnings,
@@ -176,7 +176,7 @@ export function createManagedDesktopClient({ store, applyConnection, openBrowser
   async function endAccess(stamp, message) {
     connection = null;
     try { await applyConnection(null); }
-    catch { message += " Quit and reopen Softbots to confirm Company tasks have stopped."; }
+    catch { message += " Quit and reopen Squadbots to confirm Company tasks have stopped."; }
     return current(stamp) ? publish({ status: "reauth-required", message }) : snapshot();
   }
   async function synchronize(stamp) {
@@ -263,7 +263,7 @@ export function createManagedDesktopClient({ store, applyConnection, openBrowser
     async start() {
       const stamp = generation;
       try { const saved = await store.read(); if (!current(stamp)) return snapshot(); grant = saved ? validateGrant(saved) : null; }
-      catch { return current(stamp) ? publish({ status: "unavailable", message: "Company sign-in could not be restored. Unlock your system keychain and restart Softbots." }) : snapshot(); }
+      catch { return current(stamp) ? publish({ status: "unavailable", message: "Company sign-in could not be restored. Unlock your system keychain and restart Squadbots." }) : snapshot(); }
       return refresh();
     },
     async begin(input) {

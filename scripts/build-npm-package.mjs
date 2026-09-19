@@ -46,7 +46,7 @@ writeFileSync(
     {
       name: "softbots",
       version: app.version,
-      description: "Run the Softbots server anywhere and pair your devices to it",
+      description: "Run the Squadbots server anywhere and pair your devices to it",
       license: "Apache-2.0",
       type: "module",
       bin: { softbots: "cli.js" },
@@ -84,14 +84,14 @@ conversations keep their settings.
 One optional step connects your phone, defaulting to Skip for now. Choose
 an explicitly approved managed public HTTPS endpoint protected by pairing,
 existing Tailscale, or an HTTPS reverse proxy you already configured.
-Managed access uses a separate Softbots account and asks permission for
+Managed access uses a separate Squadbots account and asks permission for
 the public endpoint and possible connector download. The pairing page and
 basic server identity are public; chat and settings require pairing.
 Tailscale must already be installed and signed in on both devices.
 
 After the HTTPS connection is checked, scan the QR with your phone. When
 you pair an Android phone the QR is an app link, so scan it inside the
-Softbots app; the web address is printed beside it if you would rather
+Squadbots app; the web address is printed beside it if you would rather
 use a browser. On iPhone or iPad, scan with Camera for Safari, or use the
 app's own scanner. Choose Connect on the phone; scanning alone is not a
 completed pairing. Codes
@@ -136,7 +136,7 @@ without starting a server. Completed installs and sign-ins remain; run
 
 For a service, use \`serve --tunnel\` after \`login\` for managed HTTPS,
 \`serve --tailscale\` for your tailnet, or your own reverse proxy. The
-\`login\` command signs in to an Softbots account, not an AI provider;
+\`login\` command signs in to an Squadbots account, not an AI provider;
 it does not start the tunnel itself.
 
 [Setup guide](https://github.com/milind-soni/OpenMausBot/blob/main/docs/cli-onboarding.md)

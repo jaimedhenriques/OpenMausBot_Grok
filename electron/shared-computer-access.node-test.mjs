@@ -239,11 +239,11 @@ process.stdout.write(JSON.stringify({jsonrpc:'2.0',id:m.id,result})+'\\n'); });`
 test("a protected directory spelled in another case is still refused", async t => {
   const { dir, folder, grant, run } = await fixture(t);
   if (!(await spellings(dir)).case) return t.skip("this filesystem is case-sensitive, so no case variant names the same directory");
-  await mkdir(path.join(dir, "Softbots"));
-  await writeFile(path.join(dir, "Softbots", "credentials.bin"), "credential blob");
-  grant.protectedPaths = [path.join(dir, "Softbots")];
+  await mkdir(path.join(dir, "Squadbots"));
+  await writeFile(path.join(dir, "Squadbots", "credentials.bin"), "credential blob");
+  grant.protectedPaths = [path.join(dir, "Squadbots")];
   folder.write = true;
-  await assert.rejects(run({ action: "read_file", path: "Softbots/credentials.bin" }), /Desktop credentials/);
+  await assert.rejects(run({ action: "read_file", path: "Squadbots/credentials.bin" }), /Desktop credentials/);
   await assert.rejects(run({ action: "read_file", path: "softbots/credentials.bin" }), /Desktop credentials/);
   await assert.rejects(run({ action: "read_file", path: "SOFTBOTS/credentials.bin" }), /Desktop credentials/);
   await assert.rejects(run({ action: "list_files", path: "softbots" }), /Desktop credentials/);

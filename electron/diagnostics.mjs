@@ -284,7 +284,7 @@ export function buildDiagnosticsReport({
   now = new Date().toISOString(),
 } = {}) {
   const lines = [];
-  lines.push("Softbots diagnostics");
+  lines.push("Squadbots diagnostics");
   lines.push(`Generated: ${now}`);
   lines.push("");
   lines.push("## App");

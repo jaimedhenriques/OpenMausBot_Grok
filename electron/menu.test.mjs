@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 
 vi.mock("electron", () => ({
-  app: { name: "Softbots" },
+  app: { name: "Squadbots" },
   Menu: { buildFromTemplate: (template) => template },
 }));
 
@@ -47,7 +47,7 @@ describe("buildApplicationMenu", () => {
     const template = build(platform);
     expect(template[0].role).toBe("fileMenu");
     for (const item of template) {
-      expect(item.label).not.toBe("Softbots");
+      expect(item.label).not.toBe("Squadbots");
     }
   });
 });

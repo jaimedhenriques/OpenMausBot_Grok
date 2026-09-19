@@ -184,7 +184,7 @@ if (process.versions.electron && process.argv.includes(flag)) {
     const beginsBeforeApp = begins;
     win.setSize(1180, 850);
     await win.loadURL(`${url}?app=1`);
-    await until(() => evaluate("document.body.textContent.includes('Welcome to Softbots')"), "normal optional welcome flow");
+    await until(() => evaluate("document.body.textContent.includes('Welcome to Squadbots')"), "normal optional welcome flow");
     assert.equal(await evaluate(`Boolean(${button("Sign in with your organisation")})`), false);
     assert.equal(begins, beginsBeforeApp);
     win.webContents.send("app:open-settings");

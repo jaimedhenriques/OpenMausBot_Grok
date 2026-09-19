@@ -21,7 +21,7 @@ try {
     encoding: "utf8",
     stdio: ["ignore", "pipe", "ignore"],
   }).trim();
-  if (status.startsWith("ii")) fail("refusing to replace a pre-existing Softbots installation");
+  if (status.startsWith("ii")) fail("refusing to replace a pre-existing Squadbots installation");
 } catch (error) {
   if (String(error?.message ?? error).includes("refusing to replace")) throw error;
 }
@@ -30,7 +30,7 @@ const temporary = fs.mkdtempSync(path.join(path.resolve(runnerTemp), "omb-deb-up
 if (path.dirname(temporary) !== path.resolve(runnerTemp)) fail("temporary fixture escaped RUNNER_TEMP");
 const legacyRoot = path.join(temporary, "legacy-package");
 const controlRoot = path.join(legacyRoot, "DEBIAN");
-const legacyApp = path.join(legacyRoot, "opt", "Softbots");
+const legacyApp = path.join(legacyRoot, "opt", "Squadbots");
 const legacyResources = path.join(legacyApp, "resources");
 const legacyDeb = path.join(temporary, "softbots_0.1.7_amd64.deb");
 
@@ -45,8 +45,8 @@ try {
       "Package: softbots",
       "Version: 0.1.7",
       "Architecture: amd64",
-      "Maintainer: Softbots CI <ci@softbots.invalid>",
-      "Description: Legacy Softbots directory-mode upgrade fixture",
+      "Maintainer: Squadbots CI <ci@softbots.invalid>",
+      "Description: Legacy Squadbots directory-mode upgrade fixture",
       "",
     ].join("\n"),
     { mode: 0o644 },
@@ -57,7 +57,7 @@ try {
     stdio: "inherit",
   });
   execFileSync("dpkg", ["--install", legacyDeb], { stdio: "inherit" });
-  for (const directory of ["/opt/Softbots", "/opt/Softbots/resources"]) {
+  for (const directory of ["/opt/Squadbots", "/opt/Squadbots/resources"]) {
     const mode = fs.lstatSync(directory).mode & 0o777;
     if (mode !== 0o775) fail(`legacy fixture did not reproduce 0775 at ${directory}`);
   }
@@ -70,9 +70,9 @@ try {
     stdio: "inherit",
   });
   for (const directory of [
-    "/opt/Softbots",
-    "/opt/Softbots/resources",
-    "/opt/Softbots/resources/cua-linux-x64",
+    "/opt/Squadbots",
+    "/opt/Squadbots/resources",
+    "/opt/Squadbots/resources/cua-linux-x64",
   ]) {
     const details = fs.lstatSync(directory);
     if (!details.isDirectory() || details.isSymbolicLink()) fail(`unsafe upgraded directory: ${directory}`);
@@ -81,14 +81,14 @@ try {
     }
   }
   for (const executable of ["cua-driver", "cua-cursor-theme"]) {
-    const file = path.join("/opt/Softbots/resources/cua-linux-x64", executable);
+    const file = path.join("/opt/Squadbots/resources/cua-linux-x64", executable);
     const details = fs.lstatSync(file);
     if (!details.isFile() || details.isSymbolicLink()) fail(`unsafe upgraded executable: ${file}`);
     if (details.uid !== 0 || details.gid !== 0 || (details.mode & 0o777) !== 0o755) {
       fail(`upgraded executable is not root:root 0755: ${file}`);
     }
   }
-  const chromiumSandbox = "/opt/Softbots/chrome-sandbox";
+  const chromiumSandbox = "/opt/Squadbots/chrome-sandbox";
   const sandboxDetails = fs.lstatSync(chromiumSandbox);
   if (!sandboxDetails.isFile() || sandboxDetails.isSymbolicLink()) {
     fail(`unsafe upgraded Chromium sandbox: ${chromiumSandbox}`);

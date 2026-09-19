@@ -1,4 +1,4 @@
-// "About Softbots" — the version you are running and where to go next.
+// "About Squadbots" — the version you are running and where to go next.
 // Small on purpose: the interesting settings live in the settings panel, and
 // this exists so a bug report can quote a version number.
 import { useEffect, useRef } from "react";

@@ -69,12 +69,12 @@ async function main() {
   mkdirSync(applications);
 
   // The bug shape: a version in the filename, and a launcher pinned to it.
-  const launched = path.join(installDir, "Softbots-0.0.1-x86_64.AppImage");
+  const launched = path.join(installDir, "Squadbots-0.0.1-x86_64.AppImage");
   copyFileSync(packaged, launched);
   const desktopEntry = path.join(applications, "ai.squadbots.app.desktop");
   writeFileSync(
     desktopEntry,
-    `[Desktop Entry]\nName=Softbots\nExec=${launched} %U\nType=Application\n`,
+    `[Desktop Entry]\nName=Squadbots\nExec=${launched} %U\nType=Application\n`,
   );
 
   // Isolate every path the updater writes to.
