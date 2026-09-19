@@ -16,9 +16,10 @@ const SKIN_CHROME = Object.freeze({
   linen: Object.freeze({ color: "#eceff3", symbolColor: "#59616c" }),
   dusk: Object.freeze({ color: "#121014", symbolColor: "#b9afbd" }),
   daylight: Object.freeze({ color: "#fcfcfc", symbolColor: "#575757" }),
+  "soft-taste": Object.freeze({ color: "#f7f8fc", symbolColor: "#5c647c" }),
 });
 
-const DEFAULT_SKIN = "midnight";
+const DEFAULT_SKIN = "soft-taste";
 
 /** The chrome colours for a skin id sent by the renderer. Anything that is
  * not a known skin — a renamed skin, a stale value, a non-string — falls
