@@ -1,5 +1,5 @@
 appId: ai.squadbots.app
-productName: Softbots
+productName: Squadbots
 artifactName: Softbots-${version}-${arch}.${ext}
 
 protocols:
@@ -156,7 +156,7 @@ win:
 nsis:
   oneClick: true
   perMachine: false
-  shortcutName: Softbots
+  shortcutName: Squadbots
   # Versioned, like the .dmg. The README's /latest/download/ button needs a
   # STABLE filename, so ship a second copy named Softbots-setup.exe on the
   # release — the same trick as Softbots.dmg beside Softbots-${version}.dmg.
