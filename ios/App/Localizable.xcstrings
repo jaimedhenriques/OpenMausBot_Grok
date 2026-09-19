@@ -444,12 +444,12 @@
         }
       }
     },
-    "Changes the language inside SoftbotsMobile. Buttons drawn by iOS itself follow the phone's language, which you can set for this app in iOS Settings.": {
+    "Changes the language inside Squadbots. Buttons drawn by iOS itself follow the phone's language, which you can set for this app in iOS Settings.": {
       "localizations": {
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Muda o idioma dentro do SoftbotsMobile. Os botões desenhados pelo próprio iOS seguem o idioma do telefone, que você pode definir para este app nos Ajustes do iOS."
+            "value": "Muda o idioma dentro do Squadbots. Os botões desenhados pelo próprio iOS seguem o idioma do telefone, que você pode definir para este app nos Ajustes do iOS."
           }
         }
       }
@@ -1236,22 +1236,22 @@
         }
       }
     },
-    "Dictation needs Microphone access. Enable it in Settings → SoftbotsMobile.": {
+    "Dictation needs Microphone access. Enable it in Settings → Squadbots.": {
       "localizations": {
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "O ditado precisa de acesso ao Microfone. Ative em Ajustes → SoftbotsMobile."
+            "value": "O ditado precisa de acesso ao Microfone. Ative em Ajustes → Squadbots."
           }
         }
       }
     },
-    "Dictation needs Speech Recognition access. Enable it in Settings → SoftbotsMobile.": {
+    "Dictation needs Speech Recognition access. Enable it in Settings → Squadbots.": {
       "localizations": {
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "O ditado precisa de acesso ao Reconhecimento de Fala. Ative em Ajustes → SoftbotsMobile."
+            "value": "O ditado precisa de acesso ao Reconhecimento de Fala. Ative em Ajustes → Squadbots."
           }
         }
       }
@@ -3655,12 +3655,12 @@
         }
       }
     },
-    "Switches SoftbotsMobile to this computer": {
+    "Switches Squadbots to this computer": {
       "localizations": {
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Muda o SoftbotsMobile para este computador"
+            "value": "Muda o Squadbots para este computador"
           }
         }
       }

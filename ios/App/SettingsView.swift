@@ -117,7 +117,7 @@ struct SettingsView: View {
                     }
                 }
             } footer: {
-                Text("Changes the language inside SoftbotsMobile. Buttons drawn by iOS itself follow the phone's language, which you can set for this app in iOS Settings.")
+                Text("Changes the language inside Squadbots. Buttons drawn by iOS itself follow the phone's language, which you can set for this app in iOS Settings.")
             }
 
             if session.connection != nil {
@@ -302,7 +302,7 @@ struct ConnectedComputersView: View {
                                 pendingRemoval = computer
                             }
                         }
-                        .accessibilityHint("Switches SoftbotsMobile to this computer")
+                        .accessibilityHint("Switches Squadbots to this computer")
                     }
                 }
             }
