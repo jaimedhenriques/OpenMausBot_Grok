@@ -140,16 +140,16 @@ jobs:
 
       - name: "Gate: both packaged apps use the canonical updater feed"
         run: |
-          for app in release/mac-arm64/Softbots.app release/mac/Softbots.app; do
+          for app in release/mac-arm64/Squadbots.app release/mac/Squadbots.app; do
             update="$app/Contents/Resources/app-update.yml"
             test -f "$update" || { echo "::error::missing $update"; exit 1; }
-            grep -Eq '^owner: milind-soni$' "$update" || { echo "::error::wrong update owner in $update"; exit 1; }
-            grep -Eq '^repo: Softbots$' "$update" || { echo "::error::wrong update repo in $update"; exit 1; }
+            grep -Eq '^owner: jaimedhenriques$' "$update" || { echo "::error::wrong update owner in $update"; exit 1; }
+            grep -Eq '^repo: OpenMausBot_Grok$' "$update" || { echo "::error::wrong update repo in $update"; exit 1; }
           done
 
       - name: "Gate: the signature must verify BEFORE notarization"
         run: |
-          for app in release/mac-arm64/Softbots.app release/mac/Softbots.app; do
+          for app in release/mac-arm64/Squadbots.app release/mac/Squadbots.app; do
             codesign --verify --deep --strict "$app"
             bin="$app/Contents/Resources/cloudflared/cloudflared"
             test -x "$bin" || { echo "::error::missing executable $bin"; exit 1; }
@@ -174,8 +174,8 @@ jobs:
       - name: "Gate: signed native browser works with an empty home"
         run: |
           case "$(node -p process.arch)" in
-            arm64) resources="$PWD/release/mac-arm64/Softbots.app/Contents/Resources" ;;
-            x64) resources="$PWD/release/mac/Softbots.app/Contents/Resources" ;;
+            arm64) resources="$PWD/release/mac-arm64/Squadbots.app/Contents/Resources" ;;
+            x64) resources="$PWD/release/mac/Squadbots.app/Contents/Resources" ;;
             *) exit 1 ;;
           esac
           node scripts/smoke-browser-bundle.mjs --resources "$resources"
@@ -183,7 +183,7 @@ jobs:
 
       - name: "Gate: both packaged servers start and every helper path resolves"
         run: |
-          for app in release/mac-arm64/Softbots.app release/mac/Softbots.app; do
+          for app in release/mac-arm64/Squadbots.app release/mac/Squadbots.app; do
             res="$app/Contents/Resources"
             # the server tree is plain JS — runnable on the runner's node
             # regardless of the app binary's arch
@@ -238,12 +238,12 @@ jobs:
         run: |
           xcrun stapler staple release/Softbots-*-arm64.dmg
           xcrun stapler staple release/Softbots-*-x64.dmg
-          xcrun stapler staple release/mac-arm64/Softbots.app
-          xcrun stapler staple release/mac/Softbots.app
+          xcrun stapler staple release/mac-arm64/Squadbots.app
+          xcrun stapler staple release/mac/Squadbots.app
           v=$(node -p "require('./package.json').version")
           rm -f "release/Softbots-$v-arm64.zip" "release/Softbots-$v-x64.zip"
-          ditto -c -k --sequesterRsrc --keepParent release/mac-arm64/Softbots.app "release/Softbots-$v-arm64.zip"
-          ditto -c -k --sequesterRsrc --keepParent release/mac/Softbots.app "release/Softbots-$v-x64.zip"
+          ditto -c -k --sequesterRsrc --keepParent release/mac-arm64/Squadbots.app "release/Softbots-$v-arm64.zip"
+          ditto -c -k --sequesterRsrc --keepParent release/mac/Squadbots.app "release/Softbots-$v-x64.zip"
           node scripts/regenerate-blockmaps.mjs \
             "release/Softbots-$v-arm64.zip" "release/Softbots-$v-x64.zip" \
             "release/Softbots-$v-arm64.dmg" "release/Softbots-$v-x64.dmg"
@@ -310,8 +310,8 @@ jobs:
           "$res/cloudflared/cloudflared.exe" version | grep -Fq "cloudflared version 2026.8.2 " || {
             echo "::error::cloudflared has the wrong version"; exit 1; }
           [ -f "$res/app-update.yml" ] || { echo "::error::missing app-update.yml"; exit 1; }
-          grep -Eq '^owner: milind-soni$' "$res/app-update.yml" || { echo "::error::wrong update owner"; exit 1; }
-          grep -Eq '^repo: Softbots$' "$res/app-update.yml" || { echo "::error::wrong update repo"; exit 1; }
+          grep -Eq '^owner: jaimedhenriques$' "$res/app-update.yml" || { echo "::error::wrong update owner"; exit 1; }
+          grep -Eq '^repo: OpenMausBot_Grok$' "$res/app-update.yml" || { echo "::error::wrong update repo"; exit 1; }
           if grep -q "publisherName" "$res/app-update.yml"; then
             echo "::error::publisherName on an unsigned build breaks every update"; exit 1
           fi
@@ -373,8 +373,8 @@ jobs:
         run: |
           update=release/linux-unpacked/resources/app-update.yml
           test -f "$update" || { echo "::error::missing $update"; exit 1; }
-          grep -Eq '^owner: milind-soni$' "$update" || { echo "::error::wrong update owner"; exit 1; }
-          grep -Eq '^repo: Softbots$' "$update" || { echo "::error::wrong update repo"; exit 1; }
+          grep -Eq '^owner: jaimedhenriques$' "$update" || { echo "::error::wrong update owner"; exit 1; }
+          grep -Eq '^repo: OpenMausBot_Grok$' "$update" || { echo "::error::wrong update repo"; exit 1; }
       - name: Verify package contents and metadata
         run: node scripts/verify-linux-package.mjs
       - name: Match a normal Ubuntu package parent on the ephemeral runner

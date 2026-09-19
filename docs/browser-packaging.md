@@ -63,7 +63,7 @@ Run the real browser check against an unpacked app:
 node scripts/smoke-browser-bundle.mjs --resources /absolute/app/resources
 ```
 
-On macOS, use `/absolute/Softbots.app/Contents/Resources`. On Linux, run as
+On macOS, use `/absolute/Squadbots.app/Contents/Resources`. On Linux, run as
 an unprivileged user against the installed `.deb` at
 `/opt/Softbots/resources`. This check creates its own empty home and local
 web page, checks automatic discovery, navigation, typing/clicking, screenshot

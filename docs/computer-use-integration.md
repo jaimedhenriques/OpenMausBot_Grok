@@ -47,12 +47,12 @@ does not replace remote/cloud boxes or the isolated Local VM provider. Local
 alternatives evaluated and rejected:
 
 The Ubuntu GNOME beta uses the same official CUA provider with the Phase 5
-supply-chain contract tracked in [#113](https://github.com/milind-soni/Softbots/issues/113): pinned archive
+supply-chain contract tracked in [#113](https://github.com/milind-soni/OpenMausBot/issues/113): pinned archive
 and inner hashes, exact archive allowlist, outside-ASAR resources, full notices/SBOM, no runtime download/update,
 and fail-closed packaged discovery. Electron still owns a private embedded daemon/socket, and the harness only
-receives the validated MCP proxy contract. Xorg is tracked in [#79](https://github.com/milind-soni/Softbots/issues/79);
+receives the validated MCP proxy contract. Xorg is tracked in [#79](https://github.com/milind-soni/OpenMausBot/issues/79);
 GNOME/Wayland additionally requires WinRects v8 plus the exact Cua health-report contract tracked in
-[#109](https://github.com/milind-soni/Softbots/issues/109).
+[#109](https://github.com/milind-soni/OpenMausBot/issues/109).
 
 | Option | Verdict |
 | --- | --- |
@@ -82,7 +82,7 @@ GNOME/Wayland additionally requires WinRects v8 plus the exact Cua health-report
 
 ### macOS packaging target
 
-- Ship the binary at `Softbots.app/Contents/Resources/cua-driver`,
+- Ship the binary at `Squadbots.app/Contents/Resources/cua-driver`,
   **outside the ASAR**, executable bit preserved (electron-builder
   `extraResources`).
 - **Re-sign it with our Team ID** before signing + notarizing the app (the

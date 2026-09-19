@@ -69,8 +69,8 @@ macOS example:
 {
   "mcpServers": {
     "softbots": {
-      "command": "/Applications/Softbots.app/Contents/MacOS/Softbots",
-      "args": ["/Applications/Softbots.app/Contents/Resources/server/mcp-server.js"],
+      "command": "/Applications/Squadbots.app/Contents/MacOS/Squadbots",
+      "args": ["/Applications/Squadbots.app/Contents/Resources/server/mcp-server.js"],
       "env": { "ELECTRON_RUN_AS_NODE": "1" }
     }
   }

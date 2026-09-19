@@ -10,7 +10,7 @@ reruns and recovery. It
 builds macOS (arm64 + x64, signed, notarized, stapled), Windows, and Ubuntu
 from a single pinned commit, verifies every artifact the way a user would
 receive it, and assembles the canonical draft in
-[Softbots releases](https://github.com/milind-soni/Softbots/releases).
+[Softbots releases](https://github.com/milind-soni/OpenMausBot/releases).
 The exact same assets are also staged in the public legacy releases repo so
 installed builds from 0.1.46 and earlier can update across the repository
 migration.
@@ -38,7 +38,7 @@ refreshes it.
 
 `app-update.yml` is baked into every packaged desktop app. Builds through
 0.1.46 point to `milind-soni/softbots-releases`; newer builds point to
-`milind-soni/Softbots`. For that reason:
+`milind-soni/OpenMausBot`. For that reason:
 
 1. Every new release is published byte-for-byte to both repositories during
    the bridge period.
