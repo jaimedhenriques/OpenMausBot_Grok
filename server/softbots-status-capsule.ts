@@ -346,7 +346,7 @@ export function readSoftbotsStatus(
   return result;
 }
 
-export function openMausStatusSystemPrompt(options: SoftbotsStatusReadOptions = {}): string {
+export function softbotsStatusSystemPrompt(options: SoftbotsStatusReadOptions = {}): string {
   const status = readSoftbotsStatus(options);
   const receipt = [
     status.observedAt ? `observed_at=${status.observedAt}` : null,
@@ -383,3 +383,6 @@ export function openMausStatusSystemPrompt(options: SoftbotsStatusReadOptions = 
     "Treat missing, stale, failed, clock-skewed, malformed, or receipt-hash-mismatched runtime data as unknown. Do not infer bot identities, viewer URLs, paths, messages, models, accounts, or credentials from this block.",
   ].join("\n");
 }
+
+/** @deprecated Softbots rebrand — use softbotsStatusSystemPrompt */
+export const openMausStatusSystemPrompt = softbotsStatusSystemPrompt;

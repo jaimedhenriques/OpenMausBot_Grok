@@ -13,7 +13,7 @@ import { dirname, join } from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
 import { z } from "zod";
 
-import { openMausStatusSystemPrompt, readSoftbotsStatus } from "./softbots-status-capsule.ts";
+import { softbotsStatusSystemPrompt, readSoftbotsStatus } from "./softbots-status-capsule.ts";
 import type { JsonObject, JsonValue } from "./schema.ts";
 
 const NOW = new Date("2026-08-22T06:30:00Z");
@@ -184,7 +184,7 @@ posixOnly("readSoftbotsStatus", () => {
     expect(Object.keys(status.slots[0]).sort()).toEqual(
       ["container", "network", "persistence", "readiness", "security", "slot"],
     );
-    const prompt = openMausStatusSystemPrompt({ cachePath: path, now: new Date(NOW.getTime() + 1_000) });
+    const prompt = softbotsStatusSystemPrompt({ cachePath: path, now: new Date(NOW.getTime() + 1_000) });
     expect(prompt).toContain("freshness=fresh");
     expect(prompt).toContain("ui.two_up=true");
     expect(prompt).toContain(`source_sha256=${DUAL_VIEW_SHA}`);
@@ -319,7 +319,7 @@ it.skipIf(process.getuid !== undefined)(
         defaultWatchOnly: false,
       },
     });
-    expect(openMausStatusSystemPrompt({ cachePath: path, now: NOW })).toContain(
+    expect(softbotsStatusSystemPrompt({ cachePath: path, now: NOW })).toContain(
       "runtime_state=unknown",
     );
   },

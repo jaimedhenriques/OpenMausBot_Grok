@@ -95,7 +95,7 @@ import {
 import * as composio from "./composio.ts";
 import { chiefOfStaffSystemPrompt } from "./chief-of-staff.ts";
 import { canAccessTeam, canReachPeer, peerAllowed, peerName, peerRosterSystemPrompt, peerStatus, peerStatusWords, reachablePeers, resolveTeammate, roomPeerRosterSystemPrompt, roomRosterLine, PEER_ACCESS_HELP } from "./peer-roster.ts";
-import { openMausStatusSystemPrompt } from "./softbots-status-capsule.ts";
+import { softbotsStatusSystemPrompt as openMausStatusSystemPrompt } from "./softbots-status-capsule.ts";
 import {
   containerComputerAction,
   containerComputerExists,
