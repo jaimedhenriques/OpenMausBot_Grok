@@ -1,4 +1,4 @@
-package com.openmausbot.companion.core
+package com.softbots.companion.core
 
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -34,11 +34,11 @@ class SessionInviteLifecycleTest {
     private val second = "omb_pair_" + "2".repeat(43)
 
     private fun link(credential: String, host: String) =
-        "openmausbot://pair?address=$host:8810&token=$credential"
+        "softbots://pair?address=$host:8810&token=$credential"
 
     /** A six-digit invite: retryable, and never burned by a redemption. */
     private fun codeLink(code: String, host: String) =
-        "openmausbot://pair?address=$host:8810&code=$code"
+        "softbots://pair?address=$host:8810&code=$code"
 
     private fun paired(connection: Connection) = PairingOutcome(
         PairResponse(

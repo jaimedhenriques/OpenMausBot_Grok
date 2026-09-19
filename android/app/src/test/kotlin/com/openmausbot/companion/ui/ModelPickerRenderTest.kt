@@ -1,4 +1,4 @@
-package com.openmausbot.companion.ui
+package com.softbots.companion.ui
 
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule

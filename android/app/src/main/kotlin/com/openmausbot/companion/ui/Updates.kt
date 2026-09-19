@@ -1,14 +1,14 @@
-package com.openmausbot.companion.ui
+package com.softbots.companion.ui
 
 import androidx.compose.runtime.Immutable
-import com.openmausbot.companion.core.Chat
-import com.openmausbot.companion.core.CompanionState
-import com.openmausbot.companion.core.Message
-import com.openmausbot.companion.core.OptionCard
-import com.openmausbot.companion.core.PendingApproval
-import com.openmausbot.companion.core.forTask
-import com.openmausbot.companion.core.takeLastCharacters
-import com.openmausbot.companion.core.visibleTasks
+import com.softbots.companion.core.Chat
+import com.softbots.companion.core.CompanionState
+import com.softbots.companion.core.Message
+import com.softbots.companion.core.OptionCard
+import com.softbots.companion.core.PendingApproval
+import com.softbots.companion.core.forTask
+import com.softbots.companion.core.takeLastCharacters
+import com.softbots.companion.core.visibleTasks
 
 /**
  * What the Updates pill shows: only the chats doing something — the port of

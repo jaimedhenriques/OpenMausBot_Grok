@@ -1,4 +1,4 @@
-package com.openmausbot.companion.notifications
+package com.softbots.companion.notifications
 
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -41,11 +41,11 @@ class NotificationIntentsTest {
     @Test
     fun `identity encodes the payload pair into the data URI`() {
         assertEquals(
-            "openmaus://notification/bot%3A1/thread%2F2",
+            "softbots://notification/bot%3A1/thread%2F2",
             NotificationIntents.contentIdentity("bot:1", "thread/2"),
         )
         assertEquals(
-            "openmaus://notification/bot%20one/a%2Fb%3Fc",
+            "softbots://notification/bot%20one/a%2Fb%3Fc",
             NotificationIntents.contentIdentity("bot one", "a/b?c"),
         )
     }

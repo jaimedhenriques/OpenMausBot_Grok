@@ -1,4 +1,4 @@
-package com.openmausbot.companion.ui
+package com.softbots.companion.ui
 
 import java.io.File
 import kotlin.test.Test
@@ -15,8 +15,8 @@ import kotlin.test.assertTrue
  *
  * The copy pinned here lives inside `@Composable` bodies and a private
  * `failureMessage`, so no JVM unit test can call it — a source pin, in the
- * spirit of [com.openmausbot.companion.PairingLinkManifestTest] and
- * [com.openmausbot.companion.lifecycle.SessionLingerWiringTest], is what is
+ * spirit of [com.softbots.companion.PairingLinkManifestTest] and
+ * [com.softbots.companion.lifecycle.SessionLingerWiringTest], is what is
  * available. It is a text assertion, not a runtime proof: it says the sentence
  * is written in the file, not that the screen renders it. The constants that
  * *are* reachable are pinned where they live —
@@ -40,7 +40,7 @@ class PhoneSectionCopyTest {
 
         // Step one of setup. Upstream: `ios/App/OnboardingViews.swift:137`.
         assertTrue(
-            source.contains("1.  Open OpenMausBot → Settings → Phone"),
+            source.contains("1.  Open Softbots → Settings → Phone"),
             "the setup steps must name the Phone section",
         )
         // A discovered computer that answered without an address.
@@ -109,7 +109,7 @@ class PhoneSectionCopyTest {
         source.split(needle).size - 1
 
     private fun sourceFile(name: String): File =
-        locate("src/main/kotlin/com/openmausbot/companion/$name")
+        locate("src/main/kotlin/com/softbots/companion/$name")
 
     private fun locate(relative: String): File {
         var directory: File? = File(".").absoluteFile

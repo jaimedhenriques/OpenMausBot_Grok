@@ -329,7 +329,7 @@ export function browserEngineStatus(options: BrowserLookupOptions = {}): Browser
     return { kind: "ready", binaryPath, version };
   }
   if (bundle && (options.exists ?? existsSync)(bundle.directory)) {
-    return { kind: "unavailable", reason: "The desktop browser bundle is incomplete. Reinstall or update OpenMausBot to repair it.", installable: false };
+    return { kind: "unavailable", reason: "The desktop browser bundle is incomplete. Reinstall or update Softbots to repair it.", installable: false };
   }
   const platform = options.platform ?? process.platform;
   const arch = options.arch ?? process.arch;
@@ -411,7 +411,7 @@ export function agentBrowserFrame(input: {
   env: Record<string, string>;
   timeoutMs?: number;
 }): Promise<{ png: string; format: string }> {
-  const file = join(tmpdir(), `openmausbot-browser-${randomUUID()}.png`);
+  const file = join(tmpdir(), `softbots-browser-${randomUUID()}.png`);
   return new Promise((settle, fail) => {
     const child = spawn(input.binaryPath, ["screenshot", file], {
         env: browserRuntimeEnv(input.env),

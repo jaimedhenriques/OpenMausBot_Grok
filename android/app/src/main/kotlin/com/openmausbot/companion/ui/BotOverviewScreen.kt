@@ -1,4 +1,4 @@
-package com.openmausbot.companion.ui
+package com.softbots.companion.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -27,8 +27,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.openmausbot.companion.R
-import com.openmausbot.companion.core.BotOverview
+import com.softbots.companion.R
+import com.softbots.companion.core.BotOverview
 import kotlinx.coroutines.launch
 
 /**

@@ -1,4 +1,4 @@
-package com.openmausbot.companion.ui
+package com.softbots.companion.ui
 
 import android.content.ClipData
 import android.util.Base64
@@ -77,16 +77,16 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.openmausbot.companion.core.Chat
-import com.openmausbot.companion.core.AttachedMessageContent
-import com.openmausbot.companion.core.DisplayedMessageAttachment
-import com.openmausbot.companion.core.DownloadedFile
-import com.openmausbot.companion.core.Message
-import com.openmausbot.companion.core.OptionCard
-import com.openmausbot.companion.core.ThreadRef
-import com.openmausbot.companion.core.ToolActivity
-import com.openmausbot.companion.core.TranscriptCard
-import com.openmausbot.companion.core.TranscriptCards
+import com.softbots.companion.core.Chat
+import com.softbots.companion.core.AttachedMessageContent
+import com.softbots.companion.core.DisplayedMessageAttachment
+import com.softbots.companion.core.DownloadedFile
+import com.softbots.companion.core.Message
+import com.softbots.companion.core.OptionCard
+import com.softbots.companion.core.ThreadRef
+import com.softbots.companion.core.ToolActivity
+import com.softbots.companion.core.TranscriptCard
+import com.softbots.companion.core.TranscriptCards
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
@@ -94,7 +94,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 /** What the clipboard shows this came from. */
-private const val MESSAGE_CLIP_LABEL = "OpenMausMobile message"
+private const val MESSAGE_CLIP_LABEL = "SoftbotsMobile message"
 
 /**
  * One row of the transcript — the port of `MessageRow` in `ios/App/ChatView.swift`.

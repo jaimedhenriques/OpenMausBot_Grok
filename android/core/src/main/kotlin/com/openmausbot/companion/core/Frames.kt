@@ -1,4 +1,4 @@
-package com.openmausbot.companion.core
+package com.softbots.companion.core
 
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
@@ -45,13 +45,13 @@ data class RuntimeEvent(
 @Serializable(with = FrameSerializer::class)
 sealed interface Frame {
     data class Hello(val cursor: String, val resumed: Boolean) : Frame
-    data class Message(val threadId: String, val message: com.openmausbot.companion.core.Message) : Frame
-    data class MessagePatch(val threadId: String, val message: com.openmausbot.companion.core.Message) : Frame
+    data class Message(val threadId: String, val message: com.softbots.companion.core.Message) : Frame
+    data class MessagePatch(val threadId: String, val message: com.softbots.companion.core.Message) : Frame
     data class Thread(val threadId: String, val activeLeafId: String?) : Frame
-    data class Bot(val bot: com.openmausbot.companion.core.Bot) : Frame
+    data class Bot(val bot: com.softbots.companion.core.Bot) : Frame
     data class BotDeleted(val botId: String) : Frame
     data class BotQueued(val queues: Map<String, List<QueuedSend>>) : Frame
-    data class Room(val room: com.openmausbot.companion.core.Room) : Frame
+    data class Room(val room: com.softbots.companion.core.Room) : Frame
     data class RoomDeleted(val groupId: String) : Frame
     data class Notify(val notification: NotificationFrame) : Frame
     data class Screen(val botId: String, val png: String, val mime: String) : Frame
@@ -89,14 +89,14 @@ object FrameSerializer : KSerializer<Frame> {
             "message" -> Frame.Message(
                 threadId = objectValue.requiredString("threadId"),
                 message = input.json.decodeFromJsonElement(
-                    com.openmausbot.companion.core.Message.serializer(),
+                    com.softbots.companion.core.Message.serializer(),
                     objectValue.required("message"),
                 ),
             )
             "message.patch" -> Frame.MessagePatch(
                 threadId = objectValue.requiredString("threadId"),
                 message = input.json.decodeFromJsonElement(
-                    com.openmausbot.companion.core.Message.serializer(),
+                    com.softbots.companion.core.Message.serializer(),
                     objectValue.required("message"),
                 ),
             )
@@ -105,13 +105,13 @@ object FrameSerializer : KSerializer<Frame> {
                 activeLeafId = objectValue["activeLeafId"]?.jsonPrimitive?.contentOrNull,
             )
             "bot" -> Frame.Bot(input.json.decodeFromJsonElement(
-                com.openmausbot.companion.core.Bot.serializer(),
+                com.softbots.companion.core.Bot.serializer(),
                 objectValue.required("bot"),
             ))
             "bot.deleted" -> Frame.BotDeleted(objectValue.requiredString("botId"))
             "bot.queued" -> decodeBotQueued(objectValue) ?: Frame.Unknown(kind)
             "group" -> Frame.Room(input.json.decodeFromJsonElement(
-                com.openmausbot.companion.core.Room.serializer(),
+                com.softbots.companion.core.Room.serializer(),
                 objectValue.required("group"),
             ))
             "group.deleted" -> Frame.RoomDeleted(objectValue.requiredString("groupId"))
@@ -206,12 +206,12 @@ private fun Frame.toJsonObject(output: JsonEncoder): JsonObject = buildJsonObjec
         is Frame.Message -> {
             put("kind", "message")
             put("threadId", threadId)
-            put("message", output.json.encodeToJsonElement(com.openmausbot.companion.core.Message.serializer(), message))
+            put("message", output.json.encodeToJsonElement(com.softbots.companion.core.Message.serializer(), message))
         }
         is Frame.MessagePatch -> {
             put("kind", "message.patch")
             put("threadId", threadId)
-            put("message", output.json.encodeToJsonElement(com.openmausbot.companion.core.Message.serializer(), message))
+            put("message", output.json.encodeToJsonElement(com.softbots.companion.core.Message.serializer(), message))
         }
         is Frame.Thread -> {
             put("kind", "thread")
@@ -220,7 +220,7 @@ private fun Frame.toJsonObject(output: JsonEncoder): JsonObject = buildJsonObjec
         }
         is Frame.Bot -> {
             put("kind", "bot")
-            put("bot", output.json.encodeToJsonElement(com.openmausbot.companion.core.Bot.serializer(), bot))
+            put("bot", output.json.encodeToJsonElement(com.softbots.companion.core.Bot.serializer(), bot))
         }
         is Frame.BotDeleted -> {
             put("kind", "bot.deleted")
@@ -236,7 +236,7 @@ private fun Frame.toJsonObject(output: JsonEncoder): JsonObject = buildJsonObjec
         }
         is Frame.Room -> {
             put("kind", "group")
-            put("group", output.json.encodeToJsonElement(com.openmausbot.companion.core.Room.serializer(), room))
+            put("group", output.json.encodeToJsonElement(com.softbots.companion.core.Room.serializer(), room))
         }
         is Frame.RoomDeleted -> {
             put("kind", "group.deleted")

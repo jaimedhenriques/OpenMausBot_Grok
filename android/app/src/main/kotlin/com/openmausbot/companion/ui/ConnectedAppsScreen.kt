@@ -1,4 +1,4 @@
-package com.openmausbot.companion.ui
+package com.softbots.companion.ui
 
 import android.content.ActivityNotFoundException
 import android.content.Intent
@@ -40,12 +40,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.LifecycleResumeEffect
-import com.openmausbot.companion.core.ConnectedAppsRules
-import com.openmausbot.companion.core.ConnectorAccount
-import com.openmausbot.companion.core.ConnectorCard
-import com.openmausbot.companion.core.ConnectorCatalog
-import com.openmausbot.companion.core.ConnectorStatus
-import com.openmausbot.companion.core.ConnectorStatuses
+import com.softbots.companion.core.ConnectedAppsRules
+import com.softbots.companion.core.ConnectorAccount
+import com.softbots.companion.core.ConnectorCard
+import com.softbots.companion.core.ConnectorCatalog
+import com.softbots.companion.core.ConnectorStatus
+import com.softbots.companion.core.ConnectorStatuses
 import kotlinx.coroutines.launch
 
 /**
@@ -265,9 +265,9 @@ private fun CredentialStoreWarning(hasLastKnownInventory: Boolean) {
             Text("Accounts could not be re-checked", fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.tertiary)
             Text(
                 if (hasLastKnownInventory) {
-                    "Showing what was connected last time. Your computer could not open its credential store just now, so these accounts could not be re-checked. Nothing has been disconnected — restarting OpenMausBot on your computer usually clears this."
+                    "Showing what was connected last time. Your computer could not open its credential store just now, so these accounts could not be re-checked. Nothing has been disconnected — restarting Softbots on your computer usually clears this."
                 } else {
-                    "Your computer could not open its credential store, so it cannot say which accounts are connected. Nothing has been disconnected — restarting OpenMausBot on your computer usually clears this."
+                    "Your computer could not open its credential store, so it cannot say which accounts are connected. Nothing has been disconnected — restarting Softbots on your computer usually clears this."
                 },
                 color = secondaryTint,
                 fontSize = 13.sp,

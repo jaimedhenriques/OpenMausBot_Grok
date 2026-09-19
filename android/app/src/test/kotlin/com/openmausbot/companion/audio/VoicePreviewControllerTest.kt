@@ -1,4 +1,4 @@
-package com.openmausbot.companion.audio
+package com.softbots.companion.audio
 
 import java.util.Collections
 import java.util.concurrent.CountDownLatch

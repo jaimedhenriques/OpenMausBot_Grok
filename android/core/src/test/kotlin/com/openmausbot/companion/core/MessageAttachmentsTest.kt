@@ -1,4 +1,4 @@
-package com.openmausbot.companion.core
+package com.softbots.companion.core
 
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -62,7 +62,7 @@ class MessageAttachmentsTest {
     fun rejectsMalformedEmptyAndCustomSchemeLinks() {
         assertNull(LocalMessageLink.resolve("#section"))
         assertNull(LocalMessageLink.resolve("?download=1"))
-        assertNull(LocalMessageLink.resolve("openmausbot://pair?token=secret"))
+        assertNull(LocalMessageLink.resolve("softbots://pair?token=secret"))
         assertNull(LocalMessageLink.resolve("javascript:alert(1)"))
         assertNull(LocalMessageLink.resolve("https:///missing-host.md"))
         assertNull(LocalMessageLink.resolve("file:///tmp/report.md?replace=1"))

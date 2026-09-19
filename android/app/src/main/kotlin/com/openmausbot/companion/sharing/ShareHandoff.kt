@@ -1,7 +1,7 @@
-package com.openmausbot.companion.sharing
+package com.softbots.companion.sharing
 
-import com.openmausbot.companion.ui.ShareLoadException
-import com.openmausbot.companion.ui.SharePolicy
+import com.softbots.companion.ui.ShareLoadException
+import com.softbots.companion.ui.SharePolicy
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -12,7 +12,7 @@ import kotlinx.coroutines.withContext
  * Incoming `ACTION_SEND` Intents carry content URIs whose read grant belongs to
  * the receiving Activity. Copying those bytes has to happen while this record
  * is still the one that holds the grant. After the copy, the original extras
- * must never reach [com.openmausbot.companion.MainActivity]: that Activity is
+ * must never reach [com.softbots.companion.MainActivity]: that Activity is
  * the root of the main task, so the system keeps and may persist its launching
  * Intent.
  *

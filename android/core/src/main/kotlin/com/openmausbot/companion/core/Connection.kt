@@ -1,4 +1,4 @@
-package com.openmausbot.companion.core
+package com.softbots.companion.core
 
 import java.io.ByteArrayOutputStream
 import java.io.IOException
@@ -351,7 +351,7 @@ data class PairingInvite(val connection: Connection, val credential: String) {
         private const val MAX_ENDPOINTS = 8
 
         fun parse(url: URI): PairingInvite? {
-            if (!url.scheme.equals("openmausbot", ignoreCase = true) ||
+            if (!url.scheme.equals("softbots", ignoreCase = true) ||
                 !url.host.equals("pair", ignoreCase = true)
             ) {
                 return null

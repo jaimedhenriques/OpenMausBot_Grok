@@ -1,14 +1,14 @@
-package com.openmausbot.companion.ui
+package com.softbots.companion.ui
 
-import com.openmausbot.companion.core.APIError
-import com.openmausbot.companion.core.BotTask
-import com.openmausbot.companion.core.CompanionEndpoint
-import com.openmausbot.companion.core.CompanionEndpointKind
-import com.openmausbot.companion.core.Connection
-import com.openmausbot.companion.core.Fleet
-import com.openmausbot.companion.core.Message
-import com.openmausbot.companion.core.MessageDestination
-import com.openmausbot.companion.core.ModelSelection
+import com.softbots.companion.core.APIError
+import com.softbots.companion.core.BotTask
+import com.softbots.companion.core.CompanionEndpoint
+import com.softbots.companion.core.CompanionEndpointKind
+import com.softbots.companion.core.Connection
+import com.softbots.companion.core.Fleet
+import com.softbots.companion.core.Message
+import com.softbots.companion.core.MessageDestination
+import com.softbots.companion.core.ModelSelection
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -129,11 +129,11 @@ class SharePolicyTest {
             SharePolicy.routeLabel(Connection(id = "lan", name = "Lan", host = "10.0.0.2", port = 8810)),
         )
         assertEquals(
-            "This phone's pairing has expired. Open OpenMausBot and pair it again.",
+            "This phone's pairing has expired. Open Softbots and pair it again.",
             SharePolicy.friendlyMessage(APIError.Status(401, "revoked"), "Air"),
         )
         assertEquals(
-            "Couldn't reach Air. Keep OpenMausBot open and Phone access on, then try again.",
+            "Couldn't reach Air. Keep Softbots open and Phone access on, then try again.",
             SharePolicy.friendlyMessage(APIError.Transport("timeout"), "Air"),
         )
         assertEquals(

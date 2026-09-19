@@ -4,7 +4,7 @@ const { contextBridge, ipcRenderer, webUtils } = require("electron");
 
 // Sandboxed preloads receive Electron's restricted `require`, which cannot
 // load sibling CommonJS files. Keep this tiny predicate inline here; main's
-const desktopRemoteClient = process.argv.includes("--openmausbot-remote-client");
+const desktopRemoteClient = process.argv.includes("--softbots-remote-client");
 
 let pendingPackageInstallUrl = null;
 const packageInstallListeners = new Set();
@@ -27,9 +27,9 @@ const REMOTE_SAFE = new Set(["platform", "getCapabilities", "onCapabilitiesChang
 // Only main can request a fresh snapshot; there is no renderer-callable method.
 const COMPANY_BACKUP_CLIENT_KEYS = [
   "omb-drafts", "omb-draft-attachments", "omb-draft-send-ids", "omb-draft-channel-modes",
-  "omb-skin", "omb-show-threads", "openmausbot.sidebarDensity",
-  "openmausbot.sidebarCollapsedSections.v1", "openmausbot.sidebarSectionOrder.v1",
-  "omb-analytics-opt-out", "openmausbot.remote-voice.v1",
+  "omb-skin", "omb-show-threads", "softbots.sidebarDensity",
+  "softbots.sidebarCollapsedSections.v1", "softbots.sidebarSectionOrder.v1",
+  "omb-analytics-opt-out", "softbots.remote-voice.v1",
 ];
 if (isLocalPage && !desktopRemoteClient && process.argv.includes("--omb-company-desktop=1")) {
   ipcRenderer.on("company-backups:collect-client-state", (_event, request) => {
@@ -65,7 +65,7 @@ const bridge = {
     ipcRenderer.on("desktop:capabilities-changed", handler);
     return () => ipcRenderer.removeListener("desktop:capabilities-changed", handler);
   },
-  /** Pair this desktop app to another OpenMausBot host. The bearer remains in
+  /** Pair this desktop app to another Softbots host. The bearer remains in
    * the main process and is never returned over this bridge. */
   remoteClient: {
     active: desktopRemoteClient,
@@ -185,7 +185,7 @@ const bridge = {
       return () => ipcRenderer.removeListener("window:maximized-changed", handler);
     },
   },
-  /** A reviewed BotMRR package opened through openmausbot://install. */
+  /** A reviewed BotMRR package opened through softbots://install. */
   onPackageInstall: (cb) => {
     packageInstallListeners.add(cb);
     if (pendingPackageInstallUrl) cb(pendingPackageInstallUrl);
@@ -221,7 +221,7 @@ const bridge = {
   /** Writes the redacted diagnostics report to a user-chosen file; resolves
    * the path, or null when the save dialog was cancelled. */
   exportDiagnostics: () => ipcRenderer.invoke("desktop:export-diagnostics"),
-  /** Ask where to save a bot-created file (inside ~/.openmausbot), copy it
+  /** Ask where to save a bot-created file (inside ~/.softbots), copy it
    * there and reveal it. Returns the chosen path, or null if the user
    * cancelled the dialog. The chat bubble shows the
    * rejection text verbatim, so strip the "Error invoking remote method"

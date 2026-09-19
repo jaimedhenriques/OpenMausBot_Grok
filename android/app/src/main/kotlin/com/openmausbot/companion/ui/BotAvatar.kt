@@ -1,4 +1,4 @@
-package com.openmausbot.companion.ui
+package com.softbots.companion.ui
 
 import android.graphics.Bitmap
 import androidx.compose.foundation.Image
@@ -21,10 +21,10 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.openmausbot.companion.avatar.AvatarImageRules
-import com.openmausbot.companion.core.AvatarCrop
-import com.openmausbot.companion.core.Bot
-import com.openmausbot.companion.core.Chat
+import com.softbots.companion.avatar.AvatarImageRules
+import com.softbots.companion.core.AvatarCrop
+import com.softbots.companion.core.Bot
+import com.softbots.companion.core.Chat
 
 /**
  * An agent's identity image, or its mascot — the port of

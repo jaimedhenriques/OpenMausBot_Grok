@@ -1,4 +1,4 @@
-package com.openmausbot.companion.avatar
+package com.softbots.companion.avatar
 
 import java.io.InputStream
 import java.util.concurrent.CountDownLatch

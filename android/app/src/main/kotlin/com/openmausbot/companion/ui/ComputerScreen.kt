@@ -1,4 +1,4 @@
-package com.openmausbot.companion.ui
+package com.softbots.companion.ui
 
 import android.graphics.BitmapFactory
 import androidx.compose.foundation.Image

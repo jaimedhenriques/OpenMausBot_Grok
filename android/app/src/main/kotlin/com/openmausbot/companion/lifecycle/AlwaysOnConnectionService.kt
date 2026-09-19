@@ -1,4 +1,4 @@
-package com.openmausbot.companion.lifecycle
+package com.softbots.companion.lifecycle
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -9,14 +9,14 @@ import android.content.Intent
 import android.os.Build
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
-import com.openmausbot.companion.OpenMausApp
-import com.openmausbot.companion.R
+import com.softbots.companion.SoftbotsApp
+import com.softbots.companion.R
 
 /**
  * The opt-in counterpart to [SessionLingerService]: instead of a short window
  * after the app leaves the screen, this holds the process out of the `cached`
  * class indefinitely, so a notify frame that arrives with the app fully closed
- * still reaches [com.openmausbot.companion.notifications.LocalNotificationPoster].
+ * still reaches [com.softbots.companion.notifications.LocalNotificationPoster].
  *
  * Deliberately a real foreground service — `startForeground` with a visible,
  * silent, ongoing notification — because that is the one supported way to ask
@@ -46,7 +46,7 @@ class AlwaysOnConnectionService : Service() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         startForeground(NOTIFICATION_ID, buildNotification())
         AlwaysOnConnectionState.active = true
-        val app = application as OpenMausApp
+        val app = application as SoftbotsApp
         // Closes the race where the toggle turns this on and the app
         // backgrounds before this callback runs: SessionLingerController may
         // already have opened its own 25s window, whose timer would otherwise

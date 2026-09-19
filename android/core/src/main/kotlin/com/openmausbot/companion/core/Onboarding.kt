@@ -1,4 +1,4 @@
-package com.openmausbot.companion.core
+package com.softbots.companion.core
 
 /**
  * The first-run decision seam — the port of

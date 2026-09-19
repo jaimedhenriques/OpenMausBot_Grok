@@ -1,13 +1,13 @@
-package com.openmausbot.companion.ui
+package com.softbots.companion.ui
 
-import com.openmausbot.companion.core.BotTask
-import com.openmausbot.companion.core.Chat
-import com.openmausbot.companion.core.CompanionState
-import com.openmausbot.companion.core.Message
-import com.openmausbot.companion.core.OptionCard
-import com.openmausbot.companion.core.PendingApproval
-import com.openmausbot.companion.core.QueuedSend
-import com.openmausbot.companion.core.ToolActivity
+import com.softbots.companion.core.BotTask
+import com.softbots.companion.core.Chat
+import com.softbots.companion.core.CompanionState
+import com.softbots.companion.core.Message
+import com.softbots.companion.core.OptionCard
+import com.softbots.companion.core.PendingApproval
+import com.softbots.companion.core.QueuedSend
+import com.softbots.companion.core.ToolActivity
 import java.util.Locale
 import kotlin.test.Test
 import kotlin.test.assertEquals

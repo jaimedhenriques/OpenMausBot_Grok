@@ -1,7 +1,7 @@
-package com.openmausbot.companion.ui
+package com.softbots.companion.ui
 
-import com.openmausbot.companion.core.Chat
-import com.openmausbot.companion.core.ChatTarget
+import com.softbots.companion.core.Chat
+import com.softbots.companion.core.ChatTarget
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -324,7 +324,7 @@ class PendingThreadNavigationTest {
     }
 
     private fun target(botId: String, threadId: String) =
-        requireNotNull(com.openmausbot.companion.core.NotificationTarget.from(botId, threadId))
+        requireNotNull(com.softbots.companion.core.NotificationTarget.from(botId, threadId))
 }
 
 /**

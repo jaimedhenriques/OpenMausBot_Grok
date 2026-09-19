@@ -61,7 +61,7 @@ if (process.versions.electron && process.argv.includes(flag)) {
       assert.equal(message.connection.token, modelToken, "native provider gets model-only capability");
       grantsApplied++;
     } else clearsApplied++;
-    queueMicrotask(() => relay.receive(fakeProcess, { type: "openmausbot:managed-desktop-result", requestId: message.requestId, ok: true }));
+    queueMicrotask(() => relay.receive(fakeProcess, { type: "softbots:managed-desktop-result", requestId: message.requestId, ok: true }));
   } };
   const client = createManagedDesktopClient({
     store: { read: async () => saved, write: async value => { saved = structuredClone(value); } },
@@ -184,7 +184,7 @@ if (process.versions.electron && process.argv.includes(flag)) {
     const beginsBeforeApp = begins;
     win.setSize(1180, 850);
     await win.loadURL(`${url}?app=1`);
-    await until(() => evaluate("document.body.textContent.includes('Welcome to OpenMausBot')"), "normal optional welcome flow");
+    await until(() => evaluate("document.body.textContent.includes('Welcome to Softbots')"), "normal optional welcome flow");
     assert.equal(await evaluate(`Boolean(${button("Sign in with your organisation")})`), false);
     assert.equal(begins, beginsBeforeApp);
     win.webContents.send("app:open-settings");

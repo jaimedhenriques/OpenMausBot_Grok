@@ -1,9 +1,9 @@
-package com.openmausbot.companion.storage
+package com.softbots.companion.storage
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.openmausbot.companion.core.OnboardingPreferenceKeys
-import com.openmausbot.companion.core.OnboardingStore
+import com.softbots.companion.core.OnboardingPreferenceKeys
+import com.softbots.companion.core.OnboardingStore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -27,7 +27,7 @@ import kotlinx.coroutines.withContext
  *   credential in, the file is named for this purpose alone, and
  *   `OnboardingPreferencesContractTest` fails if a fourth key ever appears.
  * - **A write is durable before it returns.** [SharedPreferences.Editor.commit]
- *   rather than `apply()`, because [com.openmausbot.companion.core.Session] puts
+ *   rather than `apply()`, because [com.softbots.companion.core.Session] puts
  *   this write *before* the connection save specifically so a process that stops
  *   in between cannot leave a restorable pairing whose marker never landed.
  *   `apply()` would hand that ordering back to a background thread and quietly
@@ -88,7 +88,7 @@ class OnboardingPreferences(
     }
 
     companion object {
-        const val NAME = "openmaus.onboarding"
+        const val NAME = "softbots.onboarding"
 
         /** The on-disk file, named here so the backup rules can be asserted against it. */
         const val FILE = "$NAME.xml"

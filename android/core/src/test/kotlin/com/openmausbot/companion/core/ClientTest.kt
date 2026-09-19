@@ -1,4 +1,4 @@
-package com.openmausbot.companion.core
+package com.softbots.companion.core
 
 import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.flow.toList

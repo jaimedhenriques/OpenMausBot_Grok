@@ -1,4 +1,4 @@
-package com.openmausbot.companion.core
+package com.softbots.companion.core
 
 data class PendingApproval(val threadId: String, val message: Message)
 

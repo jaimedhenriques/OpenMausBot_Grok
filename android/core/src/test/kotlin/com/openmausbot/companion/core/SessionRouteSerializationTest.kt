@@ -1,4 +1,4 @@
-package com.openmausbot.companion.core
+package com.softbots.companion.core
 
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -22,7 +22,7 @@ import kotlinx.coroutines.test.runTest
  * The window both tests use is real rather than contrived: a connection store
  * *suspends*. `DataStoreConnectionStore.save` hands the write to DataStore's
  * own IO dispatcher, so the coroutine that called it gives up the thread in the
- * middle. `Dispatchers.Main.immediate` — the scope `OpenMausApp` gives the
+ * middle. `Dispatchers.Main.immediate` — the scope `SoftbotsApp` gives the
  * session — is precisely a dispatcher on which another coroutine then runs.
  */
 @OptIn(ExperimentalCoroutinesApi::class)

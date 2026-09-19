@@ -1,7 +1,7 @@
-package com.openmausbot.companion.storage
+package com.softbots.companion.storage
 
 import android.content.Context
-import com.openmausbot.companion.core.OnboardingPreferenceKeys
+import com.softbots.companion.core.OnboardingPreferenceKeys
 import java.io.File
 import kotlin.coroutines.EmptyCoroutineContext
 import kotlin.test.assertEquals
@@ -147,7 +147,7 @@ class OnboardingPreferencesTest {
     private fun readXml(name: String): String = locate("src/main/res/xml/$name").readText()
 
     private fun sourceFile(name: String): File =
-        locate("src/main/kotlin/com/openmausbot/companion/$name")
+        locate("src/main/kotlin/com/softbots/companion/$name")
 
     private fun locate(relative: String): File {
         var directory: File? = File(".").absoluteFile

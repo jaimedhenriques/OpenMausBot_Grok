@@ -1,4 +1,4 @@
-package com.openmausbot.companion.core
+package com.softbots.companion.core
 
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -26,7 +26,7 @@ class QueuedSendTest {
         queueId = queueId,
     )
 
-    private fun echo(busy: Boolean? = null) = com.openmausbot.companion.core.Bot(
+    private fun echo(busy: Boolean? = null) = com.softbots.companion.core.Bot(
         id = "b1",
         threadId = "t1",
         name = "Echo",

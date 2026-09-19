@@ -1,11 +1,11 @@
-package com.openmausbot.companion.ui
+package com.softbots.companion.ui
 
-import com.openmausbot.companion.core.Routine
-import com.openmausbot.companion.core.RoutineInput
-import com.openmausbot.companion.core.RoutineRun
-import com.openmausbot.companion.core.RoutineRunAvailability
-import com.openmausbot.companion.core.RoutineRunLocation
-import com.openmausbot.companion.core.RoutineSchedule
+import com.softbots.companion.core.Routine
+import com.softbots.companion.core.RoutineInput
+import com.softbots.companion.core.RoutineRun
+import com.softbots.companion.core.RoutineRunAvailability
+import com.softbots.companion.core.RoutineRunLocation
+import com.softbots.companion.core.RoutineSchedule
 import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalTime
@@ -86,7 +86,7 @@ object RoutineRules {
             "and full run logs remain available. If the previous run is still active, " +
             "the next occurrence is skipped instead of queued."
     const val UNKNOWN_SCHEDULE_NOTE: String =
-        "This routine uses a schedule added by a newer OpenMausBot. Choose One time, " +
+        "This routine uses a schedule added by a newer Softbots. Choose One time, " +
             "Selected days, or Every X minutes before saving."
 
     const val CHECKING_CLOUD: String = "Checking Cloud VM availability…"
@@ -96,7 +96,7 @@ object RoutineRules {
         "Uses this agent's selected model and computer setting on the paired computer."
     const val CLOUD_READY_FOOTER: String =
         "Runs the agent and its tools inside its Box virtual machine. The VM wakes " +
-            "automatically for each run; keep OpenMausBot running so its scheduler can " +
+            "automatically for each run; keep Softbots running so its scheduler can " +
             "launch the job."
     const val CLOUD_BLOCKED_FOOTER: String =
         "This existing Cloud VM choice is preserved, but it cannot run until the paired " +

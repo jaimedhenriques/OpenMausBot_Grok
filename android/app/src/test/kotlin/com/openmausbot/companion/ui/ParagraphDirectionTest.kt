@@ -1,4 +1,4 @@
-package com.openmausbot.companion.ui
+package com.softbots.companion.ui
 
 import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.material3.Text
@@ -19,7 +19,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.openmausbot.companion.core.TranscriptCard
+import com.softbots.companion.core.TranscriptCard
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 import org.junit.Rule
@@ -308,7 +308,7 @@ class ParagraphDirectionTest {
     }
 
     private companion object {
-        /** "Welcome to OpenMaus" — strong RTL from its first letter. */
+        /** "Welcome to Softbots" — strong RTL from its first letter. */
         const val ARABIC = "مرحبا بك في أوبن ماوس"
     }
 }

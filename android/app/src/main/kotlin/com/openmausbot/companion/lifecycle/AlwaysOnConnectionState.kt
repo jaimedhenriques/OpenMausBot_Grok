@@ -1,4 +1,4 @@
-package com.openmausbot.companion.lifecycle
+package com.softbots.companion.lifecycle
 
 /**
  * Whether [AlwaysOnConnectionService] is currently the reason the stream stays

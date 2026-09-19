@@ -1,4 +1,4 @@
-package com.openmausbot.companion.ui
+package com.softbots.companion.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -42,12 +42,12 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.openmausbot.companion.core.Connection
-import com.openmausbot.companion.core.PairingInvite
-import com.openmausbot.companion.core.PairingRouteError
-import com.openmausbot.companion.discovery.DiscoveredService
-import com.openmausbot.companion.discovery.DiscoveryState
-import com.openmausbot.companion.discovery.toConnection
+import com.softbots.companion.core.Connection
+import com.softbots.companion.core.PairingInvite
+import com.softbots.companion.core.PairingRouteError
+import com.softbots.companion.discovery.DiscoveredService
+import com.softbots.companion.discovery.DiscoveryState
+import com.softbots.companion.discovery.toConnection
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -187,7 +187,7 @@ fun PairingScreen(onCancel: () -> Unit) {
             onCancel = { showingScanner = false },
             validate = { payload ->
                 if (PairingInvite.parse(payload) == null) {
-                    "That isn't an OpenMausBot pairing QR code."
+                    "That isn't an Softbots pairing QR code."
                 } else {
                     // Session decides whether this invite may be accepted at all
                     // (already paired, credential already burned) and publishes
@@ -424,7 +424,7 @@ internal fun pairingFailureDisposition(
 @Composable
 private fun SetupSection(onScan: () -> Unit) {
     SectionCard(title = "On your computer") {
-        Text("1.  Open OpenMausBot → Settings → Phone", fontSize = 15.sp)
+        Text("1.  Open Softbots → Settings → Phone", fontSize = 15.sp)
         Text("2.  Choose Set up a phone", fontSize = 15.sp)
         Button(onClick = onScan, modifier = Modifier.fillMaxWidth()) {
             Text("Scan QR Code")

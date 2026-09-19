@@ -1,4 +1,4 @@
-package com.openmausbot.companion.ui
+package com.softbots.companion.ui
 
 import android.os.Build
 import android.view.HapticFeedbackConstants

@@ -1,4 +1,4 @@
-package com.openmausbot.companion.core
+package com.softbots.companion.core
 
 sealed interface MarkdownBlock {
     data class Paragraph(val text: String) : MarkdownBlock

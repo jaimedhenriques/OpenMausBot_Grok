@@ -1,4 +1,4 @@
-package com.openmausbot.companion.ui
+package com.softbots.companion.ui
 
 import androidx.activity.ComponentActivity
 import androidx.compose.runtime.CompositionLocalProvider
@@ -10,10 +10,10 @@ import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
-import com.openmausbot.companion.core.Connection
-import com.openmausbot.companion.core.Frame
-import com.openmausbot.companion.core.Session
-import com.openmausbot.companion.core.StreamFrame
+import com.softbots.companion.core.Connection
+import com.softbots.companion.core.Frame
+import com.softbots.companion.core.Session
+import com.softbots.companion.core.StreamFrame
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 import kotlinx.coroutines.CompletableDeferred
@@ -92,7 +92,7 @@ class SettingsReconnectWiringTest {
             troubleshootingText(Session.Status.Live),
         )
         assertEquals(
-            "OpenMausBot is trying the saved connection automatically.",
+            "Softbots is trying the saved connection automatically.",
             troubleshootingText(Session.Status.Connecting),
         )
         assertEquals(

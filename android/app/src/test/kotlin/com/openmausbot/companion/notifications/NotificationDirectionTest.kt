@@ -1,4 +1,4 @@
-package com.openmausbot.companion.notifications
+package com.softbots.companion.notifications
 
 import android.Manifest
 import android.app.Application
@@ -8,7 +8,7 @@ import android.text.Layout
 import android.text.StaticLayout
 import android.text.TextDirectionHeuristics
 import android.text.TextPaint
-import com.openmausbot.companion.core.NotificationFrame
+import com.softbots.companion.core.NotificationFrame
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 import org.junit.Test

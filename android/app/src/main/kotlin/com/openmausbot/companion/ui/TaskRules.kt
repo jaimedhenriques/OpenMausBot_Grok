@@ -1,14 +1,14 @@
-package com.openmausbot.companion.ui
+package com.softbots.companion.ui
 
-import com.openmausbot.companion.core.Bot
-import com.openmausbot.companion.core.BotTask
-import com.openmausbot.companion.core.Chat
-import com.openmausbot.companion.core.demandsAttention
-import com.openmausbot.companion.core.isClosed
-import com.openmausbot.companion.core.isArchived
-import com.openmausbot.companion.core.displayTitle
-import com.openmausbot.companion.core.orderedThreads
-import com.openmausbot.companion.core.threadGroups
+import com.softbots.companion.core.Bot
+import com.softbots.companion.core.BotTask
+import com.softbots.companion.core.Chat
+import com.softbots.companion.core.demandsAttention
+import com.softbots.companion.core.isClosed
+import com.softbots.companion.core.isArchived
+import com.softbots.companion.core.displayTitle
+import com.softbots.companion.core.orderedThreads
+import com.softbots.companion.core.threadGroups
 
 /**
  * Separate contexts for an agent or a channel — the rules behind

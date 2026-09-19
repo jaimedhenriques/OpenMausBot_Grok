@@ -1,4 +1,4 @@
-package com.openmausbot.companion.ui
+package com.softbots.companion.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -58,9 +58,9 @@ object OnboardingCopy {
 
     const val UNPAIRED_HOME_TITLE = "Connect when you're ready"
     const val UNPAIRED_HOME_BODY =
-        "Pair this phone with OpenMausBot to see your chats and respond to your bots."
+        "Pair this phone with Softbots to see your chats and respond to your bots."
     const val UNPAIRED_HOME_HINT =
-        "On your computer, open OpenMausBot → Settings → Phone."
+        "On your computer, open Softbots → Settings → Phone."
     const val UNPAIRED_HOME_CONNECT = "Connect computer"
 
     const val NOTIFICATIONS_TITLE = "Stay in the loop"
@@ -144,7 +144,7 @@ fun UnpairedHomeScreen(onConnect: () -> Unit, onOpenSettings: () -> Unit) {
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
-                text = "OpenMausBot",
+                text = "Softbots",
                 fontSize = 17.sp,
                 fontWeight = FontWeight.SemiBold,
                 modifier = Modifier.weight(1f).padding(start = 10.dp),
@@ -193,7 +193,7 @@ fun UnpairedHomeScreen(onConnect: () -> Unit, onOpenSettings: () -> Unit) {
  * Both buttons end the step: [onEnable] fires the system prompt through the one
  * object allowed to fire it, and "Not now" declines without one. Either way the
  * step is answered once — see the marker's lifecycle in
- * [com.openmausbot.companion.core.NotificationOnboardingPolicy].
+ * [com.softbots.companion.core.NotificationOnboardingPolicy].
  */
 @Composable
 fun NotificationOnboardingScreen(

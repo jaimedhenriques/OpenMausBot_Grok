@@ -1,4 +1,4 @@
-package com.openmausbot.companion.core
+package com.softbots.companion.core
 
 import java.net.URI
 import java.util.UUID
@@ -36,7 +36,7 @@ class Session(
     /**
      * The durable first-pair education marker. Deliberately has no default: the
      * marker is only useful if it outlives the process, and a default would let
-     * a wiring slip in `OpenMausApp` silently swap durability for an in-memory
+     * a wiring slip in `SoftbotsApp` silently swap durability for an in-memory
      * boolean that dies with the app — the exact failure the marker exists to
      * prevent, and one no runtime assertion would ever notice.
      */
@@ -1143,7 +1143,7 @@ class Session(
                     activeClient.imageCapableInstanceIds()
                 } catch (error: APIError.Status) {
                     if (error.code != 404) throw error
-                    _actionError.value = "Update OpenMausBot on this computer before sending images."
+                    _actionError.value = "Update Softbots on this computer before sending images."
                     return false
                 }
                 if (!imageSupported(to, capable)) {
@@ -1349,7 +1349,7 @@ class Session(
         val endpoints = saved.automaticEndpoints
         if (endpoints.isEmpty()) {
             throw APIError.Transport(
-                "Couldn't reach ${saved.name}. Keep OpenMausBot open and Phone access on, then try again.",
+                "Couldn't reach ${saved.name}. Keep Softbots open and Phone access on, then try again.",
             )
         }
         var lastError: Throwable? = null
@@ -1365,7 +1365,7 @@ class Session(
             }
         }
         throw lastError ?: APIError.Transport(
-            "Couldn't reach ${saved.name}. Keep OpenMausBot open and Phone access on, then try again.",
+            "Couldn't reach ${saved.name}. Keep Softbots open and Phone access on, then try again.",
         )
     }
 

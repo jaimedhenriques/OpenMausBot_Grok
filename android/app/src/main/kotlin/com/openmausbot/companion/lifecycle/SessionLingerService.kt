@@ -1,4 +1,4 @@
-package com.openmausbot.companion.lifecycle
+package com.softbots.companion.lifecycle
 
 import android.app.Service
 import android.content.Intent
@@ -10,7 +10,7 @@ import java.util.concurrent.atomic.AtomicReference
  * only so the process is a *service* process rather than a `cached` one while
  * the window is open.
  *
- * It hosts nothing. No second [com.openmausbot.companion.core.Session], no
+ * It hosts nothing. No second [com.softbots.companion.core.Session], no
  * socket, no thread, no I/O, no binder, no notification of its own. The stream
  * it protects is the one already running in this process.
  *
@@ -53,7 +53,7 @@ class SessionLingerService : Service() {
     }
 
     companion object {
-        const val EXTRA_TOKEN = "com.openmausbot.companion.linger.TOKEN"
+        const val EXTRA_TOKEN = "com.softbots.companion.linger.TOKEN"
         const val NO_TOKEN = 0L
 
         // Android constructs Services itself, so the hand-off has to be

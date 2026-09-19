@@ -1,4 +1,4 @@
-package com.openmausbot.companion.core
+package com.softbots.companion.core
 
 /** A safe, quiet label for an attachment encoded in a stored user prompt. */
 data class DisplayedMessageAttachment(

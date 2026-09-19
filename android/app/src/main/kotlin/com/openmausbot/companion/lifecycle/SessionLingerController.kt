@@ -1,9 +1,9 @@
-package com.openmausbot.companion.lifecycle
+package com.softbots.companion.lifecycle
 
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
-import com.openmausbot.companion.core.Session
+import com.softbots.companion.core.Session
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -191,7 +191,7 @@ class SessionLingerController(
  * anchor where to report a lost service, and register the coordinator itself as
  * the process-lifecycle observer.
  *
- * `OpenMausApp` calls exactly this, and the wiring test drives exactly this
+ * `SoftbotsApp` calls exactly this, and the wiring test drives exactly this
  * against a `LifecycleRegistry`, so the state machine cannot pass while the
  * Application still cancels the stream in `onStop`.
  */

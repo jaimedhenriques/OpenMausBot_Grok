@@ -1,4 +1,4 @@
-package com.openmausbot.companion.core
+package com.softbots.companion.core
 
 import java.net.InetAddress
 import java.net.URLEncoder
@@ -328,7 +328,7 @@ class PortP104IntegratedTest {
             val endpoints = listOf(tailnet, hosted)
             sidecar.handle(TAILNET) { request ->
                 when (request.path) {
-                    "/api/health" -> jsonResponse("""{"app":"openmausbot-proxy"}""")
+                    "/api/health" -> jsonResponse("""{"app":"softbots-proxy"}""")
                     "/api/pair" -> jsonResponse(pairResponse(endpoints = endpoints), 201)
                     else -> jsonResponse("", 404)
                 }
@@ -559,7 +559,7 @@ class PortP104IntegratedTest {
             "${legacyAddress.host}:${legacyAddress.port}",
             StandardCharsets.UTF_8,
         ).replace("+", "%20")
-        return "openmausbot://pair?address=$address&token=$QR_CREDENTIAL&endpoints=$encodedEndpoints"
+        return "softbots://pair?address=$address&token=$QR_CREDENTIAL&endpoints=$encodedEndpoints"
     }
 
     private fun pairResponse(endpoints: List<CompanionEndpoint>? = null): String {
@@ -797,7 +797,7 @@ private class RecordingDispatcher(
     }
 }
 
-private fun healthResponse(): MockResponse = jsonResponse("""{"app":"openmausbot","pid":42,"static":true}""")
+private fun healthResponse(): MockResponse = jsonResponse("""{"app":"softbots","pid":42,"static":true}""")
 
 private fun jsonResponse(body: String, code: Int = 200): MockResponse = MockResponse()
     .setResponseCode(code)

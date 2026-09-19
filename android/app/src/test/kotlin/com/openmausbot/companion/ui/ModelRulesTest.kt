@@ -1,11 +1,11 @@
-package com.openmausbot.companion.ui
+package com.softbots.companion.ui
 
-import com.openmausbot.companion.core.Instance
-import com.openmausbot.companion.core.InstanceCapabilities
-import com.openmausbot.companion.core.ModelCatalog
-import com.openmausbot.companion.core.ModelOption
-import com.openmausbot.companion.core.ModelSelection
-import com.openmausbot.companion.core.ProviderSnapshot
+import com.softbots.companion.core.Instance
+import com.softbots.companion.core.InstanceCapabilities
+import com.softbots.companion.core.ModelCatalog
+import com.softbots.companion.core.ModelOption
+import com.softbots.companion.core.ModelSelection
+import com.softbots.companion.core.ProviderSnapshot
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse

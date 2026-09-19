@@ -1,9 +1,9 @@
-package com.openmausbot.companion.lifecycle
+package com.softbots.companion.lifecycle
 
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import com.openmausbot.companion.storage.AlwaysOnPreferences
+import com.softbots.companion.storage.AlwaysOnPreferences
 
 /**
  * Restarts [AlwaysOnConnectionService] after a reboot, if the user had it

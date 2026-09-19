@@ -1,4 +1,4 @@
-package com.openmausbot.companion.core
+package com.softbots.companion.core
 
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.async

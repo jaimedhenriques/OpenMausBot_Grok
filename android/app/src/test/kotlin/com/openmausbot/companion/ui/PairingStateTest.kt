@@ -1,11 +1,11 @@
-package com.openmausbot.companion.ui
+package com.softbots.companion.ui
 
 import androidx.compose.runtime.saveable.SaverScope
-import com.openmausbot.companion.core.Connection
-import com.openmausbot.companion.core.PairingInvite
-import com.openmausbot.companion.core.PairingRouteError
-import com.openmausbot.companion.discovery.DiscoveredService
-import com.openmausbot.companion.discovery.toConnection
+import com.softbots.companion.core.Connection
+import com.softbots.companion.core.PairingInvite
+import com.softbots.companion.core.PairingRouteError
+import com.softbots.companion.discovery.DiscoveredService
+import com.softbots.companion.discovery.toConnection
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -581,7 +581,7 @@ class PairingFailureDispositionTest {
  *    screen before confirming a scan *and* before typing six digits.
  *  - the scanned branch reads: "Confirm this computer to establish an
  *    authenticated companion connection. Use a trusted Wi-Fi network or a
- *    tailnet; OpenMausBot does not encrypt local Wi-Fi traffic." Authenticated
+ *    tailnet; Softbots does not encrypt local Wi-Fi traffic." Authenticated
  *    and encrypted are different claims, and only one of them is true of the
  *    local network.
  */
@@ -731,10 +731,10 @@ class PairingConfirmationTest {
 
     @Test
     fun `a QR or deep link without an address never becomes a pending pairing`() {
-        assertNull(PairingInvite.parse("openmausbot://pair?token=$credential"))
+        assertNull(PairingInvite.parse("softbots://pair?token=$credential"))
         // The control: with one, the invite carries a host and a port.
         val invite = PairingInvite.parse(
-            "openmausbot://pair?address=192.168.1.42:8810&name=Kesley%27s%20Ubuntu&token=$credential",
+            "softbots://pair?address=192.168.1.42:8810&name=Kesley%27s%20Ubuntu&token=$credential",
         )
         assertEquals("192.168.1.42", invite?.connection?.host)
         assertEquals(8810, invite?.connection?.port)

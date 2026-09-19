@@ -1,6 +1,6 @@
-package com.openmausbot.companion.avatar
+package com.softbots.companion.avatar
 
-import com.openmausbot.companion.core.AvatarCrop
+import com.softbots.companion.core.AvatarCrop
 import java.io.ByteArrayOutputStream
 import java.io.InputStream
 import kotlin.coroutines.coroutineContext

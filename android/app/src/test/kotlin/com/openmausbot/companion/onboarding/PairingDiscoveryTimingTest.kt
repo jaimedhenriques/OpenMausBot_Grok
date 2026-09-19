@@ -1,4 +1,4 @@
-package com.openmausbot.companion.onboarding
+package com.softbots.companion.onboarding
 
 import android.Manifest
 import androidx.compose.runtime.CompositionLocalProvider
@@ -8,11 +8,11 @@ import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
-import com.openmausbot.companion.permissions.CompanionPermissions
-import com.openmausbot.companion.ui.CompanionTheme
-import com.openmausbot.companion.ui.LocalCompanion
-import com.openmausbot.companion.ui.PairingScreen
-import com.openmausbot.companion.ui.PermissionPreferences
+import com.softbots.companion.permissions.CompanionPermissions
+import com.softbots.companion.ui.CompanionTheme
+import com.softbots.companion.ui.LocalCompanion
+import com.softbots.companion.ui.PairingScreen
+import com.softbots.companion.ui.PermissionPreferences
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlinx.coroutines.CompletableDeferred
@@ -172,7 +172,7 @@ class PairingDiscoveryTimingTest {
         mount(scene) { cancelled += 1 }
 
         scene.session.receivePairingURL(
-            "openmausbot://pair?address=127.0.0.1:8810&code=123456",
+            "softbots://pair?address=127.0.0.1:8810&code=123456",
         )
         compose.waitUntil(5_000) { scene.session.pairingInvite.value != null }
         compose.waitForIdle()

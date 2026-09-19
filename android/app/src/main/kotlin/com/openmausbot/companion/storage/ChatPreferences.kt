@@ -1,9 +1,9 @@
-package com.openmausbot.companion.storage
+package com.softbots.companion.storage
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.openmausbot.companion.core.ActivityDetail
-import com.openmausbot.companion.core.QuickReply
+import com.softbots.companion.core.ActivityDetail
+import com.softbots.companion.core.QuickReply
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -61,7 +61,7 @@ class ChatPreferences(
     }
 
     companion object {
-        const val NAME = "openmaus.chat-preferences"
+        const val NAME = "softbots.chat-preferences"
         const val FILE = "$NAME.xml"
         private const val ACTIVITY_DETAIL = "companion.prefs.activityDetail"
         private const val QUICK_REPLIES = "companion.prefs.quickReplies"

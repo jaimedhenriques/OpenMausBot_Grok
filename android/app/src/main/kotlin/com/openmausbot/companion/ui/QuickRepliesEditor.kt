@@ -1,4 +1,4 @@
-package com.openmausbot.companion.ui
+package com.softbots.companion.ui
 
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.verticalScroll
@@ -29,8 +29,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.openmausbot.companion.core.QuickReply
-import com.openmausbot.companion.storage.ChatPreferences
+import com.softbots.companion.core.QuickReply
+import com.softbots.companion.storage.ChatPreferences
 
 /**
  * The editor behind Settings → Chat → Quick replies.

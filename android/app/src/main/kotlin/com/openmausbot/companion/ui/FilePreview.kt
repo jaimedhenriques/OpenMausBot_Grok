@@ -1,4 +1,4 @@
-package com.openmausbot.companion.ui
+package com.softbots.companion.ui
 
 import android.content.ActivityNotFoundException
 import android.content.Context
@@ -60,8 +60,8 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.core.content.FileProvider
 import androidx.exifinterface.media.ExifInterface
-import com.openmausbot.companion.core.DownloadedFile
-import com.openmausbot.companion.core.LocalMessageLink
+import com.softbots.companion.core.DownloadedFile
+import com.softbots.companion.core.LocalMessageLink
 import java.io.File
 import java.nio.ByteBuffer
 import java.util.UUID

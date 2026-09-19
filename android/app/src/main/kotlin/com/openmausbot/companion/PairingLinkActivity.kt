@@ -1,13 +1,13 @@
-package com.openmausbot.companion
+package com.softbots.companion
 
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import com.openmausbot.companion.ui.PairingHandoff
-import com.openmausbot.companion.ui.PairingLink
+import com.softbots.companion.ui.PairingHandoff
+import com.softbots.companion.ui.PairingLink
 
 /**
- * The only door `openmausbot://pair?…&token=omb_pair_…` may come through.
+ * The only door `softbots://pair?…&token=omb_pair_…` may come through.
  *
  * A pairing URL carries a one-time credential, and §6 forbids persisting one.
  * Keeping the deep link on [MainActivity] broke that by a path no `Saver` audit
@@ -60,7 +60,7 @@ class PairingLinkActivity : Activity() {
             markFinishing = ::finish,
             // Session decides whether the invite may be accepted at all — an
             // already-paired phone rejects it (§6).
-            deliver = { url -> (application as OpenMausApp).session.receivePairingURL(url) },
+            deliver = { url -> (application as SoftbotsApp).session.receivePairingURL(url) },
         )
     }
 }

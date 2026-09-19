@@ -1,4 +1,4 @@
-package com.openmausbot.companion.storage
+package com.softbots.companion.storage
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -11,10 +11,10 @@ import kotlinx.coroutines.flow.asStateFlow
  * on screen" — off by default, since it trades a persistent notification and
  * some battery for notifications that survive the app being fully closed.
  *
- * Read synchronously at process start ([OpenMausApp.onCreate]) so the boot
+ * Read synchronously at process start ([SoftbotsApp.onCreate]) so the boot
  * receiver and the always-on service can decide whether to run before any
  * Activity exists. `commit()`, not `apply()`: the toggle in Settings starts or
- * stops [com.openmausbot.companion.lifecycle.AlwaysOnConnectionService] right
+ * stops [com.softbots.companion.lifecycle.AlwaysOnConnectionService] right
  * after writing, and that decision must see the value that was just written,
  * not a write still queued for a background thread.
  */
@@ -36,7 +36,7 @@ class AlwaysOnPreferences(private val prefs: SharedPreferences) {
     }
 
     companion object {
-        const val NAME = "openmaus.always_on"
+        const val NAME = "softbots.always_on"
         const val KEY_ENABLED = "enabled"
     }
 }

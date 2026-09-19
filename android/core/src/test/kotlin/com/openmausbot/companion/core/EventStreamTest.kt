@@ -1,4 +1,4 @@
-package com.openmausbot.companion.core
+package com.softbots.companion.core
 
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.atomic.AtomicBoolean

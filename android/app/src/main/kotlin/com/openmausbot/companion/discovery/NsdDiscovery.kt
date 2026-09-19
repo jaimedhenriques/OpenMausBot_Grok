@@ -1,4 +1,4 @@
-package com.openmausbot.companion.discovery
+package com.softbots.companion.discovery
 
 import android.content.Context
 import android.net.nsd.NsdManager
@@ -6,7 +6,7 @@ import android.net.nsd.NsdServiceInfo
 import android.net.wifi.WifiManager
 import android.os.Build
 import androidx.annotation.RequiresApi
-import com.openmausbot.companion.core.Connection
+import com.softbots.companion.core.Connection
 import java.net.InetAddress
 import java.util.Collections
 import java.util.concurrent.ConcurrentHashMap
@@ -223,7 +223,7 @@ internal fun browseDiscoveryFlow(
         }
 
         override fun onServiceFound(service: NsdServiceInfo) {
-            if (service.serviceType != serviceType && !service.serviceType.contains("openmausbot")) {
+            if (service.serviceType != serviceType && !service.serviceType.contains("softbots")) {
                 return
             }
             attemptResolve(service, attemptsSoFar = 1)
@@ -411,7 +411,7 @@ interface CompanionDiscovery {
 }
 
 /**
- * NsdManager wrapper for `_openmausbot._tcp`, exposed as a Flow of [DiscoveryState].
+ * NsdManager wrapper for `_softbots._tcp`, exposed as a Flow of [DiscoveryState].
  */
 class NsdDiscovery(
     context: Context,
@@ -529,7 +529,7 @@ class NsdDiscovery(
     }
 
     companion object {
-        const val SERVICE_TYPE = "_openmausbot._tcp."
-        const val MULTICAST_LOCK_TAG = "openmausbot-nsd"
+        const val SERVICE_TYPE = "_softbots._tcp."
+        const val MULTICAST_LOCK_TAG = "softbots-nsd"
     }
 }

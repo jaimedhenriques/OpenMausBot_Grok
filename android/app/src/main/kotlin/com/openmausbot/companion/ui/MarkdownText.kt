@@ -1,4 +1,4 @@
-package com.openmausbot.companion.ui
+package com.softbots.companion.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
@@ -38,8 +38,8 @@ import androidx.compose.ui.text.withLink
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.openmausbot.companion.core.Markdown
-import com.openmausbot.companion.core.MarkdownBlock
+import com.softbots.companion.core.Markdown
+import com.softbots.companion.core.MarkdownBlock
 
 /**
  * Bot replies, rendered — the port of `ios/App/MarkdownText.swift`.

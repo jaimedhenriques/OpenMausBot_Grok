@@ -1,6 +1,6 @@
-package com.openmausbot.companion.ui
+package com.softbots.companion.ui
 
-import com.openmausbot.companion.core.ExportedTranscript
+import com.softbots.companion.core.ExportedTranscript
 
 /** The two shapes a transcript can leave in — `GET /api/threads/:id/export?format=`. */
 enum class ShareFormat(

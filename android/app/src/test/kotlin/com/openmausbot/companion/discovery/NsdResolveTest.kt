@@ -1,4 +1,4 @@
-package com.openmausbot.companion.discovery
+package com.softbots.companion.discovery
 
 import android.net.nsd.NsdManager
 import android.net.nsd.NsdServiceInfo
@@ -61,7 +61,7 @@ class NsdResolveTest {
         }
         runCurrent()
         captured!!.onDiscoveryStarted(NsdDiscovery.SERVICE_TYPE)
-        captured!!.onServiceFound(service("openmausbot-aa"))
+        captured!!.onServiceFound(service("softbots-aa"))
         runCurrent()
 
         assertEquals(1, attempts.size)
@@ -78,7 +78,7 @@ class NsdResolveTest {
         runCurrent()
         assertEquals(2, attempts.size)
         val found = assertIs<DiscoveryState.Active>(states.last()).found
-        assertEquals(listOf("openmausbot-aa"), found.map { it.name })
+        assertEquals(listOf("softbots-aa"), found.map { it.name })
         assertEquals("192.168.1.42", found.single().host)
         assertEquals(8810, found.single().port)
 
@@ -108,7 +108,7 @@ class NsdResolveTest {
         }
         runCurrent()
         captured!!.onDiscoveryStarted(NsdDiscovery.SERVICE_TYPE)
-        captured!!.onServiceFound(service("openmausbot-bb"))
+        captured!!.onServiceFound(service("softbots-bb"))
         advanceTimeBy(10_000)
         runCurrent()
 
@@ -144,7 +144,7 @@ class NsdResolveTest {
         }
         runCurrent()
         captured!!.onDiscoveryStarted(NsdDiscovery.SERVICE_TYPE)
-        captured!!.onServiceFound(service("openmausbot-cc"))
+        captured!!.onServiceFound(service("softbots-cc"))
         runCurrent()
         assertEquals(1, attempts)
 
@@ -169,7 +169,7 @@ class NsdResolveTest {
         resolver.resolve(register = { callback = it }, onResolved = { answers += it })
         assertEquals(1, resolver.outstanding)
 
-        val info = service("openmausbot-dd")
+        val info = service("softbots-dd")
         callback!!.onServiceUpdated(info)
 
         assertSame(info, answers.single())
@@ -177,7 +177,7 @@ class NsdResolveTest {
         assertEquals(0, resolver.outstanding)
 
         // A subscription keeps talking; a resolve is one answer.
-        callback!!.onServiceUpdated(service("openmausbot-dd"))
+        callback!!.onServiceUpdated(service("softbots-dd"))
         assertEquals(1, answers.size)
         assertEquals(1, unregistered.size)
     }
@@ -230,7 +230,7 @@ class NsdResolveTest {
         val callbacks = mutableListOf<NsdManager.ServiceInfoCallback>()
 
         repeat(3) { resolver.resolve(register = { callbacks += it }, onResolved = { }) }
-        callbacks[0].onServiceUpdated(service("openmausbot-ee"))
+        callbacks[0].onServiceUpdated(service("softbots-ee"))
         assertEquals(2, resolver.outstanding)
 
         resolver.stopAll()

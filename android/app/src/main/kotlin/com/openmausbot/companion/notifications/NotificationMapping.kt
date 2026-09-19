@@ -1,6 +1,6 @@
-package com.openmausbot.companion.notifications
+package com.softbots.companion.notifications
 
-import com.openmausbot.companion.core.NotificationFrame
+import com.softbots.companion.core.NotificationFrame
 
 /**
  * Pure mapping from companion notify frames to Android channel + dedupe id.
@@ -25,10 +25,10 @@ object NotificationMapping {
         else -> CHANNEL_DONE
     }
 
-    /** Matches iOS: `openmaus.{threadId}.{seq}` (title fallback when seq is null). */
+    /** Matches iOS: `softbots.{threadId}.{seq}` (title fallback when seq is null). */
     fun dedupeId(notification: NotificationFrame, sequence: Int?): String {
         val suffix = sequence?.toString() ?: notification.title
-        return "openmaus.${notification.threadId}.$suffix"
+        return "softbots.${notification.threadId}.$suffix"
     }
 
     fun isHighImportance(notification: NotificationFrame): Boolean = notification.isBlocking

@@ -1,4 +1,4 @@
-package com.openmausbot.companion.ui
+package com.softbots.companion.ui
 
 import androidx.compose.material3.Text
 import androidx.compose.ui.semantics.SemanticsNode
@@ -6,8 +6,8 @@ import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.semantics.getOrNull
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onRoot
-import com.openmausbot.companion.core.ConfigFlag
-import com.openmausbot.companion.core.ConfigStatus
+import com.softbots.companion.core.ConfigFlag
+import com.softbots.companion.core.ConfigStatus
 import kotlin.test.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -65,10 +65,10 @@ class VoiceSectionWiringTest {
     private val systemNotice = "Your computer's built-in voices are unavailable"
     private val systemFooter =
         "Your computer's built-in voices need no key, and it reports none it can use. " +
-            "Switch the voice engine in OpenMausBot on the computer to turn speech back on."
+            "Switch the voice engine in Softbots on the computer to turn speech back on."
     private val chatterboxNotice = "The Chatterbox server is not connected"
     private val chatterboxFooter =
-        "Add the address of your Chatterbox server in OpenMausBot on the computer to turn " +
+        "Add the address of your Chatterbox server in Softbots on the computer to turn " +
             "speech back on."
 
     /**

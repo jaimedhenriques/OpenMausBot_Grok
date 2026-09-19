@@ -1,8 +1,8 @@
-package com.openmausbot.companion.avatar
+package com.softbots.companion.avatar
 
-import com.openmausbot.companion.core.AvatarCrop
-import com.openmausbot.companion.core.Bot
-import com.openmausbot.companion.core.ModelSelection
+import com.softbots.companion.core.AvatarCrop
+import com.softbots.companion.core.Bot
+import com.softbots.companion.core.ModelSelection
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicInteger

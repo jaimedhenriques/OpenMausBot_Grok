@@ -1,20 +1,20 @@
-package com.openmausbot.companion.lifecycle
+package com.softbots.companion.lifecycle
 
 import androidx.lifecycle.Lifecycle
-import com.openmausbot.companion.audio.PreviewAudioEngine
-import com.openmausbot.companion.audio.PreviewAudioFocus
-import com.openmausbot.companion.audio.VoicePreviewController
-import com.openmausbot.companion.audio.VoicePreviewPlayer
-import com.openmausbot.companion.avatar.AvatarImageStore
-import com.openmausbot.companion.core.APIError
-import com.openmausbot.companion.core.Fleet
-import com.openmausbot.companion.core.Frame
-import com.openmausbot.companion.core.Message
-import com.openmausbot.companion.core.RuntimeEvent
-import com.openmausbot.companion.core.Session
-import com.openmausbot.companion.core.StreamFrame
-import com.openmausbot.companion.core.TokenStore
-import com.openmausbot.companion.notifications.NotificationMapping
+import com.softbots.companion.audio.PreviewAudioEngine
+import com.softbots.companion.audio.PreviewAudioFocus
+import com.softbots.companion.audio.VoicePreviewController
+import com.softbots.companion.audio.VoicePreviewPlayer
+import com.softbots.companion.avatar.AvatarImageStore
+import com.softbots.companion.core.APIError
+import com.softbots.companion.core.Fleet
+import com.softbots.companion.core.Frame
+import com.softbots.companion.core.Message
+import com.softbots.companion.core.RuntimeEvent
+import com.softbots.companion.core.Session
+import com.softbots.companion.core.StreamFrame
+import com.softbots.companion.core.TokenStore
+import com.softbots.companion.notifications.NotificationMapping
 import java.io.IOException
 import kotlin.test.Test
 import kotlin.test.assertContentEquals
@@ -577,7 +577,7 @@ class SessionLingerTest {
         val session = session(stream, sink)
         val owner = live(session, stream)
 
-        // The real store, wired exactly as OpenMausApp.kt wires it: the cache
+        // The real store, wired exactly as SoftbotsApp.kt wires it: the cache
         // must not survive the pairing that minted its URLs, and the window
         // must not delay that either.
         val avatars = AvatarImageStore(fetch = { byteArrayOf(7, 7, 7) }, decode = { null })

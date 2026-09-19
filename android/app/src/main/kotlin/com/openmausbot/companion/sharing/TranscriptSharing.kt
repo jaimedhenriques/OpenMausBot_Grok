@@ -1,11 +1,11 @@
-package com.openmausbot.companion.sharing
+package com.softbots.companion.sharing
 
 import android.content.Context
 import android.content.Intent
 import androidx.core.content.FileProvider
-import com.openmausbot.companion.core.ExportedTranscript
-import com.openmausbot.companion.ui.ShareFormat
-import com.openmausbot.companion.ui.SharePayload
+import com.softbots.companion.core.ExportedTranscript
+import com.softbots.companion.ui.ShareFormat
+import com.softbots.companion.ui.SharePayload
 import java.io.File
 
 /**

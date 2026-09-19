@@ -1,4 +1,4 @@
-package com.openmausbot.companion.ui
+package com.softbots.companion.ui
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
@@ -36,15 +36,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.openmausbot.companion.core.SharedAttachmentKind
-import com.openmausbot.companion.core.SharedAttachmentReference
-import com.openmausbot.companion.core.SharedMessageComposer
-import com.openmausbot.companion.sharing.LocalShareAttachment
-import com.openmausbot.companion.sharing.ShareInbox
-import com.openmausbot.companion.sharing.ShareItemLoader
-import com.openmausbot.companion.sharing.SharePayload
-import com.openmausbot.companion.sharing.SharePreparedDelivery
-import com.openmausbot.companion.sharing.ShareSheetPhase
+import com.softbots.companion.core.SharedAttachmentKind
+import com.softbots.companion.core.SharedAttachmentReference
+import com.softbots.companion.core.SharedMessageComposer
+import com.softbots.companion.sharing.LocalShareAttachment
+import com.softbots.companion.sharing.ShareInbox
+import com.softbots.companion.sharing.ShareItemLoader
+import com.softbots.companion.sharing.SharePayload
+import com.softbots.companion.sharing.SharePreparedDelivery
+import com.softbots.companion.sharing.ShareSheetPhase
 import java.util.UUID
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
@@ -363,7 +363,7 @@ private fun ShareSheetContent(
             ) {
                 HeaderBackButton(onBack = { if (canCancel) cancel() })
                 Column(modifier = Modifier.weight(1f)) {
-                    Text("Send to OpenMausBot", fontSize = 17.sp, fontWeight = FontWeight.SemiBold)
+                    Text("Send to Softbots", fontSize = 17.sp, fontWeight = FontWeight.SemiBold)
                     Text(headerSubtitle(phase), color = secondaryTint, fontSize = 13.sp)
                 }
                 if (phase == ShareSheetPhase.SENDING) {

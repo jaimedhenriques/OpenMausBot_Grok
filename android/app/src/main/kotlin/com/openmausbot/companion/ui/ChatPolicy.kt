@@ -1,19 +1,19 @@
-package com.openmausbot.companion.ui
+package com.softbots.companion.ui
 
-import com.openmausbot.companion.core.AttachedMessageContent
-import com.openmausbot.companion.core.Bot
-import com.openmausbot.companion.core.Chat
-import com.openmausbot.companion.core.ChatSummary
-import com.openmausbot.companion.core.ChatTarget
-import com.openmausbot.companion.core.CompanionState
-import com.openmausbot.companion.core.Message
-import com.openmausbot.companion.core.OptionCard
-import com.openmausbot.companion.core.PendingApproval
-import com.openmausbot.companion.core.Reaction
-import com.openmausbot.companion.core.Room
-import com.openmausbot.companion.core.Session
-import com.openmausbot.companion.core.chat
-import com.openmausbot.companion.core.TranscriptRow
+import com.softbots.companion.core.AttachedMessageContent
+import com.softbots.companion.core.Bot
+import com.softbots.companion.core.Chat
+import com.softbots.companion.core.ChatSummary
+import com.softbots.companion.core.ChatTarget
+import com.softbots.companion.core.CompanionState
+import com.softbots.companion.core.Message
+import com.softbots.companion.core.OptionCard
+import com.softbots.companion.core.PendingApproval
+import com.softbots.companion.core.Reaction
+import com.softbots.companion.core.Room
+import com.softbots.companion.core.Session
+import com.softbots.companion.core.chat
+import com.softbots.companion.core.TranscriptRow
 
 /**
  * The decisions the chat and roster screens make that are worth testing without

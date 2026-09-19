@@ -1,4 +1,4 @@
-package com.openmausbot.companion.core
+package com.softbots.companion.core
 
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.decodeFromString
@@ -314,7 +314,7 @@ class DecodingTest {
         // A "contains pair" assertion would have kept passing when the desktop
         // renamed its Companion area to Phone and the fixtures were re-captured.
         assertEquals(
-            "pair this device from Phone settings in OpenMausBot on your computer",
+            "pair this device from Phone settings in Softbots on your computer",
             decodeFixture<APIErrorBody>("unauthorized").error,
         )
         assertTrue(decodeFixture<APIErrorBody>("forbidden").error.isNotEmpty())

@@ -1,4 +1,4 @@
-package com.openmausbot.companion.ui
+package com.softbots.companion.ui
 
 /**
  * The mascot bodies a bot can wear — the Android half of the same solve that bakes

@@ -1,18 +1,18 @@
-package com.openmausbot.companion.ui
+package com.softbots.companion.ui
 
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.staticCompositionLocalOf
-import com.openmausbot.companion.audio.VoicePreviewPlayer
-import com.openmausbot.companion.avatar.AvatarImageStore
-import com.openmausbot.companion.core.ExportedTranscript
-import com.openmausbot.companion.core.Session
-import com.openmausbot.companion.dictation.SpeechDictation
+import com.softbots.companion.audio.VoicePreviewPlayer
+import com.softbots.companion.avatar.AvatarImageStore
+import com.softbots.companion.core.ExportedTranscript
+import com.softbots.companion.core.Session
+import com.softbots.companion.dictation.SpeechDictation
 import java.net.URI
-import com.openmausbot.companion.discovery.CompanionDiscovery
-import com.openmausbot.companion.permissions.CompanionPermissions
-import com.openmausbot.companion.sharing.ShareInbox
-import com.openmausbot.companion.storage.OnboardingPreferences
-import com.openmausbot.companion.storage.ChatPreferences
+import com.softbots.companion.discovery.CompanionDiscovery
+import com.softbots.companion.permissions.CompanionPermissions
+import com.softbots.companion.sharing.ShareInbox
+import com.softbots.companion.storage.OnboardingPreferences
+import com.softbots.companion.storage.ChatPreferences
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -116,7 +116,7 @@ class CompanionEnvironment(
     /** Composer dictation; bind to the chat screen lifecycle. */
     val dictation: SpeechDictation,
     /**
-     * Volatile composer drafts keyed by [com.openmausbot.companion.core.Chat.id].
+     * Volatile composer drafts keyed by [com.softbots.companion.core.Chat.id].
      * Survives Computer navigation without entering saved state.
      */
     val chatDrafts: ChatDraftHolder,
@@ -130,7 +130,7 @@ class CompanionEnvironment(
     val openCloudDesktop: (URI) -> String?,
     /** Inbound share copied off the sending app's Intent. */
     val shareInbox: ShareInbox,
-    /** Whether [com.openmausbot.companion.lifecycle.AlwaysOnConnectionService] is enabled. */
+    /** Whether [com.softbots.companion.lifecycle.AlwaysOnConnectionService] is enabled. */
     val alwaysOnEnabled: StateFlow<Boolean>,
     /** Flips the always-on setting and starts/stops the service to match. */
     val onToggleAlwaysOn: () -> Unit,

@@ -1,4 +1,4 @@
-package com.openmausbot.companion.ui
+package com.softbots.companion.ui
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable

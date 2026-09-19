@@ -1,4 +1,4 @@
-package com.openmausbot.companion.core
+package com.softbots.companion.core
 
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest

@@ -1,6 +1,6 @@
-package com.openmausbot.companion.notifications
+package com.softbots.companion.notifications
 
-import com.openmausbot.companion.core.NotificationFrame
+import com.softbots.companion.core.NotificationFrame
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -30,8 +30,8 @@ class NotificationMappingTest {
     @Test
     fun dedupeIdMatchesIosContract() {
         val notification = frame("approval", threadId = "thread-9", title = "Allow?")
-        assertEquals("openmaus.thread-9.42", NotificationMapping.dedupeId(notification, 42))
-        assertEquals("openmaus.thread-9.Allow?", NotificationMapping.dedupeId(notification, null))
+        assertEquals("softbots.thread-9.42", NotificationMapping.dedupeId(notification, 42))
+        assertEquals("softbots.thread-9.Allow?", NotificationMapping.dedupeId(notification, null))
     }
 
     private fun frame(

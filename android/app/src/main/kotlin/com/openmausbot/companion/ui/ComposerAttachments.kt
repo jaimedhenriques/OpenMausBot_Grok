@@ -1,4 +1,4 @@
-package com.openmausbot.companion.ui
+package com.softbots.companion.ui
 
 import android.content.ContentResolver
 import android.graphics.Bitmap
@@ -37,9 +37,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.openmausbot.companion.R
-import com.openmausbot.companion.core.AttachmentPolicy
-import com.openmausbot.companion.core.PendingMessageAttachment
+import com.softbots.companion.R
+import com.softbots.companion.core.AttachmentPolicy
+import com.softbots.companion.core.PendingMessageAttachment
 import java.io.ByteArrayOutputStream
 import java.io.InputStream
 import java.util.Locale
@@ -53,7 +53,7 @@ import kotlin.math.min
 object AttachmentImportRules {
     const val TOO_MANY: String = "Send up to ${AttachmentPolicy.MAXIMUM_ITEMS} items at a time."
 
-    fun unreadable(name: String): String = "OpenMausBot couldn't read $name. Try exporting it to Files first."
+    fun unreadable(name: String): String = "Softbots couldn't read $name. Try exporting it to Files first."
 
     fun unsupported(name: String): String =
         "$name isn't a supported attachment. Try an image, PDF, text, Word, Excel, or PowerPoint file."

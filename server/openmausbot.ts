@@ -1,4 +1,4 @@
-// Entry point for the `openmausbot` command (see cli.ts).
+// Entry point for the `softbots` command (see cli.ts).
 import { main } from "./cli.ts";
 import { exitAfterFlush } from "./exit.ts";
 

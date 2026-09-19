@@ -1,9 +1,9 @@
-package com.openmausbot.companion.ui
+package com.softbots.companion.ui
 
-import com.openmausbot.companion.core.Bot
-import com.openmausbot.companion.core.BotTask
-import com.openmausbot.companion.core.Chat
-import com.openmausbot.companion.core.ThreadCloser
+import com.softbots.companion.core.Bot
+import com.softbots.companion.core.BotTask
+import com.softbots.companion.core.Chat
+import com.softbots.companion.core.ThreadCloser
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse

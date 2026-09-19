@@ -1,4 +1,4 @@
-package com.openmausbot.companion.ui
+package com.softbots.companion.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
@@ -7,9 +7,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import com.openmausbot.companion.core.Chat
-import com.openmausbot.companion.core.ChatTarget
-import com.openmausbot.companion.core.target
+import com.softbots.companion.core.Chat
+import com.softbots.companion.core.ChatTarget
+import com.softbots.companion.core.target
 
 /**
  * Where the app can be. Five places, one stack, no dependency.

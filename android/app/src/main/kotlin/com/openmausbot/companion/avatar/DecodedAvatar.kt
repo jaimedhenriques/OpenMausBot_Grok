@@ -1,4 +1,4 @@
-package com.openmausbot.companion.avatar
+package com.softbots.companion.avatar
 
 import android.graphics.Bitmap
 

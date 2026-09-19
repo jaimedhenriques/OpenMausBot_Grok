@@ -1,11 +1,11 @@
-package com.openmausbot.companion.ui
+package com.softbots.companion.ui
 
-import com.openmausbot.companion.core.AvatarCrop
-import com.openmausbot.companion.core.Bot
-import com.openmausbot.companion.core.ConfigFlag
-import com.openmausbot.companion.core.ConfigStatus
-import com.openmausbot.companion.core.ModelSelection
-import com.openmausbot.companion.core.Voice
+import com.softbots.companion.core.AvatarCrop
+import com.softbots.companion.core.Bot
+import com.softbots.companion.core.ConfigFlag
+import com.softbots.companion.core.ConfigStatus
+import com.softbots.companion.core.ModelSelection
+import com.softbots.companion.core.Voice
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -167,7 +167,7 @@ class ProfileRulesTest {
             ProfileRules.generateFooter(ConfigStatus(imageGen = ConfigFlag(configured = true))),
         )
         assertEquals(
-            "To generate images, configure the shared image provider in OpenMausBot on your " +
+            "To generate images, configure the shared image provider in Softbots on your " +
                 "computer. Provider keys cannot be added from a phone.",
             ProfileRules.generateFooter(null),
         )
@@ -320,7 +320,7 @@ class ProfileRulesTest {
         )
         assertEquals(
             "Your computer's built-in voices need no key, and it reports none it can use. " +
-                "Switch the voice engine in OpenMausBot on the computer to turn speech back on.",
+                "Switch the voice engine in Softbots on the computer to turn speech back on.",
             ProfileRules.voiceCopy(noVoices).footer,
         )
 
@@ -398,7 +398,7 @@ class ProfileRulesTest {
             ProfileRules.voiceCopy(unconfigured).unconfiguredNotice,
         )
         assertEquals(
-            "Add the shared Fish Audio API key in OpenMausBot on the computer. " +
+            "Add the shared Fish Audio API key in Softbots on the computer. " +
                 "The key is never returned to this phone.",
             ProfileRules.voiceCopy(unconfigured).footer,
         )
@@ -419,7 +419,7 @@ class ProfileRulesTest {
             ProfileRules.voiceCopy(noServer).unconfiguredNotice,
         )
         assertEquals(
-            "Add the address of your Chatterbox server in OpenMausBot on the computer to turn " +
+            "Add the address of your Chatterbox server in Softbots on the computer to turn " +
                 "speech back on.",
             ProfileRules.voiceCopy(noServer).footer,
         )

@@ -1,4 +1,4 @@
-package com.openmausbot.companion.ui
+package com.softbots.companion.ui
 
 /**
  * What counts as a pairing deep link.
@@ -7,7 +7,7 @@ package com.openmausbot.companion.ui
  * keeps the credential-carrying URL out of any Intent the system remembers.
  */
 internal object PairingLink {
-    const val SCHEME = "openmausbot"
+    const val SCHEME = "softbots"
     const val HOST = "pair"
 
     fun isInvite(scheme: String?, host: String?): Boolean =
@@ -37,7 +37,7 @@ internal object PairingHandoff {
 
     /**
      * @param inviteUrl the pairing URL, or null when this was not one of ours.
-     * @param relaunch starts the sanitized [com.openmausbot.companion.MainActivity] Intent.
+     * @param relaunch starts the sanitized [com.softbots.companion.MainActivity] Intent.
      * @param markFinishing `Activity.finish()` — synchronous, so the record is
      *   marked before it returns.
      * @param deliver hands the URL to the in-memory `Session`. Never called

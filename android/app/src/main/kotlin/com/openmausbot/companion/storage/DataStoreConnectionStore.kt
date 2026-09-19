@@ -1,4 +1,4 @@
-package com.openmausbot.companion.storage
+package com.softbots.companion.storage
 
 import android.content.Context
 import androidx.datastore.core.DataStore
@@ -7,11 +7,11 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
-import com.openmausbot.companion.core.CompanionJson
-import com.openmausbot.companion.core.Connection
-import com.openmausbot.companion.core.ConnectionRegistry
-import com.openmausbot.companion.core.ConnectionRegistryRestore
-import com.openmausbot.companion.core.ConnectionStore
+import com.softbots.companion.core.CompanionJson
+import com.softbots.companion.core.Connection
+import com.softbots.companion.core.ConnectionRegistry
+import com.softbots.companion.core.ConnectionRegistryRestore
+import com.softbots.companion.core.ConnectionStore
 import kotlinx.coroutines.flow.first
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString

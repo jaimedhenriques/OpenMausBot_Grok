@@ -1,4 +1,4 @@
-package com.openmausbot.companion.ui
+package com.softbots.companion.ui
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -39,16 +39,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
-import com.openmausbot.companion.core.BotTask
-import com.openmausbot.companion.core.Chat
-import com.openmausbot.companion.core.Session
+import com.softbots.companion.core.BotTask
+import com.softbots.companion.core.Chat
+import com.softbots.companion.core.Session
 import kotlinx.coroutines.launch
-import com.openmausbot.companion.core.ChatTarget
-import com.openmausbot.companion.core.target
-import com.openmausbot.companion.core.forTask
-import com.openmausbot.companion.core.BotThreadGroup
-import com.openmausbot.companion.core.threadGroups
-import com.openmausbot.companion.core.isArchived
+import com.softbots.companion.core.ChatTarget
+import com.softbots.companion.core.target
+import com.softbots.companion.core.forTask
+import com.softbots.companion.core.BotThreadGroup
+import com.softbots.companion.core.threadGroups
+import com.softbots.companion.core.isArchived
 
 /**
  * Separate contexts for an agent or channel — the port of

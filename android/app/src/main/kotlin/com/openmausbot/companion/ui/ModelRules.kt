@@ -1,7 +1,7 @@
-package com.openmausbot.companion.ui
+package com.softbots.companion.ui
 
-import com.openmausbot.companion.core.Instance
-import com.openmausbot.companion.core.ModelSelection
+import com.softbots.companion.core.Instance
+import com.softbots.companion.core.ModelSelection
 
 /** One row of the model picker. */
 data class ModelChoice(val id: String, val label: String)

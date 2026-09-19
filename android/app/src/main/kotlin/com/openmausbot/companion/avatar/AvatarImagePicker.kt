@@ -1,4 +1,4 @@
-package com.openmausbot.companion.avatar
+package com.softbots.companion.avatar
 
 import android.content.ContentResolver
 import android.net.Uri
@@ -26,7 +26,7 @@ import kotlinx.coroutines.withContext
  *   one URI; the app never browses the gallery itself.
  *
  * Do not register a second permission owner for this path: picking an image
- * does not go through [com.openmausbot.companion.permissions.CompanionPermissions].
+ * does not go through [com.softbots.companion.permissions.CompanionPermissions].
  *
  * [read] is suspending: query + body I/O run on [Dispatchers.IO], cooperate
  * with cancellation (closing the stream as soon as the job is cancelled,

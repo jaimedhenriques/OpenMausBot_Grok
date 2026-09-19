@@ -1,14 +1,14 @@
-package com.openmausbot.companion
+package com.softbots.companion
 
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import com.openmausbot.companion.sharing.ShareHandoff
-import com.openmausbot.companion.sharing.ShareInbox
-import com.openmausbot.companion.sharing.ShareItemLoader
-import com.openmausbot.companion.sharing.SharePayload
-import com.openmausbot.companion.ui.ShareLoadException
-import com.openmausbot.companion.ui.SharePolicy
+import com.softbots.companion.sharing.ShareHandoff
+import com.softbots.companion.sharing.ShareInbox
+import com.softbots.companion.sharing.ShareItemLoader
+import com.softbots.companion.sharing.SharePayload
+import com.softbots.companion.ui.ShareLoadException
+import com.softbots.companion.ui.SharePolicy
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -32,7 +32,7 @@ class ShareReceiveActivity : Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val app = application as OpenMausApp
+        val app = application as SoftbotsApp
         // Stay alive until the inbox copy finishes; URI grants die with this record.
         scope.launch {
             ShareHandoff.run(

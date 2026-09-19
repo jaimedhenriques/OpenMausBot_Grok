@@ -1,4 +1,4 @@
-package com.openmausbot.companion.core
+package com.softbots.companion.core
 
 import java.net.ConnectException
 import java.net.SocketTimeoutException
@@ -25,7 +25,7 @@ class FailoverTest {
         CompanionEndpoint.create("http://192.168.1.42:8810", CompanionEndpointKind.LAN, 200),
     )
     private val bonjour = assertNotNull(
-        CompanionEndpoint.create("http://openmausbot-aa.local:8810", CompanionEndpointKind.BONJOUR, 300),
+        CompanionEndpoint.create("http://softbots-aa.local:8810", CompanionEndpointKind.BONJOUR, 300),
     )
 
     @Test
@@ -210,7 +210,7 @@ class FailoverTest {
         // there (`ios/Sources/CompanionCore/Failover.swift:156`).
         assertEquals(
             "Reached your computer, but Phone access isn't answering on port 8810 — " +
-                "open OpenMausBot → Settings → Phone. The app keeps retrying automatically.",
+                "open Softbots → Settings → Phone. The app keeps retrying automatically.",
             message,
         )
     }
@@ -266,10 +266,10 @@ class FailoverTest {
             name = "Mac",
             host = "192.168.1.42",
             port = 8810,
-            hosts = listOf("mac.tail1234.ts.net", "192.168.1.42", "openmausbot-aa.local"),
+            hosts = listOf("mac.tail1234.ts.net", "192.168.1.42", "softbots-aa.local"),
         )
         assertEquals(
-            listOf("192.168.1.42", "mac.tail1234.ts.net", "openmausbot-aa.local"),
+            listOf("192.168.1.42", "mac.tail1234.ts.net", "softbots-aa.local"),
             connection.orderedHosts,
         )
     }
@@ -315,11 +315,11 @@ class FailoverTest {
             name = "Mac",
             host = "mac.tail1234.ts.net",
             port = 8810,
-            hosts = listOf("mac.tail1234.ts.net", "192.168.1.42", "openmausbot-aa.local"),
+            hosts = listOf("mac.tail1234.ts.net", "192.168.1.42", "softbots-aa.local"),
         ).promoting("192.168.1.42")
         assertEquals("192.168.1.42", connection.host)
         assertEquals(
-            listOf("192.168.1.42", "mac.tail1234.ts.net", "openmausbot-aa.local"),
+            listOf("192.168.1.42", "mac.tail1234.ts.net", "softbots-aa.local"),
             connection.hosts,
         )
         val typed = connection.promoting("10.0.0.7")
@@ -400,12 +400,12 @@ class FailoverTest {
             name = "Mac",
             host = "mac.tail1234.ts.net",
             port = 8810,
-            hosts = listOf("mac.tail1234.ts.net", "192.168.1.42", "openmausbot-aa.local"),
+            hosts = listOf("mac.tail1234.ts.net", "192.168.1.42", "softbots-aa.local"),
         ).promoting(assertNotNull(CompanionEndpoint.direct("192.168.1.42", 8810, priority = 1)))
 
         assertNull(connection.endpoints)
         assertEquals(
-            listOf("192.168.1.42", "mac.tail1234.ts.net", "openmausbot-aa.local"),
+            listOf("192.168.1.42", "mac.tail1234.ts.net", "softbots-aa.local"),
             connection.orderedEndpoints.map { it.host },
         )
     }

@@ -1,4 +1,4 @@
-package com.openmausbot.companion.sharing
+package com.softbots.companion.sharing
 
 import android.content.ContentProvider
 import android.content.ContentResolver
@@ -9,7 +9,7 @@ import android.database.Cursor
 import android.database.MatrixCursor
 import android.net.Uri
 import android.provider.OpenableColumns
-import com.openmausbot.companion.ui.ShareLoadException
+import com.softbots.companion.ui.ShareLoadException
 import java.io.ByteArrayInputStream
 import java.io.File
 import java.util.Base64
@@ -29,7 +29,7 @@ import org.robolectric.shadows.ShadowContentResolver
 /**
  * The loader against a real [ContentResolver], because its whole job is to turn
  * someone else's URI grant into bytes this app still owns after the trampoline
- * finishes. What may be sent is [com.openmausbot.companion.ui.SharePolicy]'s;
+ * finishes. What may be sent is [com.softbots.companion.ui.SharePolicy]'s;
  * this is about what reaches the cache.
  */
 @RunWith(RobolectricTestRunner::class)

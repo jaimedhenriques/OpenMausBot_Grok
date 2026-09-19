@@ -1,4 +1,4 @@
-package com.openmausbot.companion.core
+package com.softbots.companion.core
 
 import java.net.ConnectException
 import java.net.UnknownHostException
@@ -356,7 +356,7 @@ class SessionTest {
             name = "Mac",
             host = "mac.tail1234.ts.net",
             port = 8810,
-            hosts = listOf("mac.tail1234.ts.net", "192.168.1.42", "openmausbot-aa.local"),
+            hosts = listOf("mac.tail1234.ts.net", "192.168.1.42", "softbots-aa.local"),
         )
         val connections = FakeConnectionStore(saved)
         val dialed = mutableListOf<String>()
@@ -379,7 +379,7 @@ class SessionTest {
         assertEquals(listOf("http://mac.tail1234.ts.net:8810"), dialed.distinct())
         val offline = assertIs<Session.Status.Offline>(session.status.value).message
         assertFalse(offline.contains("192.168.1.42"))
-        assertFalse(offline.contains("openmausbot-aa.local"))
+        assertFalse(offline.contains("softbots-aa.local"))
         assertFalse(offline.contains("Trying"))
     }
 
@@ -996,7 +996,7 @@ class SessionTest {
             events = { _, _ -> emptyFlow() },
         )
         session.awaitRestored()
-        session.receivePairingURL("openmausbot://pair?address=10.0.0.1:8810&code=123456")
+        session.receivePairingURL("softbots://pair?address=10.0.0.1:8810&code=123456")
         assertNotNull(session.pairingInvite.value)
         assertTrue(session.pairingRequested.value)
     }
@@ -1101,7 +1101,7 @@ class SessionTest {
         )
         // Deep link arrives while restore is still suspended.
         session.receivePairingURL(
-            "openmausbot://pair?address=10.0.0.1:8810&token=omb_pair_" + "a".repeat(43),
+            "softbots://pair?address=10.0.0.1:8810&token=omb_pair_" + "a".repeat(43),
         )
         runCurrent()
         assertNull(session.pairingInvite.value)
@@ -1136,7 +1136,7 @@ class SessionTest {
             events = { _, _ -> emptyFlow() },
         )
         session.awaitRestored()
-        session.receivePairingURL("openmausbot://pair?address=192.168.1.2:8810&token=$qr&code=123456")
+        session.receivePairingURL("softbots://pair?address=192.168.1.2:8810&token=$qr&code=123456")
         assertEquals(qr, session.pairingInvite.value?.credential)
 
         assertFailsWith<PairingRouteError> {
@@ -1164,7 +1164,7 @@ class SessionTest {
             events = { _, _ -> emptyFlow() },
         )
         session.awaitRestored()
-        session.receivePairingURL("openmausbot://pair?address=192.168.1.2:8810&token=$qr")
+        session.receivePairingURL("softbots://pair?address=192.168.1.2:8810&token=$qr")
 
         assertFailsWith<APIError.Status> {
             session.pair(session.pairingInvite.value!!, "request-id-authoritative")
@@ -1177,7 +1177,7 @@ class SessionTest {
         }
         assertEquals(1, attempts)
 
-        session.receivePairingURL("openmausbot://pair?address=192.168.1.2:8810&token=$qr&code=123456")
+        session.receivePairingURL("softbots://pair?address=192.168.1.2:8810&token=$qr&code=123456")
         assertNull(session.pairingInvite.value)
         assertTrue(session.actionError!!.contains("already used") || session.actionError!!.contains("rescan"))
     }

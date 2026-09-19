@@ -1,4 +1,4 @@
-package com.openmausbot.companion.core
+package com.softbots.companion.core
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

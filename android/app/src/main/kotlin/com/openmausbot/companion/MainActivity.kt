@@ -1,4 +1,4 @@
-package com.openmausbot.companion
+package com.softbots.companion
 
 import android.Manifest
 import android.content.Intent
@@ -16,24 +16,24 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
-import com.openmausbot.companion.dictation.SpeechDictation
-import com.openmausbot.companion.lifecycle.AlwaysOnConnectionService
-import com.openmausbot.companion.notifications.notificationTarget
-import com.openmausbot.companion.browser.CloudDesktopBrowser
-import com.openmausbot.companion.sharing.TranscriptSharing
-import com.openmausbot.companion.storage.ChatPreferences
+import com.softbots.companion.dictation.SpeechDictation
+import com.softbots.companion.lifecycle.AlwaysOnConnectionService
+import com.softbots.companion.notifications.notificationTarget
+import com.softbots.companion.browser.CloudDesktopBrowser
+import com.softbots.companion.sharing.TranscriptSharing
+import com.softbots.companion.storage.ChatPreferences
 import android.os.PowerManager
-import com.openmausbot.companion.ui.CameraPermissionController
-import com.openmausbot.companion.ui.ChatDraftHolder
-import com.openmausbot.companion.ui.CompanionEnvironment
-import com.openmausbot.companion.ui.CompanionRoot
-import com.openmausbot.companion.ui.LocalCompanion
-import com.openmausbot.companion.ui.MicPermissionController
-import com.openmausbot.companion.ui.NotificationAccess
-import com.openmausbot.companion.ui.NotificationPermissionController
-import com.openmausbot.companion.ui.PermissionPreferences
-import com.openmausbot.companion.ui.PermissionRequests
-import com.openmausbot.companion.ui.PendingThreadNavigation
+import com.softbots.companion.ui.CameraPermissionController
+import com.softbots.companion.ui.ChatDraftHolder
+import com.softbots.companion.ui.CompanionEnvironment
+import com.softbots.companion.ui.CompanionRoot
+import com.softbots.companion.ui.LocalCompanion
+import com.softbots.companion.ui.MicPermissionController
+import com.softbots.companion.ui.NotificationAccess
+import com.softbots.companion.ui.NotificationPermissionController
+import com.softbots.companion.ui.PermissionPreferences
+import com.softbots.companion.ui.PermissionRequests
+import com.softbots.companion.ui.PendingThreadNavigation
 
 /**
  * The single Activity. It owns the permission launchers and the one thing that
@@ -41,12 +41,12 @@ import com.openmausbot.companion.ui.PendingThreadNavigation
  * Pairing deep links and inbound shares each have their own trampoline, so this
  * root Activity never receives a credential or another app's content URI.
  *
- * Connect/disconnect is not here: `OpenMausApp` drives it from
+ * Connect/disconnect is not here: `SoftbotsApp` drives it from
  * `ProcessLifecycleOwner`, which is the Android shape of iOS's `scenePhase`.
  */
 class MainActivity : ComponentActivity() {
-    private val app: OpenMausApp
-        get() = application as OpenMausApp
+    private val app: SoftbotsApp
+        get() = application as SoftbotsApp
 
     /** Notification tap → `(botId, threadId)`; delivered to the UI once. */
     private lateinit var notificationNavigation: PendingThreadNavigation
@@ -322,7 +322,7 @@ class MainActivity : ComponentActivity() {
     }
 
     private companion object {
-        const val STATE_CONSUMED_NOTIFICATION = "openmaus.consumedNotification"
+        const val STATE_CONSUMED_NOTIFICATION = "softbots.consumedNotification"
 
         /** One key per tracked permission, so a second one needs no new plumbing. */
         fun askedKey(permission: String): String =

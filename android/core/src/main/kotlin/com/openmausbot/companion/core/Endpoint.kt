@@ -1,4 +1,4 @@
-package com.openmausbot.companion.core
+package com.softbots.companion.core
 
 import java.net.URI
 import java.nio.charset.StandardCharsets

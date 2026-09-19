@@ -1,10 +1,10 @@
-package com.openmausbot.companion.ui
+package com.softbots.companion.ui
 
-import com.openmausbot.companion.core.AskQuestion
-import com.openmausbot.companion.core.AskQuestionOption
-import com.openmausbot.companion.core.Message
-import com.openmausbot.companion.core.OptionCard
-import com.openmausbot.companion.core.QuestionRequestCardData
+import com.softbots.companion.core.AskQuestion
+import com.softbots.companion.core.AskQuestionOption
+import com.softbots.companion.core.Message
+import com.softbots.companion.core.OptionCard
+import com.softbots.companion.core.QuestionRequestCardData
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse

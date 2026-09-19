@@ -1,16 +1,16 @@
-package com.openmausbot.companion.ui
+package com.softbots.companion.ui
 
 import androidx.compose.runtime.saveable.SaverScope
-import com.openmausbot.companion.core.ConfigFlag
-import com.openmausbot.companion.core.ConfigStatus
-import com.openmausbot.companion.core.Instance
-import com.openmausbot.companion.core.ModelCatalog
-import com.openmausbot.companion.core.ProviderSnapshot
-import com.openmausbot.companion.core.Routine
-import com.openmausbot.companion.core.RoutineRun
-import com.openmausbot.companion.core.RoutineRunAvailability
-import com.openmausbot.companion.core.RoutineRunLocation
-import com.openmausbot.companion.core.RoutineSchedule
+import com.softbots.companion.core.ConfigFlag
+import com.softbots.companion.core.ConfigStatus
+import com.softbots.companion.core.Instance
+import com.softbots.companion.core.ModelCatalog
+import com.softbots.companion.core.ProviderSnapshot
+import com.softbots.companion.core.Routine
+import com.softbots.companion.core.RoutineRun
+import com.softbots.companion.core.RoutineRunAvailability
+import com.softbots.companion.core.RoutineRunLocation
+import com.softbots.companion.core.RoutineSchedule
 import java.time.LocalDate
 import java.time.Instant
 import java.time.LocalTime

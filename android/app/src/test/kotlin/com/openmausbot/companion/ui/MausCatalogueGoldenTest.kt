@@ -1,4 +1,4 @@
-package com.openmausbot.companion.ui
+package com.softbots.companion.ui
 
 import kotlin.random.Random
 import kotlin.test.Test

@@ -1,8 +1,8 @@
-package com.openmausbot.companion.avatar
+package com.softbots.companion.avatar
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import com.openmausbot.companion.core.Bot
+import com.softbots.companion.core.Bot
 import java.util.UUID
 import kotlin.coroutines.coroutineContext
 import kotlinx.coroutines.CompletableDeferred

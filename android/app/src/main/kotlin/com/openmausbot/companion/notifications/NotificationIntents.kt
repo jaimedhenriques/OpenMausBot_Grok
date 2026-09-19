@@ -1,10 +1,10 @@
-package com.openmausbot.companion.notifications
+package com.softbots.companion.notifications
 
 import android.content.Intent
 import android.net.Uri
-import com.openmausbot.companion.MainActivity
-import com.openmausbot.companion.core.NotificationFrame
-import com.openmausbot.companion.core.NotificationTarget
+import com.softbots.companion.MainActivity
+import com.softbots.companion.core.NotificationFrame
+import com.softbots.companion.core.NotificationTarget
 
 /**
  * The two ids a notification tap carries — the same pair iOS reads from
@@ -30,7 +30,7 @@ fun Intent.notificationTarget(): NotificationTarget? =
  * The data URI below is the unambiguous discriminator; it is never hashed.
  */
 object NotificationIntents {
-    const val ACTION_OPEN = "com.openmausbot.companion.OPEN_NOTIFICATION"
+    const val ACTION_OPEN = "com.softbots.companion.OPEN_NOTIFICATION"
 
     /**
      * Stable, unhashed identity string for [android.content.Intent.setData].
@@ -38,7 +38,7 @@ object NotificationIntents {
      * that collide under 32-bit [String.hashCode].
      */
     fun contentIdentity(botId: String, threadId: String): String =
-        "openmaus://notification/${encode(botId)}/${encode(threadId)}"
+        "softbots://notification/${encode(botId)}/${encode(threadId)}"
 
     fun contentUri(botId: String, threadId: String): Uri =
         Uri.parse(contentIdentity(botId, threadId))

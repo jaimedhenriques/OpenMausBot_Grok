@@ -1,7 +1,7 @@
-package com.openmausbot.companion.ui
+package com.softbots.companion.ui
 
-import com.openmausbot.companion.core.Connection
-import com.openmausbot.companion.core.Session
+import com.softbots.companion.core.Connection
+import com.softbots.companion.core.Session
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.asStateFlow
  */
 object SettingsPolicy {
     const val NOTIFICATIONS_FOOTER =
-        "Approvals and finished work appear while OpenMausMobile is connected, including " +
+        "Approvals and finished work appear while SoftbotsMobile is connected, including " +
             "frames replayed after a short background pause. Closed-app push needs a " +
             "separate push-relay release that does not exist yet."
 
@@ -25,7 +25,7 @@ object SettingsPolicy {
 
     const val UNPAIR_FOOTER =
         "Removes the pairing from this phone only. To stop it reaching the computer at all, " +
-            "remove the device in OpenMausBot → Settings → Phone."
+            "remove the device in Softbots → Settings → Phone."
 
     const val NOT_HERE =
         "API keys, pairing and the Local VM are managed on the computer. This phone is " +

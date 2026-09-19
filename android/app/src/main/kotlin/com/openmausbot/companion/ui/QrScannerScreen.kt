@@ -1,4 +1,4 @@
-package com.openmausbot.companion.ui
+package com.softbots.companion.ui
 
 import android.util.Log
 import androidx.camera.core.CameraSelector
@@ -89,13 +89,13 @@ fun QrScannerScreen(onCancel: () -> Unit, validate: (String) -> String?) {
 
             access == CameraAccess.UNKNOWN -> EmptyState(
                 title = "Requesting camera access…",
-                description = "Allow camera access to scan the pairing QR code shown by OpenMausBot.",
+                description = "Allow camera access to scan the pairing QR code shown by Softbots.",
             )
 
             access == CameraAccess.DENIED -> EmptyState(
                 title = "Camera access needed",
                 description = "Allow camera access to scan the pairing QR code shown by " +
-                    "OpenMausBot, or go back and enter the address and code by hand.",
+                    "Softbots, or go back and enter the address and code by hand.",
             ) {
                 Button(onClick = environment.openAppSettings) { Text("Open Settings") }
             }

@@ -1,21 +1,21 @@
-package com.openmausbot.companion.ui
+package com.softbots.companion.ui
 
-import com.openmausbot.companion.avatar.AvatarImageRules
-import com.openmausbot.companion.core.AvatarCrop
-import com.openmausbot.companion.core.Bot
-import com.openmausbot.companion.core.BotProfilePatch
-import com.openmausbot.companion.core.CompanionJson
-import com.openmausbot.companion.core.ConfigFlag
-import com.openmausbot.companion.core.ConfigStatus
-import com.openmausbot.companion.core.Connection
-import com.openmausbot.companion.core.ConnectionStore
-import com.openmausbot.companion.core.Fleet
-import com.openmausbot.companion.core.InMemoryOnboardingStore
-import com.openmausbot.companion.core.ModelSelection
-import com.openmausbot.companion.core.RoutineRunLocation
-import com.openmausbot.companion.core.RoutineSchedule
-import com.openmausbot.companion.core.Session
-import com.openmausbot.companion.core.TokenStore
+import com.softbots.companion.avatar.AvatarImageRules
+import com.softbots.companion.core.AvatarCrop
+import com.softbots.companion.core.Bot
+import com.softbots.companion.core.BotProfilePatch
+import com.softbots.companion.core.CompanionJson
+import com.softbots.companion.core.ConfigFlag
+import com.softbots.companion.core.ConfigStatus
+import com.softbots.companion.core.Connection
+import com.softbots.companion.core.ConnectionStore
+import com.softbots.companion.core.Fleet
+import com.softbots.companion.core.InMemoryOnboardingStore
+import com.softbots.companion.core.ModelSelection
+import com.softbots.companion.core.RoutineRunLocation
+import com.softbots.companion.core.RoutineSchedule
+import com.softbots.companion.core.Session
+import com.softbots.companion.core.TokenStore
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -150,7 +150,7 @@ class ProfileRoutineWireTest {
         val session = session()
         val png = byteArrayOf(0x89.toByte(), 0x50, 0x4e, 0x47, 1, 2, 3)
         val prepared = AvatarImageRules.prepare(png)
-        assertTrue(prepared is com.openmausbot.companion.avatar.PreparedAvatar.Ready)
+        assertTrue(prepared is com.softbots.companion.avatar.PreparedAvatar.Ready)
         server.enqueue(
             json("""{"path":"/store/avatars/abc-1.png","mime":"image/png","bytes":7}"""),
         )

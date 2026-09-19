@@ -1,4 +1,4 @@
-package com.openmausbot.companion.ui
+package com.softbots.companion.ui
 
 import androidx.activity.ComponentActivity
 import androidx.compose.material3.Text
@@ -19,16 +19,16 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
 import androidx.compose.ui.test.performTextReplacement
-import com.openmausbot.companion.core.Bot
-import com.openmausbot.companion.core.BotTask
-import com.openmausbot.companion.core.Chat
-import com.openmausbot.companion.core.ChatTarget
-import com.openmausbot.companion.core.CompanionJson
-import com.openmausbot.companion.core.Connection
-import com.openmausbot.companion.core.Fleet
-import com.openmausbot.companion.core.Frame
-import com.openmausbot.companion.core.StreamFrame
-import com.openmausbot.companion.core.target
+import com.softbots.companion.core.Bot
+import com.softbots.companion.core.BotTask
+import com.softbots.companion.core.Chat
+import com.softbots.companion.core.ChatTarget
+import com.softbots.companion.core.CompanionJson
+import com.softbots.companion.core.Connection
+import com.softbots.companion.core.Fleet
+import com.softbots.companion.core.Frame
+import com.softbots.companion.core.StreamFrame
+import com.softbots.companion.core.target
 import java.util.concurrent.ConcurrentLinkedQueue
 import java.util.concurrent.atomic.AtomicInteger
 import kotlin.test.assertEquals

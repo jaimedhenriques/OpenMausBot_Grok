@@ -1,8 +1,8 @@
-package com.openmausbot.companion.ui
+package com.softbots.companion.ui
 
-import com.openmausbot.companion.core.Chat
-import com.openmausbot.companion.core.NotificationTarget
-import com.openmausbot.companion.core.Session
+import com.softbots.companion.core.Chat
+import com.softbots.companion.core.NotificationTarget
+import com.softbots.companion.core.Session
 
 /**
  * When a notification tap may call [Session.openNotification], and when it must

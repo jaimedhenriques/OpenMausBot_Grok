@@ -1,4 +1,4 @@
-package com.openmausbot.companion.core
+package com.softbots.companion.core
 
 import java.io.IOException
 import java.net.Inet6Address
@@ -50,10 +50,10 @@ data class PairingOutcome(
 /** No automatically permitted route identified itself and completed the logical pairing. */
 class PairingRouteError(val attemptedRoutes: List<String>) : IOException(
     "Couldn't reach this computer through any available route " +
-        "(${attemptedRoutes.joinToString()}). Keep Phone access turned on in OpenMausBot, then try again.",
+        "(${attemptedRoutes.joinToString()}). Keep Phone access turned on in Softbots, then try again.",
 )
 
-internal const val SCOPED_IPV6_HTTP_HOST = "scoped-ipv6.openmausbot.invalid"
+internal const val SCOPED_IPV6_HTTP_HOST = "scoped-ipv6.softbots.invalid"
 
 /**
  * OkHttp deliberately rejects RFC 6874 zone identifiers in HttpUrl hosts.
@@ -501,7 +501,7 @@ class CompanionClient(
             if (error.serverMessage?.contains(ALREADY_DRAINED, ignoreCase = true) == true) return
             throw APIError.Status(
                 404,
-                "This computer is too old to take back a queued message. Update OpenMausBot on it.",
+                "This computer is too old to take back a queued message. Update Softbots on it.",
             )
         }
     }
@@ -1064,7 +1064,7 @@ class CompanionClient(
                     companion.makeRequest("GET", "/api/health"),
                     probeClient,
                 )
-                identity.app == "openmausbot"
+                identity.app == "softbots"
             } catch (error: CancellationException) {
                 throw error
             } catch (_: Exception) {

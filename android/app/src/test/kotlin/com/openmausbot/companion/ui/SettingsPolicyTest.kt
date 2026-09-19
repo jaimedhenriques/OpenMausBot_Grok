@@ -1,8 +1,8 @@
-package com.openmausbot.companion.ui
+package com.softbots.companion.ui
 
-import com.openmausbot.companion.core.Connection
-import com.openmausbot.companion.core.ExportedTranscript
-import com.openmausbot.companion.core.Session
+import com.softbots.companion.core.Connection
+import com.softbots.companion.core.ExportedTranscript
+import com.softbots.companion.core.Session
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -50,7 +50,7 @@ class SettingsPolicyTest {
     fun `the footers name the desktop section that exists`() {
         assertEquals(
             "Removes the pairing from this phone only. To stop it reaching the computer at all, " +
-                "remove the device in OpenMausBot → Settings → Phone.",
+                "remove the device in Softbots → Settings → Phone.",
             SettingsPolicy.UNPAIR_FOOTER,
         )
         assertEquals(
@@ -401,7 +401,7 @@ class SharePayloadTest {
         // This names a file the app is about to write, so a directory part in it
         // is a path traversal, not a preference.
         for (hostile in listOf(
-            "../../../../data/data/com.openmausbot.companion/databases/tokens.db",
+            "../../../../data/data/com.softbots.companion/databases/tokens.db",
             "/etc/passwd",
             "..\\..\\windows\\system32\\evil.md",
             "sub/dir/transcript.md",

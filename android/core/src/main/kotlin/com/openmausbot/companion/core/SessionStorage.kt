@@ -1,4 +1,4 @@
-package com.openmausbot.companion.core
+package com.softbots.companion.core
 
 /**
  * Connection record store — UserDefaults analogue. Safe to back up; holds no token.

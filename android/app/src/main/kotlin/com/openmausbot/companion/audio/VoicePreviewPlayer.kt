@@ -1,4 +1,4 @@
-package com.openmausbot.companion.audio
+package com.softbots.companion.audio
 
 import android.content.Context
 import android.media.AudioAttributes

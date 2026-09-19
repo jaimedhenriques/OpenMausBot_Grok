@@ -1,6 +1,6 @@
-package com.openmausbot.companion.ui
+package com.softbots.companion.ui
 
-import com.openmausbot.companion.core.BotTask
+import com.softbots.companion.core.BotTask
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNull

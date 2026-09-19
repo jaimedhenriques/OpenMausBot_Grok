@@ -1,10 +1,10 @@
-package com.openmausbot.companion.storage
+package com.softbots.companion.storage
 
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
-import com.openmausbot.companion.core.TokenStore
+import com.softbots.companion.core.TokenStore
 import java.security.KeyStoreException
 import javax.crypto.AEADBadTagException
 import kotlin.coroutines.CoroutineContext
@@ -25,7 +25,7 @@ import kotlinx.coroutines.withContext
  *   read: it derives a `MasterKey` through the Android Keystore, opens an
  *   encrypted file and decrypts its index — Keystore IPC plus disk I/O, on
  *   first touch. Every reader and writer below is reached from `Session`, whose
- *   scope in `OpenMausApp` is `Dispatchers.Main.immediate`; without the hop
+ *   scope in `SoftbotsApp` is `Dispatchers.Main.immediate`; without the hop
  *   the launch-time restore would do that work on the main thread, and so
  *   would the token write in the middle of a pairing. [io] is where it goes
  *   instead — the same injected-context shape [OnboardingPreferences] uses,

@@ -1,8 +1,8 @@
-package com.openmausbot.companion.ui
+package com.softbots.companion.ui
 
 import androidx.compose.runtime.saveable.SaverScope
-import com.openmausbot.companion.core.ChatTarget
-import com.openmausbot.companion.core.Dictation
+import com.softbots.companion.core.ChatTarget
+import com.softbots.companion.core.Dictation
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse

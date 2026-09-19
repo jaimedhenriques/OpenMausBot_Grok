@@ -1,4 +1,4 @@
-package com.openmausbot.companion.audio
+package com.softbots.companion.audio
 
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner

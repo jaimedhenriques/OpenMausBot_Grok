@@ -1,4 +1,4 @@
-package com.openmausbot.companion.ui
+package com.softbots.companion.ui
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.height
@@ -17,7 +17,7 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.width
-import com.openmausbot.companion.core.TranscriptCard
+import com.softbots.companion.core.TranscriptCard
 import kotlin.math.abs
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue

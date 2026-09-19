@@ -1,16 +1,16 @@
-package com.openmausbot.companion.lifecycle
+package com.softbots.companion.lifecycle
 
-import com.openmausbot.companion.core.Bot
-import com.openmausbot.companion.core.Connection
-import com.openmausbot.companion.core.ConnectionStore
-import com.openmausbot.companion.core.Fleet
-import com.openmausbot.companion.core.InMemoryOnboardingStore
-import com.openmausbot.companion.core.ModelSelection
-import com.openmausbot.companion.core.NotificationFrame
-import com.openmausbot.companion.core.NotificationSink
-import com.openmausbot.companion.core.Session
-import com.openmausbot.companion.core.StreamFrame
-import com.openmausbot.companion.core.TokenStore
+import com.softbots.companion.core.Bot
+import com.softbots.companion.core.Connection
+import com.softbots.companion.core.ConnectionStore
+import com.softbots.companion.core.Fleet
+import com.softbots.companion.core.InMemoryOnboardingStore
+import com.softbots.companion.core.ModelSelection
+import com.softbots.companion.core.NotificationFrame
+import com.softbots.companion.core.NotificationSink
+import com.softbots.companion.core.Session
+import com.softbots.companion.core.StreamFrame
+import com.softbots.companion.core.TokenStore
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleRegistry
@@ -232,7 +232,7 @@ internal suspend fun TestScope.installLive(
 }
 
 internal fun hello(cursor: String, resumed: Boolean = true, seq: Int? = null): StreamFrame =
-    StreamFrame(com.openmausbot.companion.core.Frame.Hello(cursor, resumed), seq)
+    StreamFrame(com.softbots.companion.core.Frame.Hello(cursor, resumed), seq)
 
 internal fun notify(
     kind: String,
@@ -241,7 +241,7 @@ internal fun notify(
     title: String = "Done",
     body: String = "The report is ready.",
 ): StreamFrame = StreamFrame(
-    com.openmausbot.companion.core.Frame.Notify(
+    com.softbots.companion.core.Frame.Notify(
         NotificationFrame(
             kind = kind,
             botId = "b1",

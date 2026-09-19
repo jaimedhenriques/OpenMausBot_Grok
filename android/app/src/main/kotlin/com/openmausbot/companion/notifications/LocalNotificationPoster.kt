@@ -1,4 +1,4 @@
-package com.openmausbot.companion.notifications
+package com.softbots.companion.notifications
 
 import android.Manifest
 import android.app.NotificationChannel
@@ -10,9 +10,9 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
-import com.openmausbot.companion.R
-import com.openmausbot.companion.core.NotificationFrame
-import com.openmausbot.companion.core.NotificationSink
+import com.softbots.companion.R
+import com.softbots.companion.core.NotificationFrame
+import com.softbots.companion.core.NotificationSink
 
 /**
  * Local-only notifications from live/replayed notify frames. No FCM.
@@ -189,9 +189,9 @@ class LocalNotificationPoster(
         Build.VERSION.SDK_INT >= 33 && !canPost()
 
     companion object {
-        const val EXTRA_THREAD_ID = "openmaus.threadId"
-        const val EXTRA_BOT_ID = "openmaus.botId"
-        const val EXTRA_KIND = "openmaus.kind"
+        const val EXTRA_THREAD_ID = "softbots.threadId"
+        const val EXTRA_BOT_ID = "softbots.botId"
+        const val EXTRA_KIND = "softbots.kind"
 
         /** Permission string for the UI pass's launcher contract. */
         const val POST_NOTIFICATIONS_PERMISSION = Manifest.permission.POST_NOTIFICATIONS

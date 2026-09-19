@@ -1,4 +1,4 @@
-package com.openmausbot.companion.onboarding
+package com.softbots.companion.onboarding
 
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.test.assertIsDisplayed
@@ -7,16 +7,16 @@ import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
-import com.openmausbot.companion.core.NotificationAuthorizationState
-import com.openmausbot.companion.core.OnboardingPairingState
-import com.openmausbot.companion.core.Session
-import com.openmausbot.companion.ui.CompanionRoot
-import com.openmausbot.companion.ui.LocalCompanion
-import com.openmausbot.companion.ui.NotificationAccess
-import com.openmausbot.companion.ui.notificationAuthorization
-import com.openmausbot.companion.ui.onboardingPairingState
-import com.openmausbot.companion.ui.OnboardingCopy
-import com.openmausbot.companion.ui.PermissionPreferences
+import com.softbots.companion.core.NotificationAuthorizationState
+import com.softbots.companion.core.OnboardingPairingState
+import com.softbots.companion.core.Session
+import com.softbots.companion.ui.CompanionRoot
+import com.softbots.companion.ui.LocalCompanion
+import com.softbots.companion.ui.NotificationAccess
+import com.softbots.companion.ui.notificationAuthorization
+import com.softbots.companion.ui.onboardingPairingState
+import com.softbots.companion.ui.OnboardingCopy
+import com.softbots.companion.ui.PermissionPreferences
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
@@ -128,7 +128,7 @@ class OnboardingRoutingTest {
         compose.onNodeWithText(OnboardingCopy.WELCOME_TITLE).assertIsDisplayed()
 
         scene.session.receivePairingURL(
-            "openmausbot://pair?address=127.0.0.1:8810&code=123456",
+            "softbots://pair?address=127.0.0.1:8810&code=123456",
         )
         compose.waitForIdle()
 
@@ -279,7 +279,7 @@ class OnboardingRoutingTest {
         compose.onNodeWithText(OnboardingCopy.WELCOME_TITLE).assertIsDisplayed()
 
         scene.session.receivePairingURL(
-            "openmausbot://pair?address=127.0.0.1:8810&code=123456",
+            "softbots://pair?address=127.0.0.1:8810&code=123456",
         )
         compose.waitUntil(5_000) { scene.session.pairingInvite.value != null }
         compose.waitForIdle()
@@ -417,7 +417,7 @@ class OnboardingRoutingTest {
         compose.onNodeWithText("This phone was unpaired").assertIsDisplayed()
 
         scene.session.receivePairingURL(
-            "openmausbot://pair?address=127.0.0.1:8810&code=123456",
+            "softbots://pair?address=127.0.0.1:8810&code=123456",
         )
         compose.waitForIdle()
 

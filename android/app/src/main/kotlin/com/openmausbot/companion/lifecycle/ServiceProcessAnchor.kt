@@ -1,4 +1,4 @@
-package com.openmausbot.companion.lifecycle
+package com.softbots.companion.lifecycle
 
 import android.content.Context
 import android.content.Intent

@@ -1,4 +1,4 @@
-package com.openmausbot.companion.core
+package com.softbots.companion.core
 
 /** A saved folder's visible threads, or the unfiled threads after the folders. */
 data class BotThreadGroup(val project: BotProject?, val tasks: List<BotTask>) {

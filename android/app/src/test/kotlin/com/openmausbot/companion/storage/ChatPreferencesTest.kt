@@ -1,8 +1,8 @@
-package com.openmausbot.companion.storage
+package com.softbots.companion.storage
 
 import android.content.Context
-import com.openmausbot.companion.core.ActivityDetail
-import com.openmausbot.companion.core.QuickReply
+import com.softbots.companion.core.ActivityDetail
+import com.softbots.companion.core.QuickReply
 import kotlin.test.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith

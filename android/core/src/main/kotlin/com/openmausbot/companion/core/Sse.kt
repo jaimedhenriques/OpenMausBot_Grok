@@ -1,4 +1,4 @@
-package com.openmausbot.companion.core
+package com.softbots.companion.core
 
 import java.io.IOException
 import java.util.concurrent.atomic.AtomicReference

@@ -1,24 +1,24 @@
-package com.openmausbot.companion
+package com.softbots.companion
 
 import android.app.Application
 import androidx.lifecycle.ProcessLifecycleOwner
-import com.openmausbot.companion.audio.VoicePreviewPlayer
-import com.openmausbot.companion.avatar.AvatarImageStore
-import com.openmausbot.companion.core.Session
-import com.openmausbot.companion.discovery.NsdDiscovery
-import com.openmausbot.companion.lifecycle.AlwaysOnConnectionService
-import com.openmausbot.companion.lifecycle.AlwaysOnConnectionState
-import com.openmausbot.companion.lifecycle.ServiceProcessAnchor
-import com.openmausbot.companion.lifecycle.SessionLingerController
-import com.openmausbot.companion.lifecycle.installSessionLinger
-import com.openmausbot.companion.notifications.LocalNotificationPoster
-import com.openmausbot.companion.permissions.CompanionPermissions
-import com.openmausbot.companion.sharing.ShareInbox
-import com.openmausbot.companion.storage.AlwaysOnPreferences
-import com.openmausbot.companion.storage.DataStoreConnectionStore
-import com.openmausbot.companion.storage.OnboardingPreferences
-import com.openmausbot.companion.storage.KeystoreTokenStore
-import com.openmausbot.companion.ui.FilePreviews
+import com.softbots.companion.audio.VoicePreviewPlayer
+import com.softbots.companion.avatar.AvatarImageStore
+import com.softbots.companion.core.Session
+import com.softbots.companion.discovery.NsdDiscovery
+import com.softbots.companion.lifecycle.AlwaysOnConnectionService
+import com.softbots.companion.lifecycle.AlwaysOnConnectionState
+import com.softbots.companion.lifecycle.ServiceProcessAnchor
+import com.softbots.companion.lifecycle.SessionLingerController
+import com.softbots.companion.lifecycle.installSessionLinger
+import com.softbots.companion.notifications.LocalNotificationPoster
+import com.softbots.companion.permissions.CompanionPermissions
+import com.softbots.companion.sharing.ShareInbox
+import com.softbots.companion.storage.AlwaysOnPreferences
+import com.softbots.companion.storage.DataStoreConnectionStore
+import com.softbots.companion.storage.OnboardingPreferences
+import com.softbots.companion.storage.KeystoreTokenStore
+import com.softbots.companion.ui.FilePreviews
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -30,7 +30,7 @@ import kotlinx.coroutines.launch
  * Application entry: owns the long-lived [Session] and wires
  * [ProcessLifecycleOwner] the way iOS `scenePhase` drives connect and linger.
  */
-class OpenMausApp : Application() {
+class SoftbotsApp : Application() {
     private val appJob = SupervisorJob()
     val appScope = CoroutineScope(appJob + Dispatchers.Main.immediate)
 

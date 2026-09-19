@@ -1,11 +1,11 @@
-package com.openmausbot.companion.ui
+package com.softbots.companion.ui
 
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
-import com.openmausbot.companion.avatar.AvatarImageRules
-import com.openmausbot.companion.core.AvatarCrop
+import com.softbots.companion.avatar.AvatarImageRules
+import com.softbots.companion.core.AvatarCrop
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse

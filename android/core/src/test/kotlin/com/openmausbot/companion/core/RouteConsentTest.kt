@@ -1,4 +1,4 @@
-package com.openmausbot.companion.core
+package com.softbots.companion.core
 
 import java.net.URI
 import kotlinx.serialization.decodeFromString
@@ -219,13 +219,13 @@ class RouteConsentTest {
     @Test
     fun everyParsedPairingInviteCarriesANonNullPolicy() {
         val hostedInvite = requireNotNull(
-            PairingInvite.parse(URI("openmausbot://pair?address=https%3A%2F%2Fmac.example&code=123456")),
+            PairingInvite.parse(URI("softbots://pair?address=https%3A%2F%2Fmac.example&code=123456")),
         )
         val tailnetInvite = requireNotNull(
-            PairingInvite.parse(URI("openmausbot://pair?address=mac.tail1234.ts.net%3A8810&code=123456")),
+            PairingInvite.parse(URI("softbots://pair?address=mac.tail1234.ts.net%3A8810&code=123456")),
         )
         val localInvite = requireNotNull(
-            PairingInvite.parse(URI("openmausbot://pair?address=192.168.1.42%3A8810&code=123456")),
+            PairingInvite.parse(URI("softbots://pair?address=192.168.1.42%3A8810&code=123456")),
         )
 
         assertEquals(setOf(CompanionEndpointKind.HOSTED), hostedInvite.connection.allowedRouteKinds)

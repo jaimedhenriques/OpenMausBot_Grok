@@ -1,4 +1,4 @@
-package com.openmausbot.companion.browser
+package com.softbots.companion.browser
 
 import android.content.Context
 import android.net.Uri
@@ -6,7 +6,7 @@ import androidx.browser.customtabs.CustomTabsIntent
 import java.net.URI
 
 /**
- * The cloud provider's noVNC viewer, opened without teaching OpenMausMobile how
+ * The cloud provider's noVNC viewer, opened without teaching SoftbotsMobile how
  * to speak VNC or retain the provider's session token — the port of
  * `ios/App/CloudDesktopBrowser.swift`, where the same job is done by
  * `SFSafariViewController`.

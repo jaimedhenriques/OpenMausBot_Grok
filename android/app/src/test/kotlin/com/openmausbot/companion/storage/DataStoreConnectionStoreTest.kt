@@ -1,15 +1,15 @@
-package com.openmausbot.companion.storage
+package com.softbots.companion.storage
 
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
-import com.openmausbot.companion.core.CompanionEndpoint
-import com.openmausbot.companion.core.CompanionEndpointKind
-import com.openmausbot.companion.core.CompanionJson
-import com.openmausbot.companion.core.Connection
-import com.openmausbot.companion.core.ConnectionRegistry
+import com.softbots.companion.core.CompanionEndpoint
+import com.softbots.companion.core.CompanionEndpointKind
+import com.softbots.companion.core.CompanionJson
+import com.softbots.companion.core.Connection
+import com.softbots.companion.core.ConnectionRegistry
 import java.io.File
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse

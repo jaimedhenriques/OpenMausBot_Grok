@@ -1,9 +1,9 @@
-package com.openmausbot.companion.storage
+package com.softbots.companion.storage
 
-import com.openmausbot.companion.core.Connection
-import com.openmausbot.companion.core.ConnectionStore
-import com.openmausbot.companion.core.TokenStore
-import com.openmausbot.companion.ui.PermissionPreferences
+import com.softbots.companion.core.Connection
+import com.softbots.companion.core.ConnectionStore
+import com.softbots.companion.core.TokenStore
+import com.softbots.companion.ui.PermissionPreferences
 import java.io.File
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -97,7 +97,7 @@ class PersistenceContractTest {
     @Test
     fun permissionPrefsFileNameMatchesWhatTheAppOpens() {
         // The rules above are only worth anything if they name the real file.
-        assertEquals("openmaus.permissions", PermissionPreferences.NAME)
+        assertEquals("softbots.permissions", PermissionPreferences.NAME)
         assertEquals(PermissionPreferences.NAME + ".xml", PermissionPreferences.FILE)
     }
 

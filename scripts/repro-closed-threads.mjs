@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Reproduce: threads a bot opens with start_thread and later closes with
-// close_thread stay in the sidebar. Runs an isolated OpenMausBot server on a
+// close_thread stay in the sidebar. Runs an isolated Softbots server on a
 // throwaway data dir with the repository's fake engine, then drives the same
 // internal endpoints the agents tools hit. Never touches the user's app data.
 //
@@ -91,7 +91,7 @@ await api("PATCH", `/api/bots/${quinn.id}/tasks/${quinn.threadId}`, { title: "My
 // a couple of threads the PERSON opened, so we can see what the bot's pile does to them
 for (const title of ["Plan the launch", "Draft release notes"]) await api("POST", `/api/bots/${parker.id}/tasks`, { title });
 
-const minted = await api("POST", "/api/testing/internal-capability", { botId: parker.id, threadId: parker.threadId, kind: "agents", depth: 0 }, { "x-openmausbot-test-capability": TEST_KEY });
+const minted = await api("POST", "/api/testing/internal-capability", { botId: parker.id, threadId: parker.threadId, kind: "agents", depth: 0 }, { "x-softbots-test-capability": TEST_KEY });
 if (minted.status !== 201) throw new Error(`mint: ${minted.status} ${JSON.stringify(minted.body)}`);
 const asParker = { authorization: `Bearer ${minted.body.token}` };
 

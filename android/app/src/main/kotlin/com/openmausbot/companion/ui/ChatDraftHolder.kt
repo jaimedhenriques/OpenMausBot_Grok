@@ -1,10 +1,10 @@
-package com.openmausbot.companion.ui
+package com.softbots.companion.ui
 
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
-import com.openmausbot.companion.core.PendingMessageAttachment
-import com.openmausbot.companion.core.DraftProvenance
-import com.openmausbot.companion.core.VolatileDraft
+import com.softbots.companion.core.PendingMessageAttachment
+import com.softbots.companion.core.DraftProvenance
+import com.softbots.companion.core.VolatileDraft
 
 /**
  * Memory-only drafts, separate for each thread. Only typed text is saveable.

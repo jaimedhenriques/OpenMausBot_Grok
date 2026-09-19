@@ -1,4 +1,4 @@
-package com.openmausbot.companion.ui
+package com.softbots.companion.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -36,10 +36,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.openmausbot.companion.core.AskQuestion
-import com.openmausbot.companion.core.AskQuestionAnswer
-import com.openmausbot.companion.core.Chat
-import com.openmausbot.companion.core.Message
+import com.softbots.companion.core.AskQuestion
+import com.softbots.companion.core.AskQuestionAnswer
+import com.softbots.companion.core.Chat
+import com.softbots.companion.core.Message
 import kotlinx.coroutines.launch
 
 /**

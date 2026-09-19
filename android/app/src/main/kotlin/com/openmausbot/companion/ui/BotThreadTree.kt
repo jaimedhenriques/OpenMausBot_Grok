@@ -1,4 +1,4 @@
-package com.openmausbot.companion.ui
+package com.softbots.companion.ui
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -27,12 +27,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.openmausbot.companion.core.Bot
-import com.openmausbot.companion.core.BotTask
-import com.openmausbot.companion.core.Chat
-import com.openmausbot.companion.core.ChatSummary
-import com.openmausbot.companion.core.forTask
-import com.openmausbot.companion.core.threadGroups
+import com.softbots.companion.core.Bot
+import com.softbots.companion.core.BotTask
+import com.softbots.companion.core.Chat
+import com.softbots.companion.core.ChatSummary
+import com.softbots.companion.core.forTask
+import com.softbots.companion.core.threadGroups
 
 /** Local search includes desktop folder names and every visible conversation title. */
 internal fun rosterThreadRows(

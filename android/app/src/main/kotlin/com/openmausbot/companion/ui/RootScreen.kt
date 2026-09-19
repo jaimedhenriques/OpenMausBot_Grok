@@ -1,4 +1,4 @@
-package com.openmausbot.companion.ui
+package com.softbots.companion.ui
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
@@ -27,15 +27,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.openmausbot.companion.core.Connection
-import com.openmausbot.companion.core.NotificationAuthorizationState
-import com.openmausbot.companion.core.NotificationOnboardingPolicy
-import com.openmausbot.companion.core.NotificationTarget
-import com.openmausbot.companion.core.OnboardingContext
-import com.openmausbot.companion.core.OnboardingPairingState
-import com.openmausbot.companion.core.OnboardingRoute
-import com.openmausbot.companion.core.OnboardingRouter
-import com.openmausbot.companion.core.Session
+import com.softbots.companion.core.Connection
+import com.softbots.companion.core.NotificationAuthorizationState
+import com.softbots.companion.core.NotificationOnboardingPolicy
+import com.softbots.companion.core.NotificationTarget
+import com.softbots.companion.core.OnboardingContext
+import com.softbots.companion.core.OnboardingPairingState
+import com.softbots.companion.core.OnboardingRoute
+import com.softbots.companion.core.OnboardingRouter
+import com.softbots.companion.core.Session
 import kotlinx.coroutines.launch
 
 /**
@@ -43,7 +43,7 @@ import kotlinx.coroutines.launch
  * `ios/App/CompanionApp.swift`.
  *
  * The decision itself is not here. It is
- * [com.openmausbot.companion.core.OnboardingRouter], in `:core`, because the
+ * [com.softbots.companion.core.OnboardingRouter], in `:core`, because the
  * orderings that matter are invisible until they are wrong: revocation has to
  * outrank a pending deep link, a deep link has to outrank the welcome, and a
  * pairing someone already had must never be handed first-pair education. This
