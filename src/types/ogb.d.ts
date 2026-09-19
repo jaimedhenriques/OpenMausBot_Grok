@@ -240,7 +240,7 @@ const __APP_VERSION__: string;
       onOpenAppSettings?(cb: () => void): () => void;
       /** Updates the native Dock/taskbar unread indicator. */
       setUnreadCount?(count: number): void;
-      /** Opens a live desktop as a sandboxed window owned by Softbots. */
+      /** Opens a live desktop as a sandboxed window owned by Squadbots. */
       desktopViewer?: {
         open(url: string, title: string, contextId: string): Promise<boolean>;
         /** Closes the live-desktop window, but only when it belongs to this bot. */

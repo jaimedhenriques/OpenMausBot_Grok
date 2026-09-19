@@ -35,7 +35,7 @@ cd android
 ```
 
 Install `app/build/outputs/apk/preview/app-preview.apk`. Its launcher name is
-**Softbots Preview**, its application ID is `com.softbots.companion.preview`,
+**Squadbots Preview**, its application ID is `com.softbots.companion.preview`,
 and its version ends in `-threads-preview`. Gradle signs it with the local debug
 key, so no release signing material is needed. It installs beside the released
 app with separate pairing, preferences and messages; it does not update that app.
