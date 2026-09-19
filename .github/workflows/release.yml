@@ -140,7 +140,7 @@ jobs:
 
       - name: "Gate: both packaged apps use the canonical updater feed"
         run: |
-          for app in release/mac-arm64/Squadbots.app release/mac/Squadbots.app; do
+          for app in release/mac-arm64/Softbots.app release/mac/Softbots.app; do
             update="$app/Contents/Resources/app-update.yml"
             test -f "$update" || { echo "::error::missing $update"; exit 1; }
             grep -Eq '^owner: jaimedhenriques$' "$update" || { echo "::error::wrong update owner in $update"; exit 1; }
@@ -149,7 +149,7 @@ jobs:
 
       - name: "Gate: the signature must verify BEFORE notarization"
         run: |
-          for app in release/mac-arm64/Squadbots.app release/mac/Squadbots.app; do
+          for app in release/mac-arm64/Softbots.app release/mac/Softbots.app; do
             codesign --verify --deep --strict "$app"
             bin="$app/Contents/Resources/cloudflared/cloudflared"
             test -x "$bin" || { echo "::error::missing executable $bin"; exit 1; }
@@ -174,8 +174,8 @@ jobs:
       - name: "Gate: signed native browser works with an empty home"
         run: |
           case "$(node -p process.arch)" in
-            arm64) resources="$PWD/release/mac-arm64/Squadbots.app/Contents/Resources" ;;
-            x64) resources="$PWD/release/mac/Squadbots.app/Contents/Resources" ;;
+            arm64) resources="$PWD/release/mac-arm64/Softbots.app/Contents/Resources" ;;
+            x64) resources="$PWD/release/mac/Softbots.app/Contents/Resources" ;;
             *) exit 1 ;;
           esac
           node scripts/smoke-browser-bundle.mjs --resources "$resources"
@@ -183,7 +183,7 @@ jobs:
 
       - name: "Gate: both packaged servers start and every helper path resolves"
         run: |
-          for app in release/mac-arm64/Squadbots.app release/mac/Squadbots.app; do
+          for app in release/mac-arm64/Softbots.app release/mac/Softbots.app; do
             res="$app/Contents/Resources"
             # the server tree is plain JS — runnable on the runner's node
             # regardless of the app binary's arch
@@ -238,12 +238,12 @@ jobs:
         run: |
           xcrun stapler staple release/Softbots-*-arm64.dmg
           xcrun stapler staple release/Softbots-*-x64.dmg
-          xcrun stapler staple release/mac-arm64/Squadbots.app
-          xcrun stapler staple release/mac/Squadbots.app
+          xcrun stapler staple release/mac-arm64/Softbots.app
+          xcrun stapler staple release/mac/Softbots.app
           v=$(node -p "require('./package.json').version")
           rm -f "release/Softbots-$v-arm64.zip" "release/Softbots-$v-x64.zip"
-          ditto -c -k --sequesterRsrc --keepParent release/mac-arm64/Squadbots.app "release/Softbots-$v-arm64.zip"
-          ditto -c -k --sequesterRsrc --keepParent release/mac/Squadbots.app "release/Softbots-$v-x64.zip"
+          ditto -c -k --sequesterRsrc --keepParent release/mac-arm64/Softbots.app "release/Softbots-$v-arm64.zip"
+          ditto -c -k --sequesterRsrc --keepParent release/mac/Softbots.app "release/Softbots-$v-x64.zip"
           node scripts/regenerate-blockmaps.mjs \
             "release/Softbots-$v-arm64.zip" "release/Softbots-$v-x64.zip" \
             "release/Softbots-$v-arm64.dmg" "release/Softbots-$v-x64.dmg"
@@ -398,11 +398,11 @@ jobs:
           sudo chmod 4755 release/linux-unpacked/chrome-sandbox
           test "$(stat -c '%U:%G %a' release/linux-unpacked/chrome-sandbox)" = "root:root 4755"
       - name: "Gate: installed browser works with Ubuntu sandbox restrictions"
-        run: node scripts/smoke-browser-bundle.mjs --resources /opt/Squadbots/resources
+        run: node scripts/smoke-browser-bundle.mjs --resources /opt/Softbots/resources
       - name: "Gate: packaged Linux server discovers its browser"
         env:
-          OMB_SMOKE_DIST: /opt/Squadbots/resources/server
-        run: node scripts/smoke-packaged-server.mjs --browser-bundle /opt/Squadbots/resources/browser-engine
+          OMB_SMOKE_DIST: /opt/Softbots/resources/server
+        run: node scripts/smoke-packaged-server.mjs --browser-bundle /opt/Softbots/resources/browser-engine
       - name: Smoke the packages
         env:
           OMB_KEEP_SMOKE_DIR: "1"

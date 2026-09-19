@@ -13,6 +13,7 @@ export const SKIN_IDS = [
   "linen",
   "dusk",
   "daylight",
+  "soft-taste",
 ] as const;
 export type SkinId = (typeof SKIN_IDS)[number];
 
@@ -32,9 +33,10 @@ export const SKINS: readonly Skin[] = [
   { id: "linen", name: "Linen", tagline: "Clean daylight with a restrained navy accent." },
   { id: "dusk", name: "Dusk", tagline: "Muted plum after dark, calm and low-key." },
   { id: "daylight", name: "Daylight", tagline: "Midnight in reverse. Near-white, ink-black bubbles." },
+  { id: "soft-taste", name: "Soft Taste", tagline: "Otter floor. Soft blue, lavender, white squircles." },
 ];
 
-export const DEFAULT_SKIN: SkinId = "midnight";
+export const DEFAULT_SKIN: SkinId = "soft-taste";
 
 const KEY = "omb-skin";
 

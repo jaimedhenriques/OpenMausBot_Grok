@@ -435,7 +435,7 @@ for (const expected of [
 const extracted = mkdtempSync(path.join(tmpdir(), "omb-deb-verify-"));
 try {
   execFileSync("dpkg-deb", ["--extract", deb, extracted]);
-  const debAppRoot = path.join(extracted, "opt", "Squadbots");
+  const debAppRoot = path.join(extracted, "opt", "Softbots");
   requireDirectoryMode(debAppRoot, 0o755);
   const debResources = path.join(debAppRoot, "resources");
   // Routes the in-app updater to the package-manager hand-off.
@@ -472,7 +472,7 @@ try {
   const desktop = readFileSync(desktopFile, "utf8");
   for (const expected of [
     "Name=Softbots",
-    "Exec=/opt/Squadbots/softbots %U",
+    "Exec=/opt/Softbots/softbots %U",
     "Icon=softbots",
     "StartupWMClass=ai.squadbots.app",
     "Categories=Utility;",
