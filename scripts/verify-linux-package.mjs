@@ -165,7 +165,7 @@ function verifyCompliance(licenses, label) {
   const registryIds = new Set();
   for (const component of registry) {
     const packageId = component.properties?.find(
-      (property) => property.name === "softbots:cargo:package-id",
+      (property) => property.name === "openmausbot:cargo:package-id",
     )?.value;
     if (typeof packageId !== "string" || !packageId.startsWith("registry+")) {
       fail(`${label} SBOM registry component has no exact Cargo package ID`);
@@ -425,7 +425,7 @@ const fields = execFileSync(
 for (const expected of [
   "Package: softbots",
   "Architecture: amd64",
-  "Maintainer: Milind Soni",
+  "Maintainer: Jaime Henriques",
   "Section: utils",
   "Priority: optional",
 ]) {
@@ -435,7 +435,7 @@ for (const expected of [
 const extracted = mkdtempSync(path.join(tmpdir(), "omb-deb-verify-"));
 try {
   execFileSync("dpkg-deb", ["--extract", deb, extracted]);
-  const debAppRoot = path.join(extracted, "opt", "Softbots");
+  const debAppRoot = path.join(extracted, "opt", "Squadbots");
   requireDirectoryMode(debAppRoot, 0o755);
   const debResources = path.join(debAppRoot, "resources");
   // Routes the in-app updater to the package-manager hand-off.
@@ -472,7 +472,7 @@ try {
   const desktop = readFileSync(desktopFile, "utf8");
   for (const expected of [
     "Name=Softbots",
-    "Exec=/opt/Softbots/softbots %U",
+    "Exec=/opt/Squadbots/softbots %U",
     "Icon=softbots",
     "StartupWMClass=ai.squadbots.app",
     "Categories=Utility;",

@@ -244,7 +244,7 @@ function registryComponent(pkg, cargoLockPackages) {
         : []),
     ],
     properties: [
-      { name: "softbots:cargo:package-id", value: pkg.id },
+      { name: "openmausbot:cargo:package-id", value: pkg.id },
       { name: "softbots:cargo:crate-sha256", value: locked.checksum },
     ],
   };

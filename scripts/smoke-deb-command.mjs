@@ -72,7 +72,7 @@ const installed = inContainer(
     prepare,
     command,
     'dpkg-query -W -f="INSTALLED=\\${Version} \\${db:Status-Abbrev}\\n" softbots',
-    'test -x /opt/Softbots/softbots && echo "EXECUTABLE=yes"',
+    'test -x /opt/Squadbots/softbots && echo "EXECUTABLE=yes"',
   ].join("\n"),
 );
 
