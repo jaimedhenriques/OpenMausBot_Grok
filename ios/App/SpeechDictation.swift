@@ -253,7 +253,7 @@ final class SpeechDictation: ObservableObject {
     }
 
     static let speechDeniedMessage: LocalizedStringKey =
-        "Dictation needs Speech Recognition access. Enable it in Settings → SoftbotsMobile."
+        "Dictation needs Speech Recognition access. Enable it in Settings → Squadbots."
     static let micDeniedMessage: LocalizedStringKey =
-        "Dictation needs Microphone access. Enable it in Settings → SoftbotsMobile."
+        "Dictation needs Microphone access. Enable it in Settings → Squadbots."
 }

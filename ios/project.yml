@@ -55,22 +55,22 @@ targets:
       path: App/SoftbotsCompanion.entitlements
       properties:
         com.apple.security.application-groups:
-          - group.com.softbots.shared
+          - group.ai.squadbots.app
         keychain-access-groups:
           - $(AppIdentifierPrefix)ai.squadbots.app
-          - $(AppIdentifierPrefix)group.com.softbots.shared
+          - $(AppIdentifierPrefix)group.ai.squadbots.app
     info:
       path: App/Info.plist
       properties:
         # What appears under the icon. Distinct from the desktop app on
         # purpose: someone may well have both, and two identical labels on
         # one person's devices is a small cruelty.
-        CFBundleDisplayName: SoftbotsMobile
+        CFBundleDisplayName: Squadbots
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         LSApplicationCategoryType: public.app-category.productivity
         ITSAppUsesNonExemptEncryption: false
-        SoftbotsKeychainAccessGroup: $(AppIdentifierPrefix)group.com.softbots.shared
+        SoftbotsKeychainAccessGroup: $(AppIdentifierPrefix)group.ai.squadbots.app
         # The bot's Live Activity — its face and ask in the Dynamic Island
         # and on the lock screen.
         NSSupportsLiveActivities: true
@@ -106,9 +106,9 @@ targets:
           Softbots uses the camera only to scan a pairing QR code shown on
           your computer.
         NSMicrophoneUsageDescription: >-
-          SoftbotsMobile listens while you dictate a message to a bot.
+          Squadbots listens while you dictate a message to a bot.
         NSSpeechRecognitionUsageDescription: >-
-          SoftbotsMobile converts your speech into text so you can send it
+          Squadbots converts your speech into text so you can send it
           to a bot. Recognition runs on this phone when it can.
         NSBonjourServices:
           - _softbots._tcp
@@ -173,16 +173,16 @@ targets:
       path: ShareExtension/SoftbotsShareExtension.entitlements
       properties:
         com.apple.security.application-groups:
-          - group.com.softbots.shared
+          - group.ai.squadbots.app
         keychain-access-groups:
-          - $(AppIdentifierPrefix)group.com.softbots.shared
+          - $(AppIdentifierPrefix)group.ai.squadbots.app
     info:
       path: ShareExtension/Info.plist
       properties:
-        CFBundleDisplayName: Softbots
+        CFBundleDisplayName: Squadbots
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
-        SoftbotsKeychainAccessGroup: $(AppIdentifierPrefix)group.com.softbots.shared
+        SoftbotsKeychainAccessGroup: $(AppIdentifierPrefix)group.ai.squadbots.app
         # ATS is evaluated for URLSession work performed by the extension too.
         # Mirror the containing app's narrow local/Tailscale exceptions so a
         # share can reach the same already-paired routes. Local-network privacy
@@ -231,7 +231,7 @@ targets:
     info:
       path: Widgets/Info.plist
       properties:
-        CFBundleDisplayName: SoftbotsMobile
+        CFBundleDisplayName: Squadbots
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         NSExtension:

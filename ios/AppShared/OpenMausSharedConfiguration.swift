@@ -6,7 +6,7 @@ import Foundation
 /// the app and extension. The matching capabilities still live in the Xcode
 /// project, where iOS verifies them against the provisioning profile.
 enum SoftbotsSharedConfiguration {
-    static let appGroupIdentifier = "group.com.softbots.shared"
+    static let appGroupIdentifier = "group.ai.squadbots.app"
     static let legacyAppBundleIdentifier = "ai.squadbots.app"
     static let keychainAccessGroupInfoKey = "SoftbotsKeychainAccessGroup"
 
