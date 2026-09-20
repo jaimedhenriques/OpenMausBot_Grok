@@ -217,6 +217,7 @@ export const USAGE = `squadbots — your team of AI bots, ready in a few steps
   squadbots setup [--data-dir DIR]
   squadbots start [the same options as serve]
   squadbots serve [--port 8799] [--data-dir DIR] [--label NAME]
+  softbots serve [same options]  (legacy alias)
                     [--public-url https://host] [--tailscale | --tunnel | --domain HOST] [--no-pair]
   squadbots pair  [--label NAME] [--client] [--phone ios|android]
                     [--public-url https://host]
@@ -812,7 +813,7 @@ async function planTunnel(options: CliOptions, log: (line: string) => void): Pro
     const account = createTunnelAccount({ dataDir: options.dataDir, version: serverVersion() });
     if (account.credentials.status === "unavailable") return { error: `${account.credentials.file} exists but could not be read; fix or remove it` };
     if (!describeTunnelAccount(account.credentials.read()).email) {
-      return { error: "no account on this machine yet: run `squadbots login` first, then `squadbots serve --tunnel`" };
+      return { error: "no account on this machine yet: run `squadbots login` first, then `squadbots serve --tunnel` (legacy: run `softbots login` first)" };
     }
     // A fresh connector token when the control plane answers; the saved one otherwise.
     try {
