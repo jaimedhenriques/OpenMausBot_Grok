@@ -2,13 +2,20 @@
 // browser development falls back to PUT /api/config. Secrets are write-only
 // either way — GET /api/config returns configured flags, never values.
 import { useEffect, useId, useRef, useState } from "react";
-import { Check, CircleHelp, ExternalLink, Loader2, TriangleAlert } from "lucide-react";
+import {
+  Check,
+  CircleHelp,
+  ExternalLink,
+  Loader2,
+  TriangleAlert,
+} from "lucide-react";
 import { api, useStore, type ConfigStatus } from "@/state/store";
 import { cn } from "@/lib/cn";
 import { t } from "@/lib/i18n";
 import type { LocaleKey } from "@/locales";
 
-export type ConfigSection = "composio" | "box" | "opencodeGo" | "anthropic" | "openaiCompat" | "xai";
+export type ConfigSection =
+  "composio" | "box" | "opencodeGo" | "anthropic" | "openaiCompat" | "xai";
 /** Sections whose key can be tried against the provider from the server. */
 export type TestableProvider = "anthropic" | "openaiCompat" | "xai";
 
@@ -21,15 +28,29 @@ const SECTIONS: Record<
     flag: (c) => c.composio.configured,
   },
   box: { body: (v) => ({ box: { token: v } }), flag: (c) => c.box.configured },
-  opencodeGo: { body: (v) => ({ opencodeGo: { apiKey: v } }), flag: (c) => c.opencodeGo?.configured ?? false },
-  anthropic: { body: (v) => ({ anthropic: { key: v } }), flag: (c) => c.anthropic?.configured ?? false },
-  openaiCompat: { body: (v) => ({ openaiCompat: { key: v } }), flag: (c) => c.openaiCompat?.configured ?? false },
-  xai: { body: (v) => ({ xai: { key: v } }), flag: (c) => c.xai?.configured ?? false },
+  opencodeGo: {
+    body: (v) => ({ opencodeGo: { apiKey: v } }),
+    flag: (c) => c.opencodeGo?.configured ?? false,
+  },
+  anthropic: {
+    body: (v) => ({ anthropic: { key: v } }),
+    flag: (c) => c.anthropic?.configured ?? false,
+  },
+  openaiCompat: {
+    body: (v) => ({ openaiCompat: { key: v } }),
+    flag: (c) => c.openaiCompat?.configured ?? false,
+  },
+  xai: {
+    body: (v) => ({ xai: { key: v } }),
+    flag: (c) => c.xai?.configured ?? false,
+  },
 };
 
 // Provider keys have no desktop-shell slot yet and go through the server's
 // own 0600 config, the same place they live on a hosted server.
-const ELECTRON_CREDENTIAL: Partial<Record<ConfigSection, "composioApiKey" | "boxToken" | "opencodeGoApiKey">> = {
+const ELECTRON_CREDENTIAL: Partial<
+  Record<ConfigSection, "composioApiKey" | "boxToken" | "opencodeGoApiKey">
+> = {
   composio: "composioApiKey",
   box: "boxToken",
   opencodeGo: "opencodeGoApiKey",
@@ -106,7 +127,9 @@ function credentialCopy(section: ConfigSection) {
   return {
     ...entry,
     label: t(entry.labelKey),
-    placeholder: entry.placeholderKey ? t(entry.placeholderKey) : entry.placeholder ?? "",
+    placeholder: entry.placeholderKey
+      ? t(entry.placeholderKey)
+      : (entry.placeholder ?? ""),
     description: t(entry.descriptionKey),
     linkLabel: t(entry.linkLabelKey),
     warning: entry.warningKey ? t(entry.warningKey) : undefined,
@@ -124,7 +147,11 @@ function CredentialHelp({ section }: { section: ConfigSection }) {
     if (!open) return;
 
     const closeOnOutsideClick = (event: PointerEvent) => {
-      if (event.target instanceof Node && !rootRef.current?.contains(event.target)) setOpen(false);
+      if (
+        event.target instanceof Node &&
+        !rootRef.current?.contains(event.target)
+      )
+        setOpen(false);
     };
     const closeOnEscape = (event: KeyboardEvent) => {
       if (event.key !== "Escape") return;
@@ -160,10 +187,16 @@ function CredentialHelp({ section }: { section: ConfigSection }) {
           aria-label={t("keys.helpAria", { label: credential.label })}
           className="animate-pop-in absolute right-0 z-30 mt-1.5 w-[270px] rounded-xl border border-hairline bg-panel p-3 text-left shadow-2xl"
         >
-          <div className="text-[12px] leading-[1.45] text-ink-secondary">{credential.description}</div>
+          <div className="text-[12px] leading-[1.45] text-ink-secondary">
+            {credential.description}
+          </div>
           {credential.warning && (
             <div className="mt-2 flex gap-1.5 rounded-lg border border-warning/25 bg-warning/10 px-2 py-1.5 text-[11px] leading-[1.4] text-warning">
-              <TriangleAlert size={13} className="mt-px shrink-0" aria-hidden="true" />
+              <TriangleAlert
+                size={13}
+                className="mt-px shrink-0"
+                aria-hidden="true"
+              />
               <span>{credential.warning}</span>
             </div>
           )}
@@ -208,7 +241,9 @@ export function ApiKeyRow({
     setVerdict(null);
   }, [state.config]);
 
-  const configured = state.config ? SECTIONS[section].flag(state.config) : false;
+  const configured = state.config
+    ? SECTIONS[section].flag(state.config)
+    : false;
   const clearing = !value.trim() && configured;
   const emptyDraft = edited && !value.trim();
   const credential = credentialCopy(section);
@@ -220,12 +255,13 @@ export function ApiKeyRow({
     testGeneration.current++;
     const electronSlot = ELECTRON_CREDENTIAL[section];
     setVerdict(null);
-    const request = window.ogb?.setCredential && electronSlot
-      ? window.ogb.setCredential(electronSlot, value.trim())
-      : api("/api/config", {
-          method: "PUT",
-          body: JSON.stringify(SECTIONS[section].body(value.trim())),
-        });
+    const request =
+      window.ogb?.setCredential && electronSlot
+        ? window.ogb.setCredential(electronSlot, value.trim())
+        : api("/api/config", {
+            method: "PUT",
+            body: JSON.stringify(SECTIONS[section].body(value.trim())),
+          });
     request
       .then((status: ConfigStatus) => {
         dispatch({ type: "configStatus", config: status });
@@ -245,19 +281,33 @@ export function ApiKeyRow({
     const draft = Boolean(value.trim());
     try {
       // Only an untouched empty field tests the saved key; erased drafts stop above.
-      const result = await api("/api/keys/test", { method: "POST", body: JSON.stringify({ provider: testProvider, ...(value.trim() ? { key: value.trim() } : {}) }) });
+      const result = await api("/api/keys/test", {
+        method: "POST",
+        body: JSON.stringify({
+          provider: testProvider,
+          ...(value.trim() ? { key: value.trim() } : {}),
+        }),
+      });
       if (generation !== testGeneration.current) return;
       const outcome = result.ok
-        ? result.check === "authentication" ? t("keys.testAuthenticated")
-          : result.models?.length ? t("keys.testCatalog", { models: result.models.join(", ") }) : t("keys.testCatalogNoModels")
-        : result.reason === "rejected" ? t("keys.testRejected")
-          : result.reason === "unreachable" ? t("keys.testUnreachable")
-            : t("keys.testUnexpected", { status: String(result.status ?? "?") });
+        ? result.check === "authentication"
+          ? t("keys.testAuthenticated")
+          : result.models?.length
+            ? t("keys.testCatalog", { models: result.models.join(", ") })
+            : t("keys.testCatalogNoModels")
+        : result.reason === "rejected"
+          ? t("keys.testRejected")
+          : result.reason === "unreachable"
+            ? t("keys.testUnreachable")
+            : t("keys.testUnexpected", {
+                status: String(result.status ?? "?"),
+              });
       setVerdict(
         `${draft ? t("keys.testDraft") : t("keys.testSaved")} ${outcome}`,
       );
     } catch (cause) {
-      if (generation === testGeneration.current) setVerdict(cause instanceof Error ? cause.message : String(cause));
+      if (generation === testGeneration.current)
+        setVerdict(cause instanceof Error ? cause.message : String(cause));
     } finally {
       setTesting(false);
     }
@@ -266,21 +316,35 @@ export function ApiKeyRow({
   return (
     <div>
       <div className="mb-1.5 flex items-center gap-2 text-[13px] text-ink-secondary">
-        <span className={cn("size-1.5 rounded-full", configured ? "bg-success" : "bg-raised-hover")} />
+        <span
+          className={cn(
+            "size-1.5 rounded-full",
+            configured ? "bg-success" : "bg-raised-hover",
+          )}
+        />
         <span>{credential.label}</span>
         {credential.optional && (
           <span className="rounded bg-control px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wide text-ink-secondary">
             {t("keys.optional")}
           </span>
         )}
-        {configured && <span className="text-[11px] text-ink-secondary">{t("keys.configured")}</span>}
+        {configured && (
+          <span className="text-[11px] text-ink-secondary">
+            {t("keys.configured")}
+          </span>
+        )}
         <CredentialHelp section={section} />
       </div>
       <div className="flex gap-2">
         <input
           type="password"
           value={value}
-          onChange={(e) => { testGeneration.current++; setVerdict(null); setEdited(true); setValue(e.target.value); }}
+          onChange={(e) => {
+            testGeneration.current++;
+            setVerdict(null);
+            setEdited(true);
+            setValue(e.target.value);
+          }}
           disabled={saving}
           onKeyDown={(e) => e.key === "Enter" && save()}
           placeholder={configured ? t("keys.replace") : credential.placeholder}
@@ -300,7 +364,16 @@ export function ApiKeyRow({
           )}
           title={clearing ? t("keys.removeKey") : t("common.save")}
         >
-          {saving ? <Loader2 size={13} className="animate-spin" /> : clearing ? t("keys.clear") : <><Check size={13} />{t("common.save")}</>}
+          {saving ? (
+            <Loader2 size={13} className="animate-spin" />
+          ) : clearing ? (
+            t("keys.clear")
+          ) : (
+            <>
+              <Check size={13} />
+              {t("common.save")}
+            </>
+          )}
         </button>
         {testProvider && (configured || value.trim()) && (
           <button
@@ -314,7 +387,11 @@ export function ApiKeyRow({
         )}
       </div>
       {error && <div className="mt-1 text-[12px] text-danger">{error}</div>}
-      {verdict && <div role="status" className="mt-1 text-[12px] text-ink-secondary">{verdict}</div>}
+      {verdict && (
+        <div role="status" className="mt-1 text-[12px] text-ink-secondary">
+          {verdict}
+        </div>
+      )}
     </div>
   );
 }
@@ -350,12 +427,21 @@ export function VpsConnection() {
   return (
     <div>
       <div className="mb-1.5 flex items-center gap-2 text-[13px] text-ink-secondary">
-        <span className={cn("size-1.5 rounded-full", configured ? "bg-success" : "bg-raised-hover")} />
+        <span
+          className={cn(
+            "size-1.5 rounded-full",
+            configured ? "bg-success" : "bg-raised-hover",
+          )}
+        />
         <span>{t("keys.vps.label")}</span>
         <span className="rounded bg-control px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wide text-ink-secondary">
           {t("keys.optional")}
         </span>
-        {configured && <span className="text-[11px] text-success">{t("keys.connected")}</span>}
+        {configured && (
+          <span className="text-[11px] text-success">
+            {t("keys.connected")}
+          </span>
+        )}
       </div>
       <div className="mb-1.5 text-[12px] leading-relaxed text-ink-secondary">
         {t("keys.vps.descBefore")}
@@ -385,12 +471,83 @@ export function VpsConnection() {
           disabled={saving || (!alias.trim() && !configured)}
           className={cn(
             "flex w-[72px] shrink-0 items-center justify-center gap-1.5 rounded-lg py-2 text-[13px]",
-            !alias.trim() && configured ? "bg-control text-danger hover:bg-raised-hover" : "bg-control text-ink hover:bg-raised-hover",
+            !alias.trim() && configured
+              ? "bg-control text-danger hover:bg-raised-hover"
+              : "bg-control text-ink hover:bg-raised-hover",
             "disabled:cursor-not-allowed disabled:opacity-50",
           )}
-          title={!alias.trim() && configured ? t("keys.vps.removeAlias") : t("common.save")}
+          title={
+            !alias.trim() && configured
+              ? t("keys.vps.removeAlias")
+              : t("common.save")
+          }
         >
-          {saving ? <Loader2 size={13} className="animate-spin" /> : !alias.trim() && configured ? t("keys.clear") : <><Check size={13} />{t("common.save")}</>}
+          {saving ? (
+            <Loader2 size={13} className="animate-spin" />
+          ) : !alias.trim() && configured ? (
+            t("keys.clear")
+          ) : (
+            <>
+              <Check size={13} />
+              {t("common.save")}
+            </>
+          )}
+        </button>
+      </div>
+      {error && <div className="mt-1 text-[12px] text-danger">{error}</div>}
+    </div>
+  );
+}
+
+export const DEEPSEEK_API_BASE_URL = "https://api.deepseek.com";
+
+/** First-class DeepSeek route through the existing write-only compatible-provider store. */
+export function DeepSeekProviderPreset() {
+  const { state, dispatch } = useStore();
+  const current = state.config?.openaiCompat?.url ?? "";
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const selected = current.replace(/\/$/, "") === DEEPSEEK_API_BASE_URL;
+  const select = () => {
+    if (saving || selected) return;
+    setSaving(true);
+    setError(null);
+    api("/api/config", {
+      method: "PUT",
+      body: JSON.stringify({
+        openaiCompat: { url: DEEPSEEK_API_BASE_URL, provider: "deepseek" },
+      }),
+    })
+      .then((status: ConfigStatus) =>
+        dispatch({ type: "configStatus", config: status }),
+      )
+      .catch((e) => setError(e.message))
+      .finally(() => setSaving(false));
+  };
+  return (
+    <div className="rounded-lg border border-hairline/40 bg-inset px-3 py-2.5">
+      <div className="flex items-start justify-between gap-3">
+        <div>
+          <div className="text-[13px] font-medium text-ink">
+            {t("keys.deepseek.title")}
+          </div>
+          <p className="mt-0.5 text-[11.5px] leading-relaxed text-ink-secondary">
+            {t("keys.deepseek.desc")}
+          </p>
+        </div>
+        <button
+          type="button"
+          onClick={select}
+          disabled={saving || selected}
+          className="shrink-0 rounded-lg bg-control px-3 py-1.5 text-[12px] text-ink hover:bg-raised-hover disabled:opacity-60"
+        >
+          {saving ? (
+            <Loader2 size={13} className="animate-spin" />
+          ) : selected ? (
+            t("keys.deepseek.selected")
+          ) : (
+            t("keys.deepseek.use")
+          )}
         </button>
       </div>
       {error && <div className="mt-1 text-[12px] text-danger">{error}</div>}
@@ -406,22 +563,31 @@ export function OpenAiCompatUrl() {
   const [value, setValue] = useState(saved);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  useEffect(() => { setValue(saved); }, [saved]);
+  useEffect(() => {
+    setValue(saved);
+  }, [saved]);
   const dirty = value.trim() !== saved;
 
   const save = () => {
     if (saving || !dirty) return;
     setSaving(true);
     setError(null);
-    api("/api/config", { method: "PUT", body: JSON.stringify({ openaiCompat: { url: value.trim() } }) })
-      .then((status: ConfigStatus) => dispatch({ type: "configStatus", config: status }))
+    api("/api/config", {
+      method: "PUT",
+      body: JSON.stringify({ openaiCompat: { url: value.trim() } }),
+    })
+      .then((status: ConfigStatus) =>
+        dispatch({ type: "configStatus", config: status }),
+      )
       .catch((e) => setError(e.message))
       .finally(() => setSaving(false));
   };
 
   return (
     <div>
-      <div className="mb-1.5 text-[13px] text-ink-secondary">{t("keys.openaiCompat.url")}</div>
+      <div className="mb-1.5 text-[13px] text-ink-secondary">
+        {t("keys.openaiCompat.url")}
+      </div>
       <div className="flex gap-2">
         <input
           type="url"
@@ -438,10 +604,19 @@ export function OpenAiCompatUrl() {
           disabled={saving || !dirty}
           className="flex w-[72px] shrink-0 items-center justify-center gap-1.5 rounded-lg bg-control py-2 text-[13px] text-ink hover:bg-raised-hover disabled:cursor-not-allowed disabled:opacity-50"
         >
-          {saving ? <Loader2 size={13} className="animate-spin" /> : <><Check size={13} />{t("common.save")}</>}
+          {saving ? (
+            <Loader2 size={13} className="animate-spin" />
+          ) : (
+            <>
+              <Check size={13} />
+              {t("common.save")}
+            </>
+          )}
         </button>
       </div>
-      <p className="mt-1 text-[11.5px] leading-relaxed text-ink-secondary">{t("keys.openaiCompat.urlHint")}</p>
+      <p className="mt-1 text-[11.5px] leading-relaxed text-ink-secondary">
+        {t("keys.openaiCompat.urlHint")}
+      </p>
       {error && <div className="mt-1 text-[12px] text-danger">{error}</div>}
     </div>
   );

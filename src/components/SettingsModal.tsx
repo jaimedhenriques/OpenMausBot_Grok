@@ -3,15 +3,45 @@
 // is the stuff shared by every bot: who you are, your keys, and the
 // machine your bots can borrow.
 import { useEffect, useRef, useState } from "react";
-import { Archive, Coins, FlaskConical, KeyRound, Monitor, Palette, Search, TabletSmartphone, Terminal, User, Users, X, Building2 } from "lucide-react";
-import { api, useStore, type AppSettingsSection, type ConfigStatus } from "@/state/store";
+import {
+  Archive,
+  Coins,
+  FlaskConical,
+  KeyRound,
+  Monitor,
+  Palette,
+  Search,
+  TabletSmartphone,
+  Terminal,
+  User,
+  Users,
+  X,
+  Building2,
+} from "lucide-react";
+import {
+  api,
+  useStore,
+  type AppSettingsSection,
+  type ConfigStatus,
+} from "@/state/store";
 import { analyticsEnabled, setAnalyticsEnabled } from "@/lib/analytics";
-import { browserAvailable, browserUnavailableReason, builtInBrowserEnabled, showToolCallsEnabled, skillAuthoringEnabled } from "@/lib/feature-flags";
+import {
+  browserAvailable,
+  browserUnavailableReason,
+  builtInBrowserEnabled,
+  showToolCallsEnabled,
+  skillAuthoringEnabled,
+} from "@/lib/feature-flags";
 import { localeChoices, type LocaleKey } from "@/locales";
 import { t } from "@/lib/i18n";
 import { withTourReset } from "@/lib/guided-tour";
 import { completionPatch } from "@/lib/onboarding";
-import { ApiKeyRow, OpenAiCompatUrl, VpsConnection } from "./ApiKeys";
+import {
+  ApiKeyRow,
+  DeepSeekProviderPreset,
+  OpenAiCompatUrl,
+  VpsConnection,
+} from "./ApiKeys";
 import { useUpdaterState } from "@/lib/updater";
 import { EnginesSettings } from "./EnginesSettings";
 import { LocalComputerSection } from "./LocalComputerSection";
@@ -45,24 +75,176 @@ const SECTIONS: Array<{
   icon: typeof User;
   keywords: string[];
 }> = [
-  { id: "general", labelKey: "settings.section.general", icon: User, keywords: ["profile", "name", "email", "analytics", "updates", "threads", "parallel", "concurrency"] },
-  { id: "desktopWorkspaces", labelKey: "settings.section.desktopWorkspaces", icon: Building2, keywords: ["workspace", "cloud", "hosted", "vps", "server", "connect", "pair", "switch", "local"] },
-  { id: "organization", labelKey: "settings.section.organization", icon: Building2, keywords: ["company", "organization", "sign in", "enroll", "managed", "models", "disconnect"] },
-  { id: "appearance", labelKey: "settings.section.appearance", icon: Palette, keywords: ["skin", "theme", "appearance", "tools", "tool calls", "threads", "show threads", "hide threads", "sidebar", "display"] },
-  { id: "experimental", labelKey: "settings.section.experimental", icon: FlaskConical, keywords: ["early", "preview", "learn", "skill", "authoring", "browser", "profiles"] },
-  { id: "connections", labelKey: "settings.section.connections", icon: KeyRound, keywords: ["keys", "api", "composio", "box", "xai", "vps"] },
-  { id: "engines", labelKey: "settings.section.engines", icon: Terminal, keywords: ["models", "claude", "grok", "providers", "cli"] },
-  { id: "companion", labelKey: "settings.section.companion", icon: TabletSmartphone, keywords: ["companion", "device", "phone", "desktop", "client", "host", "pair", "pairing", "mobile", "https", "secure", "tailscale", "wifi", "remote", "advanced", "domain", "dns", "self-hosted", "server", "caddy"] },
-  { id: "computer", labelKey: "settings.section.computer", icon: Monitor, keywords: ["vm", "virtual", "desktop"] },
-  { id: "usage", labelKey: "settings.section.usage", icon: Coins, keywords: ["tokens", "cost", "billing"] },
-  { id: "people", labelKey: "settings.section.people", icon: Users, keywords: ["people", "users", "invite", "sign in", "members", "admins", "access"] },
-  { id: "backups", labelKey: "settings.section.backups", icon: Archive, keywords: ["export", "import", "restore", "full backup", "password", "recovery"] },
-  { id: "workspaces", labelKey: "settings.section.workspaces", icon: Building2, keywords: ["clients", "tenants", "fleet", "workspaces"] },
+  {
+    id: "general",
+    labelKey: "settings.section.general",
+    icon: User,
+    keywords: [
+      "profile",
+      "name",
+      "email",
+      "analytics",
+      "updates",
+      "threads",
+      "parallel",
+      "concurrency",
+    ],
+  },
+  {
+    id: "desktopWorkspaces",
+    labelKey: "settings.section.desktopWorkspaces",
+    icon: Building2,
+    keywords: [
+      "workspace",
+      "cloud",
+      "hosted",
+      "vps",
+      "server",
+      "connect",
+      "pair",
+      "switch",
+      "local",
+    ],
+  },
+  {
+    id: "organization",
+    labelKey: "settings.section.organization",
+    icon: Building2,
+    keywords: [
+      "company",
+      "organization",
+      "sign in",
+      "enroll",
+      "managed",
+      "models",
+      "disconnect",
+    ],
+  },
+  {
+    id: "appearance",
+    labelKey: "settings.section.appearance",
+    icon: Palette,
+    keywords: [
+      "skin",
+      "theme",
+      "appearance",
+      "tools",
+      "tool calls",
+      "threads",
+      "show threads",
+      "hide threads",
+      "sidebar",
+      "display",
+    ],
+  },
+  {
+    id: "experimental",
+    labelKey: "settings.section.experimental",
+    icon: FlaskConical,
+    keywords: [
+      "early",
+      "preview",
+      "learn",
+      "skill",
+      "authoring",
+      "browser",
+      "profiles",
+    ],
+  },
+  {
+    id: "connections",
+    labelKey: "settings.section.connections",
+    icon: KeyRound,
+    keywords: ["keys", "api", "composio", "box", "xai", "vps"],
+  },
+  {
+    id: "engines",
+    labelKey: "settings.section.engines",
+    icon: Terminal,
+    keywords: ["models", "claude", "grok", "providers", "cli"],
+  },
+  {
+    id: "companion",
+    labelKey: "settings.section.companion",
+    icon: TabletSmartphone,
+    keywords: [
+      "companion",
+      "device",
+      "phone",
+      "desktop",
+      "client",
+      "host",
+      "pair",
+      "pairing",
+      "mobile",
+      "https",
+      "secure",
+      "tailscale",
+      "wifi",
+      "remote",
+      "advanced",
+      "domain",
+      "dns",
+      "self-hosted",
+      "server",
+      "caddy",
+    ],
+  },
+  {
+    id: "computer",
+    labelKey: "settings.section.computer",
+    icon: Monitor,
+    keywords: ["vm", "virtual", "desktop"],
+  },
+  {
+    id: "usage",
+    labelKey: "settings.section.usage",
+    icon: Coins,
+    keywords: ["tokens", "cost", "billing"],
+  },
+  {
+    id: "people",
+    labelKey: "settings.section.people",
+    icon: Users,
+    keywords: [
+      "people",
+      "users",
+      "invite",
+      "sign in",
+      "members",
+      "admins",
+      "access",
+    ],
+  },
+  {
+    id: "backups",
+    labelKey: "settings.section.backups",
+    icon: Archive,
+    keywords: [
+      "export",
+      "import",
+      "restore",
+      "full backup",
+      "password",
+      "recovery",
+    ],
+  },
+  {
+    id: "workspaces",
+    labelKey: "settings.section.workspaces",
+    icon: Building2,
+    keywords: ["clients", "tenants", "fleet", "workspaces"],
+  },
 ];
 
-function sectionMatches(section: (typeof SECTIONS)[number], query: string): boolean {
+function sectionMatches(
+  section: (typeof SECTIONS)[number],
+  query: string,
+): boolean {
   if (!query) return true;
-  return [t(section.labelKey), ...section.keywords].some((part) => part.toLowerCase().includes(query));
+  return [t(section.labelKey), ...section.keywords].some((part) =>
+    part.toLowerCase().includes(query),
+  );
 }
 
 /** Name + email, persisted to /api/config {profile} on blur. */
@@ -79,7 +261,9 @@ function ProfileFields() {
     void fetch("/api/config", {
       method: "PUT",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify({ profile: { name: name.trim(), email: email.trim().toLowerCase() } }),
+      body: JSON.stringify({
+        profile: { name: name.trim(), email: email.trim().toLowerCase() },
+      }),
     })
       .then((r) => r.json())
       .then((config) => dispatch({ type: "configStatus", config }))
@@ -90,7 +274,14 @@ function ProfileFields() {
     "w-full rounded-lg border border-hairline/40 bg-inset px-3 py-2 text-[14px] text-ink placeholder:text-ink-secondary focus:border-hairline focus:outline-none";
   return (
     <div className="flex flex-col gap-3">
-      <input aria-label={t("settings.profile.name")} value={name} onChange={(e) => setName(e.target.value)} onBlur={save} placeholder={t("settings.profile.name")} className={inputClass} />
+      <input
+        aria-label={t("settings.profile.name")}
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        onBlur={save}
+        placeholder={t("settings.profile.name")}
+        className={inputClass}
+      />
       <input
         type="email"
         aria-label={t("phone.signIn.email")}
@@ -116,12 +307,16 @@ function UpdatesRow() {
         : s?.status === "downloading"
           ? s.percent == null
             ? t("settings.updates.startingDownload")
-            : t("settings.updates.downloading", { percent: Math.round(s.percent) })
+            : t("settings.updates.downloading", {
+                percent: Math.round(s.percent),
+              })
           : s?.status === "preparing"
             ? t("settings.updates.preparing")
             : s?.status === "downloaded"
               ? s.installMode === "handoff"
-                ? t("settings.updates.readyInstall", { version: s.version ?? "" })
+                ? t("settings.updates.readyInstall", {
+                    version: s.version ?? "",
+                  })
                 : t("settings.updates.ready", { version: s.version ?? "" })
               : s?.status === "installing"
                 ? s.message ||
@@ -131,7 +326,10 @@ function UpdatesRow() {
                 : s?.status === "handed-off"
                   ? t("settings.updates.handedOff")
                   : s?.status === "error"
-                    ? t("settings.updates.failed", { message: s.message ?? t("settings.updates.unknownError") })
+                    ? t("settings.updates.failed", {
+                        message:
+                          s.message ?? t("settings.updates.unknownError"),
+                      })
                     : t("settings.updates.latest");
   return (
     <SettingRow title={t("settings.updates.title")} subtitle={label}>
@@ -142,8 +340,11 @@ function UpdatesRow() {
           void updater.check();
         }}
         disabled={
-          s?.status === "checking" || s?.status === "downloading" || s?.status === "preparing" ||
-          s?.status === "installing" || s?.retryable === false
+          s?.status === "checking" ||
+          s?.status === "downloading" ||
+          s?.status === "preparing" ||
+          s?.status === "installing" ||
+          s?.retryable === false
         }
         className="ui-button"
       >
@@ -174,7 +375,10 @@ function UpdatesRow() {
 function AnalyticsRow() {
   const [on, setOn] = useState(analyticsEnabled);
   return (
-    <SettingRow title={t("settings.analytics.title")} subtitle={t("settings.analytics.subtitle")}>
+    <SettingRow
+      title={t("settings.analytics.title")}
+      subtitle={t("settings.analytics.subtitle")}
+    >
       <Switch
         checked={on}
         aria-label={t("settings.analytics.aria")}
@@ -202,11 +406,15 @@ function ReplayAppTourButton() {
           setFailed(false);
           void api("/api/config", {
             method: "PUT",
-            body: JSON.stringify({ onboarding: {
-              // Upgraded users may have completed only the legacy browser gate.
-              ...(!state.config?.onboarding?.completedAt ? completionPatch().onboarding : {}),
-              hintsSeen: withTourReset(state.config?.onboarding),
-            } }),
+            body: JSON.stringify({
+              onboarding: {
+                // Upgraded users may have completed only the legacy browser gate.
+                ...(!state.config?.onboarding?.completedAt
+                  ? completionPatch().onboarding
+                  : {}),
+                hintsSeen: withTourReset(state.config?.onboarding),
+              },
+            }),
             signal: AbortSignal.timeout(10_000),
           })
             .then((config) => {
@@ -220,7 +428,11 @@ function ReplayAppTourButton() {
       >
         {t("settings.welcome.appTour")}
       </button>
-      {failed && <p role="alert" className="mt-2 text-[13px] text-danger">{t("onboarding.tour.error")}</p>}
+      {failed && (
+        <p role="alert" className="mt-2 text-[13px] text-danger">
+          {t("onboarding.tour.error")}
+        </p>
+      )}
     </div>
   );
 }
@@ -228,7 +440,10 @@ function ReplayAppTourButton() {
 function ReplayTourRow() {
   const { dispatch } = useStore();
   return (
-    <SettingRow title={t("settings.welcome.title")} subtitle={t("settings.welcome.subtitle")}>
+    <SettingRow
+      title={t("settings.welcome.title")}
+      subtitle={t("settings.welcome.subtitle")}
+    >
       <div className="flex flex-wrap gap-2">
         <ReplayAppTourButton />
         <button
@@ -259,7 +474,9 @@ function LanguageRow() {
       });
       dispatch({ type: "configStatus", config });
     } catch (cause) {
-      setError(cause instanceof Error ? cause.message : t("settings.language.error"));
+      setError(
+        cause instanceof Error ? cause.message : t("settings.language.error"),
+      );
     } finally {
       setSaving(false);
     }
@@ -269,7 +486,13 @@ function LanguageRow() {
     <SettingRow
       title={t("settings.language.title")}
       subtitle={t("settings.language.subtitle")}
-      message={error ? <p role="alert" className="text-danger">{error}</p> : null}
+      message={
+        error ? (
+          <p role="alert" className="text-danger">
+            {error}
+          </p>
+        ) : null
+      }
     >
       <select
         value={current}
@@ -292,7 +515,10 @@ function LanguageRow() {
 function ShowThreadsRow() {
   const enabled = useShowThreads();
   return (
-    <SettingRow title={t("settings.threadDisplay.title")} subtitle={t("settings.threadDisplay.subtitle")}>
+    <SettingRow
+      title={t("settings.threadDisplay.title")}
+      subtitle={t("settings.threadDisplay.subtitle")}
+    >
       <Switch
         checked={enabled}
         aria-label={t("settings.threadDisplay.show")}
@@ -319,7 +545,9 @@ function ToolCallsRow() {
       });
       dispatch({ type: "configStatus", config });
     } catch (cause) {
-      setError(cause instanceof Error ? cause.message : t("settings.toolCalls.error"));
+      setError(
+        cause instanceof Error ? cause.message : t("settings.toolCalls.error"),
+      );
     } finally {
       setSaving(false);
     }
@@ -328,8 +556,18 @@ function ToolCallsRow() {
   return (
     <SettingRow
       title={t("settings.toolCalls.title")}
-      subtitle={<>{t("settings.toolCalls.subtitle")} {t("settings.toolCalls.detail")}</>}
-      message={error ? <p role="alert" className="text-danger">{error}</p> : null}
+      subtitle={
+        <>
+          {t("settings.toolCalls.subtitle")} {t("settings.toolCalls.detail")}
+        </>
+      }
+      message={
+        error ? (
+          <p role="alert" className="text-danger">
+            {error}
+          </p>
+        ) : null
+      }
     >
       <Switch
         checked={enabled}
@@ -348,11 +586,17 @@ function ExperimentalFeaturesRow() {
   const browser = builtInBrowserEnabled(state.config);
   const desktopBrowser = browserAvailable(state.config);
   const browserInstallable = state.config?.browserEngine?.installable === true;
-  const browserBlockedOnWindows = window.ogb?.platform === "win32" && !desktopBrowser && !browserInstallable;
-  const [saving, setSaving] = useState<"skillAuthoring" | "browser" | null>(null);
+  const browserBlockedOnWindows =
+    window.ogb?.platform === "win32" && !desktopBrowser && !browserInstallable;
+  const [saving, setSaving] = useState<"skillAuthoring" | "browser" | null>(
+    null,
+  );
   const [error, setError] = useState("");
 
-  const toggle = async (feature: "skillAuthoring" | "browser", next: boolean) => {
+  const toggle = async (
+    feature: "skillAuthoring" | "browser",
+    next: boolean,
+  ) => {
     if (saving) return;
     setSaving(feature);
     setError("");
@@ -363,17 +607,26 @@ function ExperimentalFeaturesRow() {
       });
       dispatch({ type: "configStatus", config });
     } catch (cause) {
-      setError(cause instanceof Error ? cause.message : t("settings.experimental.error"));
+      setError(
+        cause instanceof Error
+          ? cause.message
+          : t("settings.experimental.error"),
+      );
     } finally {
       setSaving(null);
     }
   };
 
   return (
-    <Card title={t("settings.experimental.title")} subtitle={t("settings.experimental.subtitle")}>
+    <Card
+      title={t("settings.experimental.title")}
+      subtitle={t("settings.experimental.subtitle")}
+    >
       <div className="flex items-center justify-between gap-4">
         <div className="min-w-0">
-          <div className="text-[14px] font-medium text-ink">{t("settings.experimental.skillAuthoring")}</div>
+          <div className="text-[14px] font-medium text-ink">
+            {t("settings.experimental.skillAuthoring")}
+          </div>
           <div className="mt-0.5 text-[12px] leading-relaxed text-ink-secondary">
             {t("settings.experimental.skillAuthoringDetail")}
           </div>
@@ -388,7 +641,9 @@ function ExperimentalFeaturesRow() {
       </div>
       <div className="mt-4 flex items-center justify-between gap-4 border-t border-hairline/30 pt-4">
         <div className="min-w-0">
-          <div className="text-[14px] font-medium text-ink">{t("settings.experimental.browser")}</div>
+          <div className="text-[14px] font-medium text-ink">
+            {t("settings.experimental.browser")}
+          </div>
           <div className="mt-0.5 text-[12px] leading-relaxed text-ink-secondary">
             {desktopBrowser
               ? browser
@@ -402,12 +657,19 @@ function ExperimentalFeaturesRow() {
         <Switch
           checked={browser}
           aria-label={t("settings.experimental.browserAria")}
-          disabled={saving !== null || (!browser && !desktopBrowser && !browserInstallable)}
+          disabled={
+            saving !== null ||
+            (!browser && !desktopBrowser && !browserInstallable)
+          }
           onClick={() => void toggle("browser", !browser)}
           className="disabled:cursor-wait disabled:opacity-50"
         />
       </div>
-      {error ? <p role="alert" className="mt-2 text-[12px] text-danger">{error}</p> : null}
+      {error ? (
+        <p role="alert" className="mt-2 text-[12px] text-danger">
+          {error}
+        </p>
+      ) : null}
     </Card>
   );
 }
@@ -415,9 +677,13 @@ function ExperimentalFeaturesRow() {
 function BrowserProfilesRow() {
   const { state } = useStore();
   const profiles = state.config?.browserProfiles ?? [];
-  if (!builtInBrowserEnabled(state.config) && profiles.length === 0) return null;
+  if (!builtInBrowserEnabled(state.config) && profiles.length === 0)
+    return null;
   return (
-    <Card title={t("settings.profiles.title")} subtitle={t("settings.profiles.sharedSubtitle")}>
+    <Card
+      title={t("settings.profiles.title")}
+      subtitle={t("settings.profiles.sharedSubtitle")}
+    >
       <BrowserProfilesManager />
     </Card>
   );
@@ -428,7 +694,10 @@ function BrowserProfilesRow() {
  * never credential values (the desktop shell does not read secret fields). */
 function DiagnosticsRow() {
   const [exporting, setExporting] = useState(false);
-  const [result, setResult] = useState<{ kind: "success" | "error"; message: string } | null>(null);
+  const [result, setResult] = useState<{
+    kind: "success" | "error";
+    message: string;
+  } | null>(null);
 
   const exportDiagnostics = async () => {
     if (!window.ogb?.exportDiagnostics || exporting) return;
@@ -436,9 +705,16 @@ function DiagnosticsRow() {
     setResult(null);
     try {
       const path = await window.ogb.exportDiagnostics();
-      if (path) setResult({ kind: "success", message: t("settings.diagnostics.saved", { path }) });
+      if (path)
+        setResult({
+          kind: "success",
+          message: t("settings.diagnostics.saved", { path }),
+        });
     } catch (e) {
-      setResult({ kind: "error", message: e instanceof Error ? e.message : String(e) });
+      setResult({
+        kind: "error",
+        message: e instanceof Error ? e.message : String(e),
+      });
     } finally {
       setExporting(false);
     }
@@ -448,11 +724,19 @@ function DiagnosticsRow() {
     <SettingRow
       title={t("settings.diagnostics.title")}
       subtitle={t("settings.diagnostics.subtitle")}
-      message={result ? (
-        <p role={result.kind === "error" ? "alert" : "status"} className={cn("break-all", result.kind === "error" ? "text-danger" : "text-success")}>
-          {result.message}
-        </p>
-      ) : null}
+      message={
+        result ? (
+          <p
+            role={result.kind === "error" ? "alert" : "status"}
+            className={cn(
+              "break-all",
+              result.kind === "error" ? "text-danger" : "text-success",
+            )}
+          >
+            {result.message}
+          </p>
+        ) : null
+      }
     >
       <button
         onClick={() => void exportDiagnostics()}
@@ -460,7 +744,9 @@ function DiagnosticsRow() {
         aria-label={t("settings.diagnostics.aria")}
         className="ui-button"
       >
-        {exporting ? t("settings.diagnostics.exporting") : t("settings.diagnostics.export")}
+        {exporting
+          ? t("settings.diagnostics.exporting")
+          : t("settings.diagnostics.export")}
       </button>
     </SettingRow>
   );
@@ -470,34 +756,73 @@ export function SettingsModal() {
   const { state, dispatch } = useStore();
   const remoteActive = window.ogb?.remoteClient?.active === true;
   const section: AppSettingsSection =
-    (remoteActive && !["appearance", "desktopWorkspaces"].includes(state.appSettingsSection)) || state.appSettingsSection === "remote"
+    (remoteActive &&
+      !["appearance", "desktopWorkspaces"].includes(
+        state.appSettingsSection,
+      )) ||
+    state.appSettingsSection === "remote"
       ? "companion"
       : state.appSettingsSection;
   const dialogRef = useRef<HTMLDivElement>(null);
   const [query, setQuery] = useState("");
-  useEffect(() => window.ogb?.environments?.onOpenSettings?.(() => setQuery("")), []);
+  useEffect(
+    () => window.ogb?.environments?.onOpenSettings?.(() => setQuery("")),
+    [],
+  );
   const q = query.trim().toLowerCase();
-  const availableSections = SECTIONS.filter((entry) => !remoteActive || entry.id === "companion" || entry.id === "appearance" || entry.id === "desktopWorkspaces")
-    .filter((entry) => entry.id !== "desktopWorkspaces" || Boolean(window.ogb?.environments))
-    .filter((entry) => entry.id !== "organization" || Boolean(window.ogb?.organization))
+  const availableSections = SECTIONS.filter(
+    (entry) =>
+      !remoteActive ||
+      entry.id === "companion" ||
+      entry.id === "appearance" ||
+      entry.id === "desktopWorkspaces",
+  )
+    .filter(
+      (entry) =>
+        entry.id !== "desktopWorkspaces" || Boolean(window.ogb?.environments),
+    )
+    .filter(
+      (entry) =>
+        entry.id !== "organization" || Boolean(window.ogb?.organization),
+    )
     // the operator's screen for other workspaces exists only where a fleet agent does
-    .filter((entry) => entry.id !== "workspaces" || workspacesAvailable(state.config))
+    .filter(
+      (entry) => entry.id !== "workspaces" || workspacesAvailable(state.config),
+    )
     // sign-in by email is a hosted server's; the desktop app pairs devices under Remote access
     .filter((entry) => entry.id !== "people" || !window.ogb);
-  const visibleSections = availableSections.filter((entry) => sectionMatches(entry, q));
-  const sectionLabelKey = SECTIONS.find((entry) => entry.id === section)?.labelKey;
-  const nextVisibleSection = visibleSections.some((entry) => entry.id === section) ? undefined : visibleSections[0]?.id;
+  const visibleSections = availableSections.filter((entry) =>
+    sectionMatches(entry, q),
+  );
+  const sectionLabelKey = SECTIONS.find(
+    (entry) => entry.id === section,
+  )?.labelKey;
+  const nextVisibleSection = visibleSections.some(
+    (entry) => entry.id === section,
+  )
+    ? undefined
+    : visibleSections[0]?.id;
 
   useEffect(() => {
     // Translated matches can change without the query changing. Follow the
     // rendered results instead of a second filter with stale effect inputs.
-    if (nextVisibleSection) dispatch({ type: "toggleAppSettings", open: true, section: nextVisibleSection });
+    if (nextVisibleSection)
+      dispatch({
+        type: "toggleAppSettings",
+        open: true,
+        section: nextVisibleSection,
+      });
   }, [dispatch, nextVisibleSection]);
 
   useEffect(() => {
-    const previousFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    const previousFocus =
+      document.activeElement instanceof HTMLElement
+        ? document.activeElement
+        : null;
     const dialog = dialogRef.current;
-    const search = dialog?.querySelector<HTMLInputElement>("[data-settings-search]");
+    const search = dialog?.querySelector<HTMLInputElement>(
+      "[data-settings-search]",
+    );
     if (search?.checkVisibility()) search.focus();
     else dialog?.focus();
 
@@ -542,7 +867,10 @@ export function SettingsModal() {
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-3 sm:p-6"
-      onMouseDown={(e) => e.target === e.currentTarget && dispatch({ type: "toggleAppSettings", open: false })}
+      onMouseDown={(e) =>
+        e.target === e.currentTarget &&
+        dispatch({ type: "toggleAppSettings", open: false })
+      }
     >
       <div
         ref={dialogRef}
@@ -550,10 +878,17 @@ export function SettingsModal() {
         aria-modal="true"
         aria-labelledby="app-settings-title"
         tabIndex={-1}
-        className={cn("flex max-h-[calc(100dvh-24px)] w-full overflow-hidden rounded-2xl border border-hairline/50 bg-panel shadow-2xl outline-none", section === "engines" ? "h-[720px] max-w-[1040px]" : "h-[560px] max-w-[860px]")}
+        className={cn(
+          "flex max-h-[calc(100dvh-24px)] w-full overflow-hidden rounded-2xl border border-hairline/50 bg-panel shadow-2xl outline-none",
+          section === "engines"
+            ? "h-[720px] max-w-[1040px]"
+            : "h-[560px] max-w-[860px]",
+        )}
       >
         {/* section nav */}
-        <span id="app-settings-title" className="sr-only">{t("settings.title")}</span>
+        <span id="app-settings-title" className="sr-only">
+          {t("settings.title")}
+        </span>
         <nav className="hidden min-h-0 w-[190px] shrink-0 flex-col gap-1 overflow-y-auto border-r border-hairline/40 bg-app/30 p-3 sm:flex">
           <div className="shrink-0 px-2 py-3 text-[15px] font-semibold text-ink">
             {t("settings.title")}
@@ -583,11 +918,15 @@ export function SettingsModal() {
           {visibleSections.map(({ id, labelKey, icon: Icon }) => (
             <button
               key={id}
-              onClick={() => dispatch({ type: "toggleAppSettings", open: true, section: id })}
+              onClick={() =>
+                dispatch({ type: "toggleAppSettings", open: true, section: id })
+              }
               aria-current={section === id ? "page" : undefined}
               className={cn(
                 "flex min-h-9 items-center gap-2.5 rounded-lg px-2.5 py-2 text-left text-[13px] transition-colors motion-reduce:transition-none",
-                section === id ? "bg-control text-ink" : "text-ink-secondary hover:bg-control/50 hover:text-ink",
+                section === id
+                  ? "bg-control text-ink"
+                  : "text-ink-secondary hover:bg-control/50 hover:text-ink",
               )}
             >
               <Icon size={15} className="shrink-0" />
@@ -603,19 +942,27 @@ export function SettingsModal() {
               value={section}
               onChange={(event) => {
                 setQuery("");
-                dispatch({ type: "toggleAppSettings", open: true, section: event.target.value as AppSettingsSection });
+                dispatch({
+                  type: "toggleAppSettings",
+                  open: true,
+                  section: event.target.value as AppSettingsSection,
+                });
               }}
               className="min-w-0 rounded-lg bg-control px-3 py-2 text-[14px] text-ink sm:hidden"
             >
               {availableSections.map(({ id, labelKey }) => (
-                <option key={id} value={id}>{t(labelKey)}</option>
+                <option key={id} value={id}>
+                  {t(labelKey)}
+                </option>
               ))}
             </select>
             <span className="hidden text-[15px] font-semibold text-ink sm:block">
               {sectionLabelKey ? t(sectionLabelKey) : null}
             </span>
             <button
-              onClick={() => dispatch({ type: "toggleAppSettings", open: false })}
+              onClick={() =>
+                dispatch({ type: "toggleAppSettings", open: false })
+              }
               aria-label={t("settings.close")}
               title={`${t("settings.close")} (${shortcutLabel("close-panel")})`}
               className="ui-icon-button shrink-0"
@@ -626,17 +973,25 @@ export function SettingsModal() {
 
           <div className="flex flex-1 flex-col gap-4 overflow-y-auto px-3 py-4 sm:px-5 sm:pb-5">
             {section === "desktopWorkspaces" && <ConnectedWorkspacesSettings />}
-            {section === "organization" && window.ogb?.organization && !remoteActive && <OrganizationSettings />}
+            {section === "organization" &&
+              window.ogb?.organization &&
+              !remoteActive && <OrganizationSettings />}
             {section === "general" && (
               <>
-                <Card title={t("settings.profile.title")} subtitle={t("settings.profile.subtitle")}>
+                <Card
+                  title={t("settings.profile.title")}
+                  subtitle={t("settings.profile.subtitle")}
+                >
                   <ProfileFields />
                 </Card>
                 <div>
                   <LanguageRow />
                   <AnalyticsRow />
                 </div>
-                <Card title={t("settings.roomTurns.title")} subtitle={t("settings.roomTurns.subtitle")}>
+                <Card
+                  title={t("settings.roomTurns.title")}
+                  subtitle={t("settings.roomTurns.subtitle")}
+                >
                   <RoomTurnTimeoutSettings />
                 </Card>
                 <ThreadConcurrencySettings />
@@ -650,7 +1005,10 @@ export function SettingsModal() {
 
             {section === "appearance" && (
               <>
-                <Card title={t("settings.skin.title")} subtitle={t("settings.skin.subtitle")}>
+                <Card
+                  title={t("settings.skin.title")}
+                  subtitle={t("settings.skin.subtitle")}
+                >
                   <SkinPicker />
                 </Card>
                 <div>
@@ -678,18 +1036,30 @@ export function SettingsModal() {
                       {t("settings.connections.ready")}
                     </div>
                   ) : null}
-                  <div className="text-[11.5px] font-medium uppercase tracking-wide text-ink-secondary">{t("keys.providers.title")}</div>
-                  <p className="-mt-3 text-[12px] leading-relaxed text-ink-secondary">{t("keys.providers.subtitle")}</p>
+                  <div className="text-[11.5px] font-medium uppercase tracking-wide text-ink-secondary">
+                    {t("keys.providers.title")}
+                  </div>
+                  <p className="-mt-3 text-[12px] leading-relaxed text-ink-secondary">
+                    {t("keys.providers.subtitle")}
+                  </p>
                   <ApiKeyRow section="anthropic" testProvider="anthropic" />
-                  <ApiKeyRow section="openaiCompat" testProvider="openaiCompat" />
+                  <DeepSeekProviderPreset />
+                  <ApiKeyRow
+                    section="openaiCompat"
+                    testProvider="openaiCompat"
+                  />
                   <OpenAiCompatUrl />
                   <ApiKeyRow section="xai" testProvider="xai" />
-                  <div className="pt-2 text-[11.5px] font-medium uppercase tracking-wide text-ink-secondary">{t("keys.integrations.title")}</div>
+                  <div className="pt-2 text-[11.5px] font-medium uppercase tracking-wide text-ink-secondary">
+                    {t("keys.integrations.title")}
+                  </div>
                   <ApiKeyRow section="box" />
                   <VpsConnection />
                   <ApiKeyRow section="opencodeGo" />
                   <details className="rounded-lg border border-hairline/40 bg-inset px-3 py-2">
-                    <summary className="cursor-pointer text-[13px] text-ink-secondary">{t("settings.connections.selfHost")}</summary>
+                    <summary className="cursor-pointer text-[13px] text-ink-secondary">
+                      {t("settings.connections.selfHost")}
+                    </summary>
                     <div className="mt-3">
                       <ApiKeyRow section="composio" />
                     </div>
@@ -698,11 +1068,14 @@ export function SettingsModal() {
               </Card>
             )}
 
-            {section === "engines" && (
-              <EnginesSettings />
-            )}
+            {section === "engines" && <EnginesSettings />}
 
-            {section === "backups" && <><WorkspaceBackupSettings /><CompanyBackupSettings /></>}
+            {section === "backups" && (
+              <>
+                <WorkspaceBackupSettings />
+                <CompanyBackupSettings />
+              </>
+            )}
 
             {section === "companion" && (
               <>
@@ -715,7 +1088,11 @@ export function SettingsModal() {
                     Settings there is the only place that server's phones can be paired from (MOCA-84).
                     The server decides who may act — an owner or an admin session — not this gate. */}
                 <ServerPairingCard />
-                {!remoteActive && <CompanionSection profileEmail={state.config?.profile?.email} />}
+                {!remoteActive && (
+                  <CompanionSection
+                    profileEmail={state.config?.profile?.email}
+                  />
+                )}
               </>
             )}
 

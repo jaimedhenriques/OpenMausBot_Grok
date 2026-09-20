@@ -2232,5 +2232,9 @@
   "engines.icon.formatError": "Upload a PNG, JPEG, or WebP image.",
   "engines.icon.sizeError": "Provider icons must be 128 KB or smaller.",
   "engines.icon.invalidError": "Upload a complete PNG, JPEG, or WebP image up to 128 KB and {dimension} × {dimension} pixels.",
-  "engines.icon.dimensionError": "Provider icons must be at most {dimension} × {dimension} pixels."
+  "engines.icon.dimensionError": "Provider icons must be at most {dimension} × {dimension} pixels.",
+  "keys.deepseek.title": "DeepSeek API",
+  "keys.deepseek.desc": "Use your own DeepSeek key with the official endpoint. The key stays write-only in this workspace, usage is billed by DeepSeek, and the OpenMaus policy and approval layer remains in control.",
+  "keys.deepseek.use": "Use DeepSeek",
+  "keys.deepseek.selected": "Selected"
 }
