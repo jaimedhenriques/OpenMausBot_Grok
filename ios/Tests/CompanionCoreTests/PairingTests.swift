@@ -441,7 +441,7 @@ final class PairingTests: XCTestCase {
     }
 
     private static let credential = "omb_pair_" + String(repeating: "a", count: 43)
-    private static let health = Data(#"{"app":"squadbots","pid":42,"static":true}"#.utf8)
+    private static let health = Data(#"{"app":"softbots","pid":42,"static":true}"#.utf8)
     private static let paired = Data(
         #"{"token":"omb_device","device":{"id":"d","name":"iPhone","createdAt":1,"lastSeenAt":1},"serverName":"Mac","hosts":["192.168.1.42"]}"#.utf8
     )

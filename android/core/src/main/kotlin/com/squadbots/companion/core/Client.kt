@@ -1064,7 +1064,7 @@ class CompanionClient(
                     companion.makeRequest("GET", "/api/health"),
                     probeClient,
                 )
-                identity.app == "squadbots"
+                identity.app == "softbots"
             } catch (error: CancellationException) {
                 throw error
             } catch (_: Exception) {

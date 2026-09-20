@@ -43,7 +43,7 @@ const ENTRY_POINTS = [
   "index.ts",
   // the `squadbots` command (serve/pair/sessions/status) for the npm
   // package, the container image and checkouts; pair-cli.ts stays as an alias
-  "squadbots.ts",
+  "softbots.ts",
   "pair-cli.ts",
   // The packaged smoke probe imports this manifest directly. Importing the
   // shared avatar contract widens TypeScript's inferred emit root to the repo,

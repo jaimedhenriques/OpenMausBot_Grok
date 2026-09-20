@@ -797,7 +797,7 @@ private class RecordingDispatcher(
     }
 }
 
-private fun healthResponse(): MockResponse = jsonResponse("""{"app":"squadbots","pid":42,"static":true}""")
+private fun healthResponse(): MockResponse = jsonResponse("""{"app":"softbots","pid":42,"static":true}""")
 
 private fun jsonResponse(body: String, code: Int = 200): MockResponse = MockResponse()
     .setResponseCode(code)

@@ -854,7 +854,7 @@ public struct CompanionClient: Sendable {
             guard !Task.isCancelled,
                   let http = response as? HTTPURLResponse,
                   (200...299).contains(http.statusCode),
-                  try JSONDecoder().decode(HealthIdentity.self, from: data).app == "squadbots"
+                  try JSONDecoder().decode(HealthIdentity.self, from: data).app == "softbots"
             else { return false }
             return true
         } catch {
