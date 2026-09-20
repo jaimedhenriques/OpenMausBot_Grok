@@ -2,8 +2,8 @@
 BETTER_AUTH_URL=https://auth.softbots.test
 BETTER_AUTH_SECRET=replace-with-at-least-32-random-bytes
 CLOUDFLARE_API_TOKEN=replace-with-a-scoped-cloudflare-api-token
-EMAIL_FROM=noreply@softbots.test
+EMAIL_FROM=noreply@squadbots.test
 ALLOWED_ORIGINS=https://app.softbots.test
 CLOUDFLARE_ACCOUNT_ID=00000000000000000000000000000000
 CLOUDFLARE_ZONE_ID=00000000000000000000000000000000
-COMPANION_HOST_SUFFIX=softbots.test
+COMPANION_HOST_SUFFIX=squadbots.test

@@ -1,9 +1,9 @@
 // dweb MCP proxy — spawned as an MCP server inside a bot's agent process.
-// Exposes dweb's HTTP API (the local Softbots network daemon) as tools an
+// Exposes dweb's HTTP API (the local Squadbots network daemon) as tools an
 // agent can call to inspect the network and run model requests:
 //
 //   dweb_status          → ping dweb, summarize server + peer state
-//   dweb_repo_status     → the Softbots repo the daemon is tracking
+//   dweb_repo_status     → the Squadbots repo the daemon is tracking
 //   dweb_opencode_models → models available on the opencode integration
 //   dweb_opencode_run    → run a model command, wait up to 5 min for output
 //

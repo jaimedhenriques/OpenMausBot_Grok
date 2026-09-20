@@ -58,8 +58,8 @@ const statusProbe = `${driverExec} status --socket ${CUA_SOCKET}`;
 const healthProbe = `${driverExec} call health_report {} --socket ${CUA_SOCKET}`;
 const readinessProbe =
   `${driverExec} call get_desktop_state {} --socket ${CUA_SOCKET} ` +
-  "--screenshot-out-file /tmp/softbots-readiness.png";
-const readinessRead = `docker exec ${CONTAINER} base64 -w0 /tmp/softbots-readiness.png`;
+  "--screenshot-out-file /tmp/squadbots-readiness.png";
+const readinessRead = `docker exec ${CONTAINER} base64 -w0 /tmp/squadbots-readiness.png`;
 const validPng = Buffer.concat([
   Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]),
   Buffer.alloc(600),
@@ -196,8 +196,8 @@ describe("containerComputerStatus", () => {
         overall: "ok",
         checks: [],
       }),
-      [`${targetDriverExec} call get_desktop_state {} --socket ${CUA_SOCKET} --screenshot-out-file /tmp/softbots-readiness.png`]: "{}\n",
-      [`podman exec ${target.containerName} base64 -w0 /tmp/softbots-readiness.png`]: validPng.toString("base64"),
+      [`${targetDriverExec} call get_desktop_state {} --socket ${CUA_SOCKET} --screenshot-out-file /tmp/squadbots-readiness.png`]: "{}\n",
+      [`podman exec ${target.containerName} base64 -w0 /tmp/squadbots-readiness.png`]: validPng.toString("base64"),
     });
 
     const status = await containerComputerStatus(fake.run, "win32", target);
@@ -288,8 +288,8 @@ describe("containerComputerStatus", () => {
         overall: "ok",
         checks: [],
       }),
-      [`${targetDriverExec} call get_desktop_state {} --socket ${CUA_SOCKET} --screenshot-out-file /tmp/softbots-readiness.png`]: "{}\n",
-      [`docker exec ${target.containerName} base64 -w0 /tmp/softbots-readiness.png`]: validPng.toString("base64"),
+      [`${targetDriverExec} call get_desktop_state {} --socket ${CUA_SOCKET} --screenshot-out-file /tmp/squadbots-readiness.png`]: "{}\n",
+      [`docker exec ${target.containerName} base64 -w0 /tmp/squadbots-readiness.png`]: validPng.toString("base64"),
     });
 
     const status = await containerComputerStatus(fake.run, "linux", target);
@@ -321,7 +321,7 @@ describe("containerComputerStatus", () => {
 
     expect(status.managed).toBe(false);
     expect(status.ready).toBe(false);
-    expect(status.problem).toContain("not created by Softbots");
+    expect(status.problem).toContain("not created by Squadbots");
   });
 
   it("prefers a running runtime over an earlier installed but stopped one", async () => {
@@ -625,7 +625,7 @@ describe("Cua integration", () => {
     expect(dockerfile).toContain(`cua-driver ${CUA_DRIVER_VERSION}`);
     expect(dockerfile).toContain(`serve --socket ${CUA_SOCKET} --permission-mode standard`);
     expect(dockerfile).toContain("CUA_DRIVER_RS_TELEMETRY_ENABLED=0");
-    expect(dockerfile).toContain("prepare-softbots-workspace.sh");
+    expect(dockerfile).toContain("prepare-squadbots-workspace.sh");
     expect(dockerfile).toContain('if ! chmod 0700 "$workspace"');
     expect(dockerfile).toContain('test -r "$directory" && test -w "$directory" && test -x "$directory"');
     expect(dockerfile).toContain("migrate_profile google-chrome");
@@ -664,7 +664,7 @@ describe("Cua integration", () => {
   it("captures the preview through Cua Driver rather than xdotool or VNC", async () => {
     const screenshotCall =
       `${driverExec} call get_desktop_state {} --socket ${CUA_SOCKET} ` +
-      "--screenshot-out-file /tmp/softbots-preview.png";
+      "--screenshot-out-file /tmp/squadbots-preview.png";
     const png = validPng;
     const fake = runner({
       "/usr/bin/which docker": "docker\n",
@@ -678,7 +678,7 @@ describe("Cua integration", () => {
       [readinessProbe]: "{}\n",
       [readinessRead]: png.toString("base64"),
       [screenshotCall]: "{}\n",
-      [`docker exec ${CONTAINER} base64 -w0 /tmp/softbots-preview.png`]: png.toString("base64"),
+      [`docker exec ${CONTAINER} base64 -w0 /tmp/squadbots-preview.png`]: png.toString("base64"),
     });
 
     const image = await containerComputerScreenshot(fake.run, "linux");
@@ -705,8 +705,8 @@ describe("Cua integration", () => {
       [readinessProbe]: "{}\n",
       [readinessRead]: png.toString("base64"),
       [`${driverExec} call get_desktop_state {} --socket ${CUA_SOCKET} ` +
-        "--screenshot-out-file /tmp/softbots-preview.png"]: "{}\n",
-      [`docker exec ${CONTAINER} base64 -w0 /tmp/softbots-preview.png`]: png.toString("base64"),
+        "--screenshot-out-file /tmp/squadbots-preview.png"]: "{}\n",
+      [`docker exec ${CONTAINER} base64 -w0 /tmp/squadbots-preview.png`]: png.toString("base64"),
     });
 
     const frame = await containerComputerFrame(fake.run, "linux");
@@ -717,7 +717,7 @@ describe("Cua integration", () => {
 });
 
 describe("containerComputerAction", () => {
-  it("never removes an exact-name container without Softbots ownership labels", async () => {
+  it("never removes an exact-name container without Squadbots ownership labels", async () => {
     const fake = runner({
       "/usr/bin/which docker": "docker\n",
       "/usr/bin/which podman": new Error("missing"),
@@ -729,12 +729,12 @@ describe("containerComputerAction", () => {
     });
 
     await expect(containerComputerAction("remove", fake.run, "linux")).rejects.toThrow(
-      /not created by Softbots.*remove it manually/i,
+      /not created by Squadbots.*remove it manually/i,
     );
     expect(fake.calls).not.toContain(`docker rm -f ${CONTAINER}`);
   });
 
-  it("removes a verified Softbots container even when its version labels are stale", async () => {
+  it("removes a verified Squadbots container even when its version labels are stale", async () => {
     const fake = runner({
       "/usr/bin/which docker": "docker\n",
       "/usr/bin/which podman": new Error("missing"),
@@ -903,9 +903,9 @@ describe("setupCommands", () => {
   });
 
   it("uses an explicit local image name so Podman never resolves the managed build on Docker Hub", () => {
-    expect(IMAGE).toMatch(/^localhost\/softbots\/cua-local-vm:/);
+    expect(IMAGE).toMatch(/^localhost\/squadbots\/cua-local-vm:/);
     expect(setupCommands("podman", "darwin").run).toContain(IMAGE);
-    expect(setupCommands("podman", "darwin").run).not.toContain("docker.io/softbots");
+    expect(setupCommands("podman", "darwin").run).not.toContain("docker.io/squadbots");
   });
 
   it("generates Apple container lifecycle commands without Docker-only flags", () => {

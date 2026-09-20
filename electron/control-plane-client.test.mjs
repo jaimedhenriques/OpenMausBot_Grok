@@ -79,7 +79,7 @@ describe("control-plane desktop client", () => {
     const timeoutSignal = vi.fn(() => new AbortController().signal);
     const fetchImpl = vi
       .fn()
-      .mockResolvedValueOnce(jsonResponse({ ok: true, service: "softbots-control-plane" }))
+      .mockResolvedValueOnce(jsonResponse({ ok: true, service: "squadbots-control-plane" }))
       .mockResolvedValueOnce(jsonResponse({ ok: true, service: "some-other-service" }));
     const client = createControlPlaneClient({
       baseURL: "https://accounts.softbots.com",

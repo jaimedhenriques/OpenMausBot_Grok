@@ -42,7 +42,7 @@ async function binaryVersion(candidate) {
 }
 
 async function officialBinary() {
-  const cache = join(root, "node_modules", ".cache", "softbots", `cua-driver-${release.version}-win`);
+  const cache = join(root, "node_modules", ".cache", "squadbots", `cua-driver-${release.version}-win`);
   const cachedBinary = join(cache, "cua-driver.exe");
   if ((await binaryVersion(cachedBinary)) === expectedVersion) return cachedBinary;
 
@@ -129,7 +129,7 @@ await build({
       'export { EmbeddedCuaDriverHost } from "@trycua/cua-driver/embedded";',
     ].join("\n"),
     resolveDir: root,
-    sourcefile: "softbots-cua-entry.mjs",
+    sourcefile: "squadbots-cua-entry.mjs",
     loader: "js",
   },
   bundle: true,
@@ -137,14 +137,14 @@ await build({
   target: "node20",
   format: "esm",
   banner: {
-    js: 'import { createRequire as __softbotsCreateRequire } from "node:module"; const require = __softbotsCreateRequire(import.meta.url);',
+    js: 'import { createRequire as __squadbotsCreateRequire } from "node:module"; const require = __squadbotsCreateRequire(import.meta.url);',
   },
   outfile: bundle,
   logLevel: "silent",
 });
 // Same redirect as prepare-cua.mjs: the SDK resolves its native library
 // through @ubjs at runtime; patch the bundled resolver so
-// SOFTBOTS_CUA_SDK_LIBRARY (set by electron/cua.mjs to the staged DLL)
+// SQUADBOTS_CUA_SDK_LIBRARY (set by electron/cua.mjs to the staged DLL)
 // wins over the node_modules lookups that do not exist in the packaged app.
 const bundledSource = await readFile(bundle, "utf8");
 const resolverPattern = /function resolveLibPath\d*\(opts\) \{/g;
@@ -156,7 +156,7 @@ await writeFile(
   bundle,
   bundledSource.replace(
     resolverPattern,
-    `${resolvers[0]}\n      if (process.env.SOFTBOTS_CUA_SDK_LIBRARY) return resolveOverride(opts.crateName, process.env.SOFTBOTS_CUA_SDK_LIBRARY);`,
+    `${resolvers[0]}\n      if (process.env.SQUADBOTS_CUA_SDK_LIBRARY) return resolveOverride(opts.crateName, process.env.SQUADBOTS_CUA_SDK_LIBRARY);`,
   ),
 );
 

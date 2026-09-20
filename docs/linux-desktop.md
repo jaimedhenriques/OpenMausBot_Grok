@@ -1,12 +1,12 @@
 # Ubuntu Desktop
 
-Softbots has an Ubuntu 24.04 LTS x86_64 desktop beta. The Electron package embeds the harness server, so
+Squadbots has an Ubuntu 24.04 LTS x86_64 desktop beta. The Electron package embeds the harness server, so
 installed builds do not require Node, pnpm, Swift, or a terminal at runtime. For giving a bot the same kind
 of Linux desktop on your own server instead of this machine, see [byo-vps.md](byo-vps.md).
 
 ## What works
 
-- The native Electron window and embedded Softbots server on GNOME Xorg and GNOME Wayland.
+- The native Electron window and embedded Squadbots server on GNOME Xorg and GNOME Wayland.
 - Local Claude, Codex, Grok, Gemini, and other configured agent CLIs.
 - Chat, streaming turns, approvals, bot-to-bot communication, and local data storage.
 - Composio connected apps and Box cloud computers.
@@ -32,8 +32,8 @@ CUA supply-chain work is tracked in [issue #113](https://github.com/milind-soni/
 
 Choose one Ubuntu 24.04 x86_64 package from the latest release:
 
-- [Debian package (`Softbots-amd64.deb`)](https://github.com/milind-soni/OpenMausBot/releases/latest/download/Softbots-amd64.deb) — recommended; APT installs its desktop dependencies and configures the bundled bot browser's sandbox.
-- [Portable AppImage (`Softbots.AppImage`)](https://github.com/milind-soni/OpenMausBot/releases/latest/download/Softbots.AppImage) — does not install system files.
+- [Debian package (`Squadbots-amd64.deb`)](https://github.com/milind-soni/OpenMausBot/releases/latest/download/Squadbots-amd64.deb) — recommended; APT installs its desktop dependencies and configures the bundled bot browser's sandbox.
+- [Portable AppImage (`Squadbots.AppImage`)](https://github.com/milind-soni/OpenMausBot/releases/latest/download/Squadbots.AppImage) — does not install system files.
 - [SHA-256 checksums](https://github.com/milind-soni/OpenMausBot/releases/latest/download/SHA256SUMS-ubuntu-x64.txt)
 
 Versioned packages and previous releases remain available on the
@@ -49,7 +49,7 @@ Requirements for building from source:
 
 ```sh
 git clone https://github.com/milind-soni/OpenMausBot.git
-cd Softbots
+cd Squadbots
 corepack enable
 pnpm install --frozen-lockfile
 pnpm package:linux
@@ -57,8 +57,8 @@ pnpm package:linux
 
 The build creates:
 
-- `release/Softbots-<version>-amd64.deb`
-- `release/Softbots-<version>-x86_64.AppImage`
+- `release/Squadbots-<version>-amd64.deb`
+- `release/Squadbots-<version>-x86_64.AppImage`
 
 The AppImage uses a static runtime and does not require the legacy `libfuse2` package.
 
@@ -67,23 +67,23 @@ The AppImage uses a static runtime and does not require the legacy `libfuse2` pa
 Install a downloaded Debian package with APT so its desktop dependencies are resolved:
 
 ```sh
-sudo apt install ./Softbots-amd64.deb
+sudo apt install ./Squadbots-amd64.deb
 ```
 
-Then open **Softbots** from the GNOME application launcher. To remove it:
+Then open **Squadbots** from the GNOME application launcher. To remove it:
 
 ```sh
-sudo apt remove softbots
+sudo apt remove squadbots
 ```
 
 The portable AppImage does not install system files:
 
 ```sh
-chmod +x release/Softbots-*-x86_64.AppImage
-./release/Softbots-*-x86_64.AppImage
+chmod +x release/Squadbots-*-x86_64.AppImage
+./release/Squadbots-*-x86_64.AppImage
 ```
 
-For a downloaded release AppImage, use `Softbots.AppImage` in place of the versioned path above.
+For a downloaded release AppImage, use `Squadbots.AppImage` in place of the versioned path above.
 
 ### Bundled bot browser on Ubuntu 24.04
 
@@ -99,7 +99,7 @@ do not add `--no-sandbox`, disable AppArmor globally, or allowlist arbitrary exe
 directory. See [Chromium's explanation of the Ubuntu restriction](https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md).
 
 Application data remains local in `~/.softbots`. Electron browser data and window state use the normal XDG
-configuration directory (`~/.config/softbots` unless the environment overrides it).
+configuration directory (`~/.config/squadbots` unless the environment overrides it).
 
 ## Develop the desktop shell
 
@@ -115,12 +115,12 @@ For a package-shaped build without creating `.deb` or AppImage artifacts:
 
 ```sh
 pnpm package:linux:dir
-./release/linux-unpacked/softbots
+./release/linux-unpacked/squadbots
 ```
 
 ## Agent CLI discovery
 
-Applications launched from GNOME do not inherit the same interactive shell `PATH` as a terminal. Softbots
+Applications launched from GNOME do not inherit the same interactive shell `PATH` as a terminal. Squadbots
 keeps the inherited path and adds existing common locations such as:
 
 - `~/.local/bin`
@@ -136,16 +136,16 @@ It also probes the login shell in the background. If a CLI still is not detected
 path before launching the app from a terminal and verify it there:
 
 ```sh
-OMB_EXTRA_PATH=/your/custom/bin ./release/Softbots-*-x86_64.AppImage
+OMB_EXTRA_PATH=/your/custom/bin ./release/Squadbots-*-x86_64.AppImage
 ```
 
-Restart Softbots after installing or signing in to a CLI.
+Restart Squadbots after installing or signing in to a CLI.
 
 ## Xorg and Wayland
 
 The shell, chat, cloud computers, connected apps, and preview-only capture work in both GNOME session types.
 The Wayland chooser/select/persistent-stream/cancel/end/retry lifecycle has been validated in a real Ubuntu
-24.04 GNOME Wayland session. Softbots detects Wayland before XWayland when both `WAYLAND_DISPLAY` and
+24.04 GNOME Wayland session. Squadbots detects Wayland before XWayland when both `WAYLAND_DISPLAY` and
 `DISPLAY` exist, so capture cannot accidentally bypass portal-mediated behavior.
 
 Open the Computer panel and use the separate **Preview this computer** card. Capture never starts when the app
@@ -156,7 +156,7 @@ or panel opens.
   you press **Stop preview**, close the panel, end sharing from GNOME, or quit the app.
 
 Cancelling or ending Wayland sharing returns to a calm **Try again** state and never reopens the chooser
-automatically. Softbots does not capture screen audio, remember the selected monitor after restart, or
+automatically. Squadbots does not capture screen audio, remember the selected monitor after restart, or
 offer an **Open Settings** action on Linux.
 
 Local computer control is independent from preview. It is available after explicit opt-in on Xorg and remains
@@ -167,7 +167,7 @@ fail-closed on Wayland. XWayland's `DISPLAY` never bypasses the Wayland safety g
 Installed `.deb` and AppImage builds include the certified **Cua Driver 0.19.3** CLI and cursor-theme sidecar.
 On GNOME Xorg, open Settings, choose **Enable local control (Beta)**, wait for **Ready**, then explicitly assign a bot
 to **This computer**. No driver download, terminal command, `chmod`, or daemon setup is required. The owned daemon
-starts with `--no-overlay`, so Cua's decorative full-screen X11 cursor surface is never created. Softbots also
+starts with `--no-overlay`, so Cua's decorative full-screen X11 cursor surface is never created. Squadbots also
 uses Electron software rendering on Linux to avoid the reproduced NVIDIA/libGLES GPU-process failure that could
 leave an invisible focused app window receiving input.
 
@@ -204,7 +204,7 @@ package-owned path to `root:root 0755` automatically.
 The packaged runtime remains outside ASAR for deterministic provenance and validation. In packaged builds neither a
 `CUA_DRIVER_PATH` value nor an ambient PATH candidate can replace it; on Wayland neither can bypass the safety gate.
 
-The Xorg runtime uses private sockets, standard permission mode, per-action Softbots approvals,
+The Xorg runtime uses private sockets, standard permission mode, per-action Squadbots approvals,
 telemetry/update-check suppression, strict driver identity, overlay-free startup, and lifecycle cleanup tests. Those
 defenses remain necessary, but none substitutes for the real-seat acceptance evidence required to enable Wayland. Linux
 **Auto** never routes to the user's desktop, and no Cloud or Local VM approval can authorize it.
@@ -225,7 +225,7 @@ pnpm smoke:linux-package
 The verifier checks `.deb` metadata, desktop identity, the exact dormant Cua resource tree and provenance,
 SquashFS/DEB directory modes, runtime path policy, and matching binary hashes across all artifacts. The local smoke
 launches the unpacked app and AppImage without `--no-sandbox`; CI first reproduces a `0.1.7` in-place DEB upgrade and
-then runs the same smoke against `/opt/Softbots/softbots`. These lanes prove the embedded server and UI are
+then runs the same smoke against `/opt/Squadbots/squadbots`. These lanes prove the embedded server and UI are
 usable while an optional Composio broker stalls, verify that an old local-control opt-in is cleared, and assert that
 no Cua executable starts on Xorg or simulated Wayland. Low-level runtime tests retain the future private-daemon
 contract without activating it in a packaged app. Only a real-seat acceptance matrix can authorize re-enablement.
@@ -234,7 +234,7 @@ contract without activating it in a packaged app. Only a real-seat acceptance ma
 
 ### An agent CLI is missing
 
-Run the CLI directly in a terminal, finish its sign-in flow, then restart Softbots. If it lives outside the
+Run the CLI directly in a terminal, finish its sign-in flow, then restart Squadbots. If it lives outside the
 common directories above, use `OMB_EXTRA_PATH` while testing and report the install location so it can be
 considered for automatic discovery.
 
@@ -260,8 +260,8 @@ open a new chooser. Cancelling or stopping sharing never causes an automatic sec
 Confirm the executable bit and architecture:
 
 ```sh
-chmod +x Softbots-*-x86_64.AppImage
-file Softbots-*-x86_64.AppImage
+chmod +x Squadbots-*-x86_64.AppImage
+file Squadbots-*-x86_64.AppImage
 ```
 
 Run it from a terminal once to collect the startup output. Do not install `libfuse2` just for this AppImage; the

@@ -80,7 +80,7 @@ struct PairingView: View {
             .fullScreenCover(isPresented: $showingScanner) {
                 PairingScannerSheet { payload in
                     guard let url = URL(string: payload), let invite = PairingInvite.parse(url) else {
-                        return "That isn't an Softbots pairing QR code."
+                        return "That isn't an Squadbots pairing QR code."
                     }
                     accept(invite)
                     return nil
@@ -106,7 +106,7 @@ struct PairingView: View {
                 Text("Connect to your computer")
                     .font(.title.bold())
                     .multilineTextAlignment(.center)
-                Text("Scan the QR code in Softbots. We'll securely choose the best way to connect.")
+                Text("Scan the QR code in Squadbots. We'll securely choose the best way to connect.")
                     .font(.body)
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)
@@ -295,7 +295,7 @@ struct PairingView: View {
 
             if let credential = scannedCredential {
                 if !connectionIsProtected(connection) {
-                    Text("Only continue on a network you trust. Local connections are authenticated but are not encrypted by Softbots.")
+                    Text("Only continue on a network you trust. Local connections are authenticated but are not encrypted by Squadbots.")
                         .font(.footnote)
                         .foregroundStyle(.secondary)
                         .multilineTextAlignment(.center)

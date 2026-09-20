@@ -63,7 +63,7 @@ const internal = async (method: string, path: string, body?: unknown): Promise<A
   const threadId = String(claims.fromThreadId ?? claims.threadId ?? url.searchParams.get("fromThreadId") ?? "");
   const minted = await fetch(`${BASE}/api/testing/internal-capability`, {
     method: "POST",
-    headers: { "content-type": "application/json", "x-softbots-test-capability": TEST_CAPABILITY_KEY },
+    headers: { "content-type": "application/json", "x-squadbots-test-capability": TEST_CAPABILITY_KEY },
     body: JSON.stringify({ botId, threadId, kind: "agents", skillAuthoring: true }),
   });
   const { token } = await minted.json() as { token: string };

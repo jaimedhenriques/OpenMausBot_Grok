@@ -61,7 +61,7 @@ if (process.versions.electron && process.argv.includes(flag)) {
       assert.equal(message.connection.token, modelToken, "native provider gets model-only capability");
       grantsApplied++;
     } else clearsApplied++;
-    queueMicrotask(() => relay.receive(fakeProcess, { type: "softbots:managed-desktop-result", requestId: message.requestId, ok: true }));
+    queueMicrotask(() => relay.receive(fakeProcess, { type: "squadbots:managed-desktop-result", requestId: message.requestId, ok: true }));
   } };
   const client = createManagedDesktopClient({
     store: { read: async () => saved, write: async value => { saved = structuredClone(value); } },

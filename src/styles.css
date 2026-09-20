@@ -135,6 +135,7 @@
   --color-scrollbar: #3d3d3d;
   /* second speed line of the mascot — contrasts against the app ground */
   --color-maus-line: #fcfcfc;
+  --color-focus: #1084fe;
 }
 
 /* ── Midnight ──────────────────────────────────────────────────────────────
@@ -163,6 +164,7 @@
   --color-ink: #fcfcfc;
   --color-ink-secondary: #fcfcfc99;
   --color-accent: #1084fe;
+  --color-focus: #1084fe;
   --color-accent-border: #459ffe;
   --color-accent-text: #7fc0ff;
   --color-accent-ink: #ffffff;
@@ -211,7 +213,8 @@
   --color-ink-secondary: #6b6559; /* #8b8578 was 3.67:1 → 5.78:1 */
 
   /* Two accent tones: the fill carries white, the text stands on white. */
-  --color-accent: #a05f25;        /* #b06a2c darkened → 5.05:1 */
+  --color-accent: #a05f25;
+  --color-focus: #a05f25;        /* #b06a2c darkened → 5.05:1 */
   --color-accent-border: #b06a2c; /* the original tone lives on as the border */
   --color-accent-text: #96551f;   /* for links on a light ground — 5.81:1 */
   --color-accent-ink: #ffffff;
@@ -269,6 +272,7 @@
 
   /* Brass. Bright fill, dark lettering — the inversion described above. */
   --color-accent: #d99a3e;
+  --color-focus: #d99a3e;
   --color-accent-border: #e8b25e;
   --color-accent-text: #e0a44c;   /* 8.6:1 on the ground, for links */
   --color-accent-ink: #1c150c;    /* 7.4:1 on the brass fill */
@@ -331,7 +335,8 @@
                                      as a foreign object on a tinted ground */
   --color-ink-secondary: #4d5c5b; /* 7.0:1 on white, 5.8:1 on the ground */
 
-  --color-accent: #11736d;        /* deep teal, carries white at 5.68:1 */
+  --color-accent: #11736d;
+  --color-focus: #11736d;        /* deep teal, carries white at 5.68:1 */
   --color-accent-border: #14807a;
   --color-accent-text: #0d5f5a;   /* 7.5:1 on a card */
   --color-accent-ink: #ffffff;
@@ -375,6 +380,7 @@
   --color-ink-secondary: #b3b8c2;
 
   --color-accent: #4f75a2;
+  --color-focus: #4f75a2;
   --color-accent-border: #698fbb;
   --color-accent-text: #8fb4df;
   --color-accent-ink: #ffffff;
@@ -418,6 +424,7 @@
   --color-ink-secondary: #59616c;
 
   --color-accent: #355f8a;
+  --color-focus: #355f8a;
   --color-accent-border: #4978a6;
   --color-accent-text: #2c5680;
   --color-accent-ink: #ffffff;
@@ -460,6 +467,7 @@
   --color-ink-secondary: #b9afbd;
 
   --color-accent: #765683;
+  --color-focus: #9670a3;
   --color-accent-border: #9670a3;
   --color-accent-text: #c49bd2;
   --color-accent-ink: #ffffff;
@@ -513,6 +521,7 @@
      unread dot it is mostly used for, not for a filled button's label. The
      fill is darkened until white clears AA; the dot keeps reading as blue. */
   --color-accent: #0b62c4;
+  --color-focus: #0b62c4;
   --color-accent-border: #1084fe;
   --color-accent-text: #0b5cb8;
   --color-accent-ink: #ffffff;
@@ -554,15 +563,16 @@
   --color-menu: #ffffff;
   --color-inset: #e8ebf6;
   --color-control: #dde1f2;
-  --color-hairline: #c8cde3;
+  --color-hairline: #c4c9df;
 
   --color-ink: #1a1f33;
   --color-ink-secondary: #5c647c;
 
   --color-accent: #5b7cfa;
+  --color-focus: #5b7cfa;
   --color-accent-border: #7b94fc;
   --color-accent-text: #3d5fd4;
-  --color-accent-ink: #ffffff;
+  --color-accent-ink: #101735;
   --color-bubble-user: #e4e8fa;
   --color-bubble-user-ink: #1a1f33;
 

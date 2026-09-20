@@ -1125,7 +1125,7 @@ export function ComputerPanel({
   };
 
   const openVmSettings = () => {
-    window.sessionStorage.setItem("softbots.settings.section", "computer");
+    window.sessionStorage.setItem("squadbots.settings.section", "computer");
     dispatch({ type: "toggleAppSettings", open: true });
   };
 

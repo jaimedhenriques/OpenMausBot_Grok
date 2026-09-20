@@ -1,11 +1,11 @@
-# Softbots Android companion
+# Squadbots Android companion
 
 The Android counterpart to the iOS companion app: pair a phone with a computer
-running Softbots, then read and answer from the phone.
+running Squadbots, then read and answer from the phone.
 
 - `applicationId` — `com.softbots.companion`
 - `minSdk` 26 (Android 8.0), `targetSdk` / `compileSdk` 37
-- Deep-link scheme — `softbots`
+- Deep-link scheme — `squadbots`
 - Two modules: `:core` (protocol, ported from `ios/Sources/CompanionCore`) and
   `:app` (Compose UI, Android platform)
 
@@ -41,7 +41,7 @@ key, so no release signing material is needed. It installs beside the released
 app with separate pairing, preferences and messages; it does not update that app.
 
 Open Preview and pair using its QR scanner or manual address form. Preview does
-not register the release's `softbots://` pairing links or system share targets.
+not register the release's `squadbots://` pairing links or system share targets.
 Its file-sharing provider uses the preview application ID too.
 
 Pull-request CI runs the core and debug UI unit tests, builds both APK variants,
@@ -85,8 +85,8 @@ The signing key belongs to the maintainer and never enters this repository.
 Create a key once, outside any clone of this repository:
 
 ```sh
-keytool -genkeypair -v -keystore ~/softbots-release.jks \
-  -storetype PKCS12 -alias softbots -keyalg RSA -keysize 4096 -validity 10000
+keytool -genkeypair -v -keystore ~/squadbots-release.jks \
+  -storetype PKCS12 -alias squadbots -keyalg RSA -keysize 4096 -validity 10000
 ```
 
 Then, for each release:
@@ -95,7 +95,7 @@ Then, for each release:
 # whichever build-tools version is installed; any recent one works
 APKSIGNER="$(ls -d "$ANDROID_HOME"/build-tools/* | tail -1)/apksigner"
 
-"$APKSIGNER" sign --ks ~/softbots-release.jks --ks-key-alias softbots \
+"$APKSIGNER" sign --ks ~/squadbots-release.jks --ks-key-alias squadbots \
   --out app-release.apk app-release-unsigned.apk
 
 "$APKSIGNER" verify --verbose --print-certs app-release.apk
@@ -117,19 +117,19 @@ silently inherit a stale `keystore.properties` from a cached workspace.
 `android/keystore.properties` (gitignored):
 
 ```properties
-storeFile=/absolute/path/to/softbots-release.jks
+storeFile=/absolute/path/to/squadbots-release.jks
 storePassword=…
-keyAlias=softbots
+keyAlias=squadbots
 keyPassword=…
 ```
 
 or the environment, for CI secrets:
 
 ```
-SOFTBOTS_KEYSTORE_FILE
-SOFTBOTS_KEYSTORE_PASSWORD
-SOFTBOTS_KEY_ALIAS
-SOFTBOTS_KEY_PASSWORD   # optional; PKCS12 reuses the store password
+SQUADBOTS_KEYSTORE_FILE
+SQUADBOTS_KEYSTORE_PASSWORD
+SQUADBOTS_KEY_ALIAS
+SQUADBOTS_KEY_PASSWORD   # optional; PKCS12 reuses the store password
 ```
 
 Supply all of it or none of it. A build handed only part of the material stops

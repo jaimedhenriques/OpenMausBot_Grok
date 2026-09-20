@@ -25,7 +25,7 @@ const ORIGIN_TARGET =
     ? {
         pid: 31337,
         socketPath:
-          "\\\\.\\pipe\\softbots-companion-origin-31337-12345678-1234-1234-1234-123456789abc",
+          "\\\\.\\pipe\\squadbots-companion-origin-31337-12345678-1234-1234-1234-123456789abc",
       }
     : { pid: 31337, socketPath: "/tmp/omb-companion-origin-test/origin.sock" };
 const temporaryDirectories = [];
@@ -67,7 +67,7 @@ function fakeChild(pid = 4242) {
 function healthyResponse() {
   return {
     ok: true,
-    text: async () => JSON.stringify({ app: "softbots" }),
+    text: async () => JSON.stringify({ app: "squadbots" }),
   };
 }
 

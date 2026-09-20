@@ -232,7 +232,7 @@ const __APP_VERSION__: string;
         state(): Promise<{ maximized: boolean }>;
         onMaximizedChanged(cb: (maximized: boolean) => void): () => void;
       };
-      /** Receives a GitHub package URL opened through softbots://install. */
+      /** Receives a GitHub package URL opened through squadbots://install. */
       onPackageInstall?(cb: (url: string) => void): () => void;
       /** The desktop shell's app-menu Preferences… item was activated; open
        * app Settings. Local-shell only: remote server pages never receive

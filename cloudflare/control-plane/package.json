@@ -1,5 +1,5 @@
 {
-  "name": "@softbots/control-plane",
+  "name": "@squadbots/control-plane",
   "private": true,
   "version": "0.0.0",
   "type": "module",

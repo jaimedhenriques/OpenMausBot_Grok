@@ -11,9 +11,9 @@ dist-server
 .DS_Store
 *.tsbuildinfo
 electron/resources/speech-helper
-electron/resources/Softbots Speech.app
+electron/resources/Squadbots Speech.app
 # stale helper from the removed Teach a skill recorder
-electron/resources/Softbots Recorder.app
+electron/resources/Squadbots Recorder.app
 release
 .omb-scratch
 .wrangler/

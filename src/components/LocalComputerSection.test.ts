@@ -84,7 +84,7 @@ describe("computer inventory request wiring", () => {
     const local = confirmComputerAction(perBotLocalVmDeletePlan(cloudVm), confirm);
     const cloudDelete = confirmComputerAction(cloudComputerActionPlan("delete", ownedCloudComputer), confirm);
     const cloudSleep = confirmComputerAction(cloudComputerActionPlan("sleep", ownedCloudComputer), confirm);
-    const vpsName = "softbots-vps-current-123456abcdef";
+    const vpsName = "squadbots-vps-current-123456abcdef";
     const vps = confirmComputerAction(vpsComputerRemovePlan({
       name: vpsName,
       state: "running",
@@ -434,7 +434,7 @@ describe("cloud computer inventory UI", () => {
 
 describe("VPS computer inventory UI", () => {
   const ownedVps: VpsComputerInventoryInstance = {
-    name: "softbots-vps-current-123456abcdef",
+    name: "squadbots-vps-current-123456abcdef",
     state: "running",
     ownerBotId: "current-owner",
     ownerName: "Research",
@@ -456,7 +456,7 @@ describe("VPS computer inventory UI", () => {
     }));
 
   it("shows the configured host, owners, orphans, and status without raw container details", () => {
-    const orphanName = "softbots-vps-deleted-abcdef123456";
+    const orphanName = "squadbots-vps-deleted-abcdef123456";
     const markup = renderCard({
       instances: [
         ownedVps,
@@ -482,7 +482,7 @@ describe("VPS computer inventory UI", () => {
   });
 
   it("derives a stable identifier without exposing the bot-derived container name", () => {
-    expect(vpsComputerShortId("softbots-vps-deleted-abcdef123456")).toBe("ef123456");
+    expect(vpsComputerShortId("squadbots-vps-deleted-abcdef123456")).toBe("ef123456");
     expect(vpsComputerShortId("unexpected-provider-name")).toBe("unknown");
   });
 

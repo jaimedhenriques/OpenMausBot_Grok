@@ -45,7 +45,7 @@ const api = async (method: string, path: string, body?: unknown): Promise<ApiRes
 const internal = async (method: string, path: string, body?: unknown): Promise<ApiResult> => {
   const minted = await fetch(`${BASE}/api/testing/internal-capability`, {
     method: "POST",
-    headers: { "content-type": "application/json", "x-softbots-test-capability": TEST_CAPABILITY_KEY },
+    headers: { "content-type": "application/json", "x-squadbots-test-capability": TEST_CAPABILITY_KEY },
     body: JSON.stringify({ botId, threadId: botId, kind: "agents" }),
   });
   const { token } = await minted.json() as { token: string };
@@ -59,7 +59,7 @@ const internal = async (method: string, path: string, body?: unknown): Promise<A
 };
 
 const descriptorCapabilities = async (): Promise<Record<string, unknown>> =>
-  ((await api("GET", "/.well-known/softbots/environment")).body.capabilities ?? {}) as Record<string, unknown>;
+  ((await api("GET", "/.well-known/squadbots/environment")).body.capabilities ?? {}) as Record<string, unknown>;
 
 /** Every public route of the family, plus a path this build genuinely has no
  * handler for — the control the disabled routes must be identical to. */

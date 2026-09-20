@@ -26,16 +26,16 @@ let stderr = "";
 
 const completeReplies = [
   [
-    "Scout should verify the draft.\n<softbots-goal>{\"status\":\"continue\",",
-    "\"next\":\"Scout\",\"instruction\":\"Verify the draft and report evidence\",\"detail\":\"Draft prepared\"}</softbots-goal>",
+    "Scout should verify the draft.\n<squadbots-goal>{\"status\":\"continue\",",
+    "\"next\":\"Scout\",\"instruction\":\"Verify the draft and report evidence\",\"detail\":\"Draft prepared\"}</squadbots-goal>",
   ],
   "The draft is accurate and the cited evidence checks out.",
-  "The verified draft is ready to ship.\n<softbots-goal>{\"status\":\"completed\",\"detail\":\"Draft produced and independently verified.\"}</softbots-goal>",
+  "The verified draft is ready to ship.\n<squadbots-goal>{\"status\":\"completed\",\"detail\":\"Draft produced and independently verified.\"}</squadbots-goal>",
 ];
 
 const loopReplies = Array.from({ length: 13 }, (_, index) =>
   index % 2 === 0
-    ? `More work is needed.\n<softbots-goal>{"status":"continue","next":"Looper","instruction":"Try approach ${index / 2 + 1}","detail":"Still working"}</softbots-goal>`
+    ? `More work is needed.\n<squadbots-goal>{"status":"continue","next":"Looper","instruction":"Try approach ${index / 2 + 1}","detail":"Still working"}</squadbots-goal>`
     : `Approach ${Math.ceil(index / 2)} did not finish the task.`,
 );
 
@@ -110,7 +110,7 @@ beforeAll(async () => {
           FAKE_CLAUDE_SLOW_FINISH_GATE: busyGoalFinishGate,
           FAKE_CLAUDE_REPLIES: JSON.stringify([
             "The unrelated direct task is complete.",
-            "The queued team goal is complete.\n<softbots-goal>{\"status\":\"completed\",\"detail\":\"Waited for the lead, then completed normally.\"}</softbots-goal>",
+            "The queued team goal is complete.\n<squadbots-goal>{\"status\":\"completed\",\"detail\":\"Waited for the lead, then completed normally.\"}</squadbots-goal>",
           ]),
           FAKE_CLAUDE_REPLY_STATE: join(home, "busy-goal-replies.txt"),
         },
@@ -122,8 +122,8 @@ beforeAll(async () => {
         environment: {
           FAKE_CLAUDE_MODE: "happy",
           FAKE_CLAUDE_REPLIES: JSON.stringify([
-            "I am delegating the research.\n<softbots-goal>{\"status\":\"continue\",\"next\":\"Busy specialist\",\"instruction\":\"Research the answer and report evidence\",\"detail\":\"Waiting for specialist research.\"}</softbots-goal>",
-            "The specialist's evidence resolves the goal.\n<softbots-goal>{\"status\":\"completed\",\"detail\":\"Specialist research incorporated after their direct task finished.\"}</softbots-goal>",
+            "I am delegating the research.\n<squadbots-goal>{\"status\":\"continue\",\"next\":\"Busy specialist\",\"instruction\":\"Research the answer and report evidence\",\"detail\":\"Waiting for specialist research.\"}</squadbots-goal>",
+            "The specialist's evidence resolves the goal.\n<squadbots-goal>{\"status\":\"completed\",\"detail\":\"Specialist research incorporated after their direct task finished.\"}</squadbots-goal>",
           ]),
           FAKE_CLAUDE_REPLY_STATE: join(home, "busy-worker-lead-replies.txt"),
         },
@@ -150,9 +150,9 @@ beforeAll(async () => {
           FAKE_CLAUDE_MODE: "slow",
           FAKE_CLAUDE_SLOW_FINISH_GATE: stopScopedLeadFinishGate,
           FAKE_CLAUDE_REPLIES: JSON.stringify([
-            "I am delegating this scheduled goal.\n<softbots-goal>{\"status\":\"continue\",\"next\":\"Delayed worker\",\"instruction\":\"Finish the scheduled analysis\",\"detail\":\"Waiting for the delayed worker.\"}</softbots-goal>",
+            "I am delegating this scheduled goal.\n<squadbots-goal>{\"status\":\"continue\",\"next\":\"Delayed worker\",\"instruction\":\"Finish the scheduled analysis\",\"detail\":\"Waiting for the delayed worker.\"}</squadbots-goal>",
             "This is unrelated direct work and should be stopped.",
-            "The scheduled analysis is now complete.\n<softbots-goal>{\"status\":\"completed\",\"detail\":\"Scheduled goal survived the coordinator's direct Stop.\"}</softbots-goal>",
+            "The scheduled analysis is now complete.\n<squadbots-goal>{\"status\":\"completed\",\"detail\":\"Scheduled goal survived the coordinator's direct Stop.\"}</squadbots-goal>",
           ]),
           FAKE_CLAUDE_REPLY_STATE: join(home, "stop-scoped-lead-replies.txt"),
         },
@@ -187,7 +187,7 @@ beforeAll(async () => {
           FAKE_CLAUDE_MODE: "slow",
           FAKE_CLAUDE_SLOW_FINISH_GATE: routineGoalFinishGate,
           FAKE_CLAUDE_REPLIES: JSON.stringify([
-            "The scheduled review is complete.\n<softbots-goal>{\"status\":\"completed\",\"detail\":\"Scheduled team review completed.\"}</softbots-goal>",
+            "The scheduled review is complete.\n<squadbots-goal>{\"status\":\"completed\",\"detail\":\"Scheduled team review completed.\"}</squadbots-goal>",
           ]),
           FAKE_CLAUDE_REPLY_STATE: join(home, "routine-goal-replies.txt"),
         },
@@ -274,7 +274,7 @@ describe("goal-driven channel runs", () => {
     expect(current.working).toBe(false);
     expect(current.messages.filter((message: { kind: string; role?: string }) => message.kind === "text" && message.role === "bot")
       .map((message: { from?: { name?: string } }) => message.from?.name)).toEqual(["Lead", "Scout", "Lead"]);
-    expect(JSON.stringify(current.messages)).not.toContain("<softbots-goal>");
+    expect(JSON.stringify(current.messages)).not.toContain("<squadbots-goal>");
   });
 
   it("waits for a busy coordinator without spending a goal turn, then completes on the same card", async () => {

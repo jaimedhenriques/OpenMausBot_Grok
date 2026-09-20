@@ -31,7 +31,7 @@ const EXCLUDED = new Set([
   ".backups", "tools", "cache", ".cache", "tmp", ".tmp", "dist-native", "tunnel-runtime",
   ".softbots-server-child", "environment-id", "sessions.json", "tunnel-account.json",
   "team-computers.json",
-  "softbots-server.lease", "box-create-requests.lock", "messages.db-wal", "messages.db-shm",
+  "squadbots-server.lease", "box-create-requests.lock", "messages.db-wal", "messages.db-shm",
 ]);
 const EXCLUSION_NOTES = [
   "Device pairing, server identity, live leases and runtime files (existing destination identities are preserved).",
@@ -69,7 +69,7 @@ export interface WorkspaceRestoreResult {
 export type LastWorkspaceRestore = WorkspaceRestoreResult & { restored: true; id: string };
 
 function excluded(name: string): boolean {
-  return EXCLUDED.has(name) || excludedWorkspaceAuthPath(name) || name.startsWith("softbots-server.lease.") || name.startsWith("box-create-requests.lock.") || /^perm-[A-Za-z0-9_-]+\.sock$/.test(name);
+  return EXCLUDED.has(name) || excludedWorkspaceAuthPath(name) || name.startsWith("squadbots-server.lease.") || name.startsWith("box-create-requests.lock.") || /^perm-[A-Za-z0-9_-]+\.sock$/.test(name);
 }
 function forbiddenArchivePath(path: string): boolean {
   const folded = path.toLowerCase();
@@ -337,7 +337,7 @@ export async function createWorkspaceBackup(dataDir: string, options: CreateWork
     walk(root);
     if (skippedLinks) warnings.push(`${skippedLinks} managed skill discovery link(s) were omitted and are recreated by the app.`);
     const summary: WorkspaceBackupSummary = {
-      format: "softbots.workspace-backup", version: 1, id: job.id, createdAt: new Date().toISOString(),
+      format: "squadbots.workspace-backup", version: 1, id: job.id, createdAt: new Date().toISOString(),
       appVersion: options.appVersion ?? "unknown", files: entries.filter((entry) => entry.type === "file").length,
       directories: entries.filter((entry) => entry.type === "directory").length, bytes,
       bots: countJsonArray(join(snapshot, "data", "bots.json")), groups: countJsonArray(join(snapshot, "data", "groups.json")),
@@ -369,7 +369,7 @@ export async function createWorkspaceBackup(dataDir: string, options: CreateWork
 }
 
 function validateManifest(value: unknown): Manifest {
-  if (!record(value) || !record(value.summary) || value.summary.format !== "softbots.workspace-backup" || value.summary.version !== 1 ||
+  if (!record(value) || !record(value.summary) || value.summary.format !== "squadbots.workspace-backup" || value.summary.version !== 1 ||
     typeof value.summary.id !== "string" || !ID.test(value.summary.id) || typeof value.summary.createdAt !== "string" ||
     !Number.isFinite(Date.parse(value.summary.createdAt)) || typeof value.summary.appVersion !== "string" ||
     typeof value.sourceDataDir !== "string" || !(posix.isAbsolute(value.sourceDataDir) || win32.isAbsolute(value.sourceDataDir)) ||
@@ -530,7 +530,7 @@ export async function stageWorkspaceBackup(dataDir: string, archivePath: string,
     const versions = [manifest.summary.appVersion, options.currentAppVersion ?? ""].map((version) => /^(\d+)\.(\d+)\.(\d+)(?:[-+].*)?$/.exec(version)?.slice(1).map(Number));
     if (versions[0] && versions[1]) {
       for (let i = 0; i < 3; i++) {
-        if (versions[0][i] > versions[1][i]) throw new Error("This backup was made by a newer Softbots version. Update the app before restoring it.");
+        if (versions[0][i] > versions[1][i]) throw new Error("This backup was made by a newer Squadbots version. Update the app before restoring it.");
         if (versions[0][i] < versions[1][i]) break;
       }
     }

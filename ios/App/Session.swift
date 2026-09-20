@@ -220,7 +220,7 @@ final class Session: ObservableObject {
     /// only the first should ever send someone back to the pairing screen.
     private func restore() {
         restorePending = false
-        registry = SoftbotsSharedConnectionStore.loadRegistry()
+        registry = SquadbotsSharedConnectionStore.loadRegistry()
         connections = registry.connections
         // The Share extension can target any saved computer, not only the
         // one active at launch. Move every inactive pre-extension token into
@@ -361,7 +361,7 @@ final class Session: ObservableObject {
                 )
             }
         } saveConnection: {
-            SoftbotsSharedConnectionStore.saveRegistry(updatedRegistry)
+            SquadbotsSharedConnectionStore.saveRegistry(updatedRegistry)
         }
 
         stopActiveRuntime()
@@ -389,7 +389,7 @@ final class Session: ObservableObject {
         connect()
     }
 
-    /// `GET /.well-known/softbots/environment` on a server about to be
+    /// `GET /.well-known/squadbots/environment` on a server about to be
     /// paired. Nothing there means this address is not a server; the message
     /// names the address, since that is what the person can fix. Any other
     /// answer — unreachable, a gateway error — is passed through as it is.
@@ -399,7 +399,7 @@ final class Session: ObservableObject {
             _ = try await probe.environment()
         } catch APIError.status(404, _) {
             throw APIError.transport(
-                "\(connection.displayAddress) isn't an Softbots server. Check the address and try again."
+                "\(connection.displayAddress) isn't an Squadbots server. Check the address and try again."
             )
         }
     }
@@ -563,7 +563,7 @@ final class Session: ObservableObject {
     }
 
     private func persistRegistry() {
-        SoftbotsSharedConnectionStore.saveRegistry(registry)
+        SquadbotsSharedConnectionStore.saveRegistry(registry)
     }
 
     private func persistActiveConnection(_ updated: Connection) {
@@ -964,7 +964,7 @@ final class Session: ObservableObject {
                 do {
                     capable = try await client.imageCapableInstanceIDs()
                 } catch APIError.status(code: 404, message: _) {
-                    actionError = "Update Softbots on this computer before sending images."
+                    actionError = "Update Squadbots on this computer before sending images."
                     return false
                 }
                 guard imageSupported(by: chat, capableInstances: capable) else {
@@ -1229,7 +1229,7 @@ final class Session: ObservableObject {
     ) throws -> DownloadedFile {
         let manager = FileManager.default
         let root = manager.temporaryDirectory
-            .appendingPathComponent("SoftbotsFilePreviews", isDirectory: true)
+            .appendingPathComponent("SquadbotsFilePreviews", isDirectory: true)
         let directory = root.appendingPathComponent(UUID().uuidString, isDirectory: true)
         try Task.checkCancellation()
         try manager.createDirectory(
@@ -1263,7 +1263,7 @@ final class Session: ObservableObject {
 
     private static func removeStaleFilePreviews() {
         let root = FileManager.default.temporaryDirectory
-            .appendingPathComponent("SoftbotsFilePreviews", isDirectory: true)
+            .appendingPathComponent("SquadbotsFilePreviews", isDirectory: true)
         try? FileManager.default.removeItem(at: root)
     }
 

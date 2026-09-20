@@ -3,22 +3,22 @@
 <plist version="1.0">
   <dict>
     <key>CFBundleDisplayName</key>
-    <string>Softbots</string>
+    <string>Squadbots</string>
     <key>CFBundleExecutable</key>
     <string>speech-helper</string>
     <key>CFBundleIdentifier</key>
-    <string>ai.squadbots.app.speech-helper</string>
+    <string>ai.softbots.app.speech-helper</string>
     <key>CFBundleInfoDictionaryVersion</key>
     <string>6.0</string>
     <key>CFBundleName</key>
-    <string>Softbots Speech</string>
+    <string>Squadbots Speech</string>
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>LSBackgroundOnly</key>
     <true/>
     <key>NSMicrophoneUsageDescription</key>
-    <string>Softbots listens while you dictate messages or talk to a bot.</string>
+    <string>Squadbots listens while you dictate messages or talk to a bot.</string>
     <key>NSSpeechRecognitionUsageDescription</key>
-    <string>Softbots converts your speech into text during dictation and calls.</string>
+    <string>Squadbots converts your speech into text during dictation and calls.</string>
   </dict>
 </plist>

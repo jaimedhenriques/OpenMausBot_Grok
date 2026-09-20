@@ -1,4 +1,4 @@
-# Softbots agent notes
+# Squadbots agent notes
 
 Before claiming a server or conversation change works, follow
 [`docs/verification/README.md`](docs/verification/README.md). Always launch an

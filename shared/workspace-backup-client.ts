@@ -7,11 +7,11 @@ export const WORKSPACE_BACKUP_CLIENT_KEYS = [
   "omb-draft-channel-modes",
   "omb-skin",
   "omb-show-threads",
-  "softbots.sidebarDensity",
-  "softbots.sidebarCollapsedSections.v1",
-  "softbots.sidebarSectionOrder.v1",
+  "squadbots.sidebarDensity",
+  "squadbots.sidebarCollapsedSections.v1",
+  "squadbots.sidebarSectionOrder.v1",
   "omb-analytics-opt-out",
-  "softbots.remote-voice.v1",
+  "squadbots.remote-voice.v1",
 ] as const;
 
 export type WorkspaceBackupClientState = Partial<Record<(typeof WORKSPACE_BACKUP_CLIENT_KEYS)[number], string>>;

@@ -7,8 +7,8 @@ import { networkInterfaces } from "node:os";
 
 const CHECK_TIMEOUT_MS = 8_000;
 const MAX_RESPONSE_BYTES = 16_384;
-const DESCRIPTOR_PATH = "/.well-known/softbots/environment";
-export const CUSTOM_DOMAIN_CHALLENGE_PATH = "/.well-known/softbots/domain-check/";
+const DESCRIPTOR_PATH = "/.well-known/squadbots/environment";
+export const CUSTOM_DOMAIN_CHALLENGE_PATH = "/.well-known/squadbots/domain-check/";
 
 export class CustomDomainError extends Error {
   readonly status: number;
@@ -104,7 +104,7 @@ function requestJson(url: URL, address: LookupAddress, signal: AbortSignal): Pro
     };
     const request = httpsRequest(url, {
       method: "GET", agent: false, lookup, signal, rejectUnauthorized: true,
-      headers: { Accept: "application/json", "User-Agent": "Softbots-domain-check" },
+      headers: { Accept: "application/json", "User-Agent": "Squadbots-domain-check" },
     }, (response) => {
       // Node's HTTPS client does not follow Location redirects.
       if (response.statusCode !== 200) {

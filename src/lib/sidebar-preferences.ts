@@ -2,10 +2,10 @@ import { z } from "zod";
 
 export type SidebarDensity = "comfortable" | "compact" | "icons";
 
-export const SIDEBAR_DENSITY_KEY = "softbots.sidebarDensity";
-export const SIDEBAR_ATTENTION_PINNED_KEY = "softbots.sidebarAttentionPinned.v1";
-export const SIDEBAR_COLLAPSED_SECTIONS_KEY = "softbots.sidebarCollapsedSections.v1";
-export const SIDEBAR_SECTION_ORDER_KEY = "softbots.sidebarSectionOrder.v1";
+export const SIDEBAR_DENSITY_KEY = "squadbots.sidebarDensity";
+export const SIDEBAR_ATTENTION_PINNED_KEY = "squadbots.sidebarAttentionPinned.v1";
+export const SIDEBAR_COLLAPSED_SECTIONS_KEY = "squadbots.sidebarCollapsedSections.v1";
+export const SIDEBAR_SECTION_ORDER_KEY = "squadbots.sidebarSectionOrder.v1";
 
 export function parseSidebarDensity(value: string | null): SidebarDensity {
   switch (value) {

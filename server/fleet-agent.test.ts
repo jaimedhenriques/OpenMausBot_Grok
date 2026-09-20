@@ -58,7 +58,7 @@ describe.skipIf(process.platform === "win32")("fleet agent over its socket", () 
 
   async function boot(m: ReturnType<typeof machine>) {
     const logs: string[] = [];
-    const server = await startFleetAgent({ socketPath, node: "/usr/bin/node", script: "/usr/lib/node_modules/softbots/cli.js", root: m.root, deps: m.deps, auditFile: join(m.root, "audit.jsonl"), licenseKey: "omb1.k", now: () => new Date("2026-09-10T12:00:00Z") }, { log: (line) => logs.push(line) });
+    const server = await startFleetAgent({ socketPath, node: "/usr/bin/node", script: "/usr/lib/node_modules/squadbots/cli.js", root: m.root, deps: m.deps, auditFile: join(m.root, "audit.jsonl"), licenseKey: "omb1.k", now: () => new Date("2026-09-10T12:00:00Z") }, { log: (line) => logs.push(line) });
     stop = () => new Promise((resolve) => server.close(() => resolve()));
     return logs;
   }
@@ -69,10 +69,10 @@ describe.skipIf(process.platform === "win32")("fleet agent over its socket", () 
     await boot(m);
     const created = await fleetRequest(socketPath, "POST", "/workspaces", { slug: "acme", admins: ["owner@example.test"], portalUrl: "https://admin.example.test", openrouterKey: "scoped-secret", openrouterUrl: "https://admin.example.test/api/gateway/acme/openrouter/v1", openrouterModels: ["provider/first"], openrouterDefault: true });
     expect(created.status).toBe(200);
-    const configPath = join(root, "var/lib/softbots/acme/.softbots/config.json");
+    const configPath = join(root, "var/lib/squadbots/acme/.softbots/config.json");
     const original = m.files.get(configPath);
     expect(JSON.parse(original!).defaultModelSelection).toEqual({ instanceId: "opencodeGo", model: `${MANAGED_OPENROUTER}/provider/first` });
-    const path = join(root, "var/lib/softbots/acme/.config/opencode/opencode.json");
+    const path = join(root, "var/lib/squadbots/acme/.config/opencode/opencode.json");
     const count = m.calls.length;
     expect((await fleetRequest(socketPath, "POST", "/workspaces/acme/providers", { models: ["provider/second"] })).status).toBe(200);
     expect(JSON.parse(m.files.get(path)!).provider[MANAGED_OPENROUTER]).toMatchObject({ options: { apiKey: "scoped-secret" }, models: { "provider/second": { name: "provider/second" } } });
@@ -101,15 +101,15 @@ describe.skipIf(process.platform === "win32")("fleet agent over its socket", () 
 
     const created = await fleetRequest(socketPath, "POST", "/workspaces", { slug: "acme", admins: ["ada@example.test"], members: ["@acme.test"], cap: 40, anthropicKey: "sk-ant-fixture", brandJson: '{"name":"Acme"}', portalUrl: "https://admin.example.test", anthropicUrl: "https://admin.example.test/api/gateway/acme/anthropic" });
     expect(created).toMatchObject({ status: 200, body: { ok: true, log: [expect.stringContaining("https://acme.agentada.cc is ready")] } });
-    expect(m.calls).toContain("useradd --system --create-home --home-dir " + join(root, "var/lib/softbots/acme") + " --shell /usr/sbin/nologin --user-group omb-acme");
-    expect(JSON.parse(m.files.get(join(root, "var/lib/softbots/acme/.softbots/config.json"))!)).toMatchObject({ anthropic: { key: "sk-ant-fixture", url: "https://admin.example.test/api/gateway/acme/anthropic" }, budgets: { monthlyUsd: 40 } });
-    expect(m.files.get(join(root, "etc/softbots/instances/acme.env"))).toContain("OMB_LICENSE_KEY=omb1.k");
-    expect(m.files.get(join(root, "etc/softbots/instances/acme.env"))).toContain("OMB_ADMIN_URL=https://admin.example.test");
-    expect(m.files.get(join(root, "etc/softbots/instances/acme.env"))).toContain("OMB_ADMIN_WORKSPACE=acme");
+    expect(m.calls).toContain("useradd --system --create-home --home-dir " + join(root, "var/lib/squadbots/acme") + " --shell /usr/sbin/nologin --user-group omb-acme");
+    expect(JSON.parse(m.files.get(join(root, "var/lib/squadbots/acme/.softbots/config.json"))!)).toMatchObject({ anthropic: { key: "sk-ant-fixture", url: "https://admin.example.test/api/gateway/acme/anthropic" }, budgets: { monthlyUsd: 40 } });
+    expect(m.files.get(join(root, "etc/squadbots/instances/acme.env"))).toContain("OMB_LICENSE_KEY=omb1.k");
+    expect(m.files.get(join(root, "etc/squadbots/instances/acme.env"))).toContain("OMB_ADMIN_URL=https://admin.example.test");
+    expect(m.files.get(join(root, "etc/squadbots/instances/acme.env"))).toContain("OMB_ADMIN_WORKSPACE=acme");
 
     // The fixture's ledger is summarized by the mocked unprivileged-usage seam.
     // The filesystem suite exercises the real privilege-dropped child.
-    const dataDir = join(root, "var/lib/softbots/acme/.softbots");
+    const dataDir = join(root, "var/lib/squadbots/acme/.softbots");
     mkdirSync(dataDir, { recursive: true });
     appendUsage(dataDir, { at: "2026-09-03T10:00:00.000Z", botId: "b", botName: "B", threadId: "t", instanceId: "claude", driverKind: "claudeAgent", model: "m", input: 10, output: 5, costUsd: 0.25, trigger: { kind: "owner" } });
     appendUsage(dataDir, { at: "2026-08-03T10:00:00.000Z", botId: "b", botName: "B", threadId: "t", instanceId: "claude", driverKind: "claudeAgent", model: "m", input: 10, output: 5, costUsd: 9, trigger: { kind: "owner" } });
@@ -124,7 +124,7 @@ describe.skipIf(process.platform === "win32")("fleet agent over its socket", () 
     expect(await fleetRequest(socketPath, "POST", "/workspaces/acme/users", { action: "remove", email: "nobody@acme.test" })).toMatchObject({ status: 400, body: { error: expect.stringContaining("not on the list") } });
 
     expect((await fleetRequest(socketPath, "POST", "/workspaces/acme/suspend")).status).toBe(200);
-    expect(m.calls).toContain("systemctl disable --now softbots@acme.service");
+    expect(m.calls).toContain("systemctl disable --now squadbots@acme.service");
     expect((await fleetRequest(socketPath, "DELETE", "/workspaces/acme", { keepData: true })).status).toBe(200);
     expect(m.calls.some((call) => call.startsWith("userdel"))).toBe(false);
     expect(m.files.get(layout.fenceFile)).toContain("omb-acme");
@@ -158,7 +158,7 @@ describe.skipIf(process.platform === "win32")("fleet agent over its socket", () 
     expect(writeText).not.toHaveBeenCalled();
     expect(remove).not.toHaveBeenCalled();
     expect([...m.files]).toEqual(files);
-    expect(m.calls).toEqual(["systemctl is-active softbots@alpha.service", "systemctl is-active softbots@beta.service"]);
+    expect(m.calls).toEqual(["systemctl is-active squadbots@alpha.service", "systemctl is-active squadbots@beta.service"]);
     expect((await fleetRequest(socketPath, "GET", "/workspaces?statusOnly=false")).status).toBe(200);
     expect(usage).toHaveBeenCalledTimes(3);
   });
@@ -179,7 +179,7 @@ describe.skipIf(process.platform === "win32")("fleet agent over its socket", () 
     expect(await fleetRequest(socketPath, "POST", "/workspaces", { slug: "beta", admins: ["b@example.test"] })).toMatchObject({ status: 400, body: { error: expect.stringContaining("already exists") } });
     expect(await fleetRequest(socketPath, "POST", "/workspaces/beta/resume")).toMatchObject({ status: 400, body: { error: expect.stringContaining("operator recovery") } });
     expect(await fleetRequest(socketPath, "GET", "/workspaces")).toMatchObject({ status: 200, body: { workspaces: [{ slug: "beta", status: "error", live: "error" }] } });
-    expect(m.calls).not.toContain("systemctl is-active softbots@beta.service");
+    expect(m.calls).not.toContain("systemctl is-active squadbots@beta.service");
   });
 
   it("serializes complete mutations and exposes the reservation while creation is pending", async () => {

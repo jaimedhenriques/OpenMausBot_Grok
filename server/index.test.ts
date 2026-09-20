@@ -54,7 +54,7 @@ async function mintTestCapability(
     method: "POST",
     headers: {
       "content-type": "application/json",
-      "x-softbots-test-capability": TEST_CAPABILITY_KEY,
+      "x-squadbots-test-capability": TEST_CAPABILITY_KEY,
     },
     body: JSON.stringify({ botId, threadId, kind: options.kind ?? "agents", skillAuthoring: options.skillAuthoring ?? false }),
   });
@@ -63,7 +63,7 @@ async function mintTestCapability(
 }
 
 const PHONE_SECRET_TEST_IDENTITY = {
-  type: "softbots:phone-secret-key",
+  type: "squadbots:phone-secret-key",
   version: 1,
   keyId: "taWSR_nZ7ojlH_0Z3tar6Q",
   privateKey: {
@@ -177,7 +177,7 @@ const managedBoxNameForFixture = (botId: string): string => {
 const managedVpsNameForFixture = (botId: string): string => {
   const botPrefix = botId.toLowerCase().replace(/[^a-z0-9]/g, "").slice(0, 12) || "bot";
   const botHash = createHash("sha256").update(botId).digest("hex").slice(0, 12);
-  return `softbots-vps-${botPrefix}-${botHash}`;
+  return `squadbots-vps-${botPrefix}-${botHash}`;
 };
 
 const expectStoppedTestServerCleanly = (serverChild: ChildProcess, capturedStderr: string): void => {
@@ -211,7 +211,7 @@ const waitForIsolatedServer = async (
       if (response.status === 200) {
         const health = await response.json() as { app?: unknown; pid?: unknown; static?: unknown };
         lastObservedHealth = JSON.stringify(health);
-        if (health.app === "softbots" && health.pid === serverChild.pid && health.static === true) return;
+        if (health.app === "squadbots" && health.pid === serverChild.pid && health.static === true) return;
       }
     } catch {
       /* still starting */
@@ -424,7 +424,7 @@ beforeAll(async () => {
   // a fleet of exactly one unknown driver: no CLI probes, no network
   mkdirSync(join(home, ".softbots"), { recursive: true });
   mkdirSync(join(staticDir, "assets"), { recursive: true });
-  writeFileSync(join(staticDir, "index.html"), "<!doctype html><title>Packaged Softbots</title>");
+  writeFileSync(join(staticDir, "index.html"), "<!doctype html><title>Packaged Squadbots</title>");
   writeFileSync(join(staticDir, "assets", "smoke.css"), "body { color: white; }");
   writeFileSync(
     join(home, ".softbots", "config.json"),
@@ -1036,10 +1036,10 @@ describe("harness HTTP API", () => {
     expect(room.messages.find(
       (message: { id: string }) => message.id === "restarted-goal-card",
     )).toMatchObject({
-      text: "Goal failed: Softbots restarted before this goal finished.",
+      text: "Goal failed: Squadbots restarted before this goal finished.",
       goalRun: {
         status: "failed",
-        detail: "Softbots restarted before this goal finished.",
+        detail: "Squadbots restarted before this goal finished.",
         turnCount: 2,
         finishedAt: expect.any(Number),
       },
@@ -1133,7 +1133,7 @@ describe("harness HTTP API", () => {
       req.end();
     });
     expect(probe.status).toBe(200);
-    expect(probe.body).toEqual({ app: "softbots" });
+    expect(probe.body).toEqual({ app: "squadbots" });
     // the brand is public too: the sign-in page is branded before anyone has a session
     const brand = await new Promise<{ status: number; body: unknown }>((resolve, reject) => {
       const req = request({ hostname: "127.0.0.1", port: PORT, path: "/api/brand", headers: { host: "example.com" } }, (res) => {
@@ -1145,7 +1145,7 @@ describe("harness HTTP API", () => {
       req.end();
     });
     expect(brand.status).toBe(200);
-    expect(Reflect.get(Object(Reflect.get(Object(brand.body), "brand")), "name")).toBe("Softbots");
+    expect(Reflect.get(Object(Reflect.get(Object(brand.body), "brand")), "name")).toBe("Squadbots");
     expect(await statusWithHeaders({ origin: "https://example.com" })).toBe(403);
     expect(await statusWithHeaders({ host: `127.0.0.2:${PORT}` })).toBe(200);
     expect(await statusWithHeaders({ host: `[::1]:${PORT}` })).toBe(200);
@@ -1163,7 +1163,7 @@ describe("harness HTTP API", () => {
   it("identifies itself on /api/health", async () => {
     const { status, body } = await api("GET", "/api/health");
     expect(status).toBe(200);
-    expect(body.app).toBe("softbots");
+    expect(body.app).toBe("squadbots");
     expect(typeof body.pid).toBe("number");
     expect(body.static).toBe(true);
   });
@@ -1207,7 +1207,7 @@ describe("harness HTTP API", () => {
     const root = await fetch(`${BASE}/`);
     expect(root.status).toBe(200);
     expect(root.headers.get("content-type")).toBe("text/html");
-    expect(await root.text()).toContain("Packaged Softbots");
+    expect(await root.text()).toContain("Packaged Squadbots");
 
     const asset = await fetch(`${BASE}/assets/smoke.css`);
     expect(asset.status).toBe(200);
@@ -1217,7 +1217,7 @@ describe("harness HTTP API", () => {
     const spa = await fetch(`${BASE}/settings/desktop`);
     expect(spa.status).toBe(200);
     expect(spa.headers.get("content-type")).toBe("text/html");
-    expect(await spa.text()).toContain("Packaged Softbots");
+    expect(await spa.text()).toContain("Packaged Squadbots");
 
     const unknownApi = await api("GET", "/api/not-a-real-route");
     expect(unknownApi.status).toBe(404);
@@ -4286,7 +4286,7 @@ describe("harness HTTP API", () => {
       .map((bot: { name: string }) => bot.name);
     const exported = await api("POST", "/api/teams/export", { name: "Field Team" });
     expect(exported.status).toBe(200);
-    expect(exported.body).toMatchObject({ format: "softbots.team", version: 2, team: { name: "Field Team" } });
+    expect(exported.body).toMatchObject({ format: "squadbots.team", version: 2, team: { name: "Field Team" } });
     expect(exported.body.team.members.map((member: { name: string }) => member.name)).toEqual(visibleNames);
     expect(exported.body.team.members).toEqual(expect.arrayContaining([
       expect.objectContaining({ key: "mira", name: "Mira", title: "Project Lead", appearance: { color: "purple", mascotExpression: "focused" } }),
@@ -4301,7 +4301,7 @@ describe("harness HTTP API", () => {
     expect(markdownExport.body.markdown).toContain("Give this file to your Chief of Staff");
     expect(markdownExport.body.markdown).not.toMatch(/Archived|autoApprove|alwaysAllow|modelSelection|threadId/);
     expect((await api("GET", "/api/bots")).body.groups).toHaveLength(roomsBefore);
-    expect((await api("POST", "/api/teams/export", {})).body.team.name).toBe("My Softbots Team");
+    expect((await api("POST", "/api/teams/export", {})).body.team.name).toBe("My Squadbots Team");
 
     const stream = await openSse(`${BASE}/api/events`);
     try {
@@ -4427,7 +4427,7 @@ describe("harness HTTP API", () => {
     try {
       for (const suffix of [3, 4]) {
         const imported = await api("POST", "/api/teams/import", {
-          format: "softbots.team", version: 2,
+          format: "squadbots.team", version: 2,
           team: { name: `${stem} long template name`, members: [{ key: "helper", name: "Template helper", section: "Must not choose destination", appearance: { color: "blue" } }] },
         });
         expect(imported.status).toBe(201);
@@ -4447,7 +4447,7 @@ describe("harness HTTP API", () => {
 
   it("installs a complete bot package with a Chief, room, playbook, connector intent, and paused routine", async () => {
     const packageFile = {
-      format: "softbots.package",
+      format: "squadbots.package",
       version: 1,
       package: {
         id: "signal-desk",
@@ -4456,7 +4456,7 @@ describe("harness HTTP API", () => {
         tagline: "Find and explain the signal.",
         summary: "A complete two-bot signal workflow.",
         category: "Research",
-        author: { name: "Softbots" },
+        author: { name: "Squadbots" },
         license: "MIT",
         outcomes: ["Produce a concise signal brief."],
         setupMinutes: 4,
@@ -4642,7 +4642,7 @@ describe("harness HTTP API", () => {
     const room = (await api("POST", "/api/groups", { memberIds: [trusted.id], name: "War Room" })).body.group;
 
     const smuggled = {
-      format: "softbots.team",
+      format: "squadbots.team",
       version: 2,
       team: {
         name: "Trap Team",
@@ -4712,7 +4712,7 @@ describe("harness HTTP API", () => {
     // a legacy v1 file carries a room block; import ignores it entirely —
     // it neither creates a room nor touches the existing one sharing its name
     const legacy = await api("POST", "/api/teams/import", {
-      format: "softbots.team",
+      format: "squadbots.team",
       version: 1,
       team: {
         name: "Trap Team Legacy",
@@ -4871,7 +4871,7 @@ describe("harness HTTP API", () => {
         .find((message: { id: string }) => message.id === messageId);
       expect(directCard).toMatchObject({
         kind: "secret",
-        text: "Securely provide the OpenAI API key from Softbots on your phone or computer. It is never added to chat.",
+        text: "Securely provide the OpenAI API key from Squadbots on your phone or computer. It is never added to chat.",
       });
       expect(directCard.secret.description).toContain(
         `${bot.name} can use it but never read it back.`,
@@ -4904,8 +4904,8 @@ describe("harness HTTP API", () => {
           method: "POST",
           headers: {
             "content-type": "application/json",
-            "x-softbots-companion": "1",
-            "x-softbots-companion-device": "phone-1",
+            "x-squadbots-companion": "1",
+            "x-squadbots-companion-device": "phone-1",
           },
           body: JSON.stringify(encryptedEnvelope),
         },
@@ -5001,7 +5001,7 @@ describe("harness HTTP API", () => {
             queueMicrotask(() => callback({ data: identity }));
           },
           postMessage(message) {
-            if (message?.type !== "softbots:phone-secret-save") return;
+            if (message?.type !== "squadbots:phone-secret-save") return;
             writeFileSync(join(gate, message.requestId + ".started"), message.target);
             saves = saves.then(async () => {
               while (!existsSync(release)) await delay(10);
@@ -5021,13 +5021,13 @@ describe("harness HTTP API", () => {
                 const body = await response.json().catch(() => null);
                 if (!response.ok) throw new Error(body?.error || "credential config failed");
                 messages.emit("message", { data: {
-                  type: "softbots:phone-secret-save-result",
+                  type: "squadbots:phone-secret-save-result",
                   requestId: message.requestId,
                   ok: true,
                 } });
               } catch (error) {
                 messages.emit("message", { data: {
-                  type: "softbots:phone-secret-save-result",
+                  type: "squadbots:phone-secret-save-result",
                   requestId: message.requestId,
                   ok: false,
                   error: error instanceof Error ? error.message : String(error),
@@ -5184,8 +5184,8 @@ describe("harness HTTP API", () => {
           method: "POST",
           headers: {
             "content-type": "application/json",
-            "x-softbots-companion": "1",
-            "x-softbots-companion-device": deviceId,
+            "x-squadbots-companion": "1",
+            "x-squadbots-companion-device": deviceId,
           },
           body: JSON.stringify(Object.fromEntries(
             Object.entries(envelope).filter(([key]) => key !== "botId" && key !== "messageId"),
@@ -6440,7 +6440,7 @@ describe("harness HTTP API", () => {
 
   it("cards every ask when Claude's reviewer never started, says so once, and can hand the allow to Claude for the session", async () => {
     // A bot on Approve for me with Haiku 4.5: the CLI takes `auto`, runs
-    // Manual, and asks about everything. Softbots passes that through —
+    // Manual, and asks about everything. Squadbots passes that through —
     // no rule of its own answers — and says why, once.
     const bot = (await api("POST", "/api/bots", { name: "Quill" })).body.bot;
     const conns: Socket[] = [];
@@ -6529,7 +6529,7 @@ describe("harness HTTP API", () => {
       const seen = JSON.parse(readFileSync(fakeClaudeDump, "utf8"));
       const system = seen.systemPrompt ?? "";
       // the skill's instructions ride the system prompt the agent receives
-      expect(system).toContain('<softbots-skill id="create-verification-skill"');
+      expect(system).toContain('<squadbots-skill id="create-verification-skill"');
       expect(system).toContain("skill_manage");
     } finally {
       await api("POST", `/api/bots/${bot.id}/interrupt`);
@@ -6549,8 +6549,8 @@ describe("harness HTTP API", () => {
       await expect.poll(() => existsSync(fakeClaudeDump), { timeout: 5_000 }).toBe(true);
       const seen = JSON.parse(readFileSync(fakeClaudeDump, "utf8"));
       const system: string = seen.systemPrompt ?? "";
-      expect(system.startsWith("You are Kiwi, a personal bot in Softbots. Role: Tracker.")).toBe(true);
-      const persona = "You are Kiwi, a personal bot in Softbots. Role: Tracker.";
+      expect(system.startsWith("You are Kiwi, a personal bot in Squadbots. Role: Tracker.")).toBe(true);
+      const persona = "You are Kiwi, a personal bot in Squadbots. Role: Tracker.";
       const afterPersona = system.slice(persona.length);
       expect(afterPersona.startsWith("\n\nYour standing instructions follow.")).toBe(true);
       expect(system).toContain("--- BEGIN STANDING INSTRUCTIONS (SOUL.md, 28 bytes) ---\nFile bugs. Never file noise.\n--- END STANDING INSTRUCTIONS ---");
@@ -6612,7 +6612,7 @@ describe("harness HTTP API", () => {
       rmSync(fakeClaudeDump, { force: true });
       expect((await api("POST", `/api/bots/${bot.id}/messages`, { text: "hello" })).status).toBe(202);
       let system = (await readJsonFileWhenReady<{ systemPrompt: string }>(fakeClaudeDump, 15_000)).systemPrompt;
-      expect(system.startsWith("You are Blank, a personal bot in Softbots.")).toBe(true);
+      expect(system.startsWith("You are Blank, a personal bot in Squadbots.")).toBe(true);
       expect(system).not.toContain("at most four questions");
       expect(system).toContain("propose_profile");
 
@@ -6717,8 +6717,8 @@ describe("harness HTTP API", () => {
       })).status).toBe(202);
       let seen = await readJsonFileWhenReady<{ systemPrompt?: string }>(fakeClaudeDump);
       let system = seen.systemPrompt ?? "";
-      expect(system).toContain('<softbots-skill id="create-verification-skill"');
-      expect(system).toContain('<softbots-skill id="phone-harness"');
+      expect(system).toContain('<squadbots-skill id="create-verification-skill"');
+      expect(system).toContain('<squadbots-skill id="phone-harness"');
       expect((await api("POST", `/api/groups/${room.id}/interrupt`, {})).status).toBe(200);
       await expect.poll(async () => {
         const state = (await api("GET", "/api/bots?messages=0")).body;
@@ -6731,8 +6731,8 @@ describe("harness HTTP API", () => {
       })).status).toBe(202);
       seen = await readJsonFileWhenReady<{ systemPrompt?: string }>(fakeClaudeDump);
       system = seen.systemPrompt ?? "";
-      expect(system).not.toContain('<softbots-skill id="create-verification-skill"');
-      expect(system).toContain('<softbots-skill id="phone-harness"');
+      expect(system).not.toContain('<squadbots-skill id="create-verification-skill"');
+      expect(system).toContain('<squadbots-skill id="phone-harness"');
     } finally {
       if (room) {
         expect((await api("POST", `/api/groups/${room.id}/interrupt`, {})).status).toBe(200);
@@ -7207,7 +7207,7 @@ describe("harness HTTP API", () => {
           postMessage(message) {
             if (message?.requestId && /browser-(?:bot|profile)-deleted/.test(message.type ?? "")) {
               queueMicrotask(() => messages.emit("message", { data: {
-                type: "softbots:browser-lifecycle-result",
+                type: "squadbots:browser-lifecycle-result",
                 requestId: message.requestId,
                 ok: true,
               } }));
@@ -7450,7 +7450,7 @@ describe("harness HTTP API", () => {
 
       const removed = await api("POST", `/api/bots/${bot.id}/local-computer/remove`, {});
       expect(removed.status).toBe(409);
-      expect(removed.body.error).toMatch(/not created by Softbots.*remove it manually/i);
+      expect(removed.body.error).toMatch(/not created by Squadbots.*remove it manually/i);
       expect(readFileSync(fakeDockerLog, "utf8").split("\n")).not.toContain(
         `rm -f ${status.body.container_name}`,
       );
@@ -7688,7 +7688,7 @@ describe("harness HTTP API", () => {
         .find((message: { id: string }) => message.id === messageId);
       expect(roomCard).toMatchObject({
         kind: "secret",
-        text: "Securely provide the OpenAI API key from Softbots on your phone or computer. It is never added to chat.",
+        text: "Securely provide the OpenAI API key from Squadbots on your phone or computer. It is never added to chat.",
         from: { botId: second.id, name: second.name, color: second.color },
       });
 
@@ -7705,8 +7705,8 @@ describe("harness HTTP API", () => {
           method: "POST",
           headers: {
             "content-type": "application/json",
-            "x-softbots-companion": "1",
-            "x-softbots-companion-device": "phone-1",
+            "x-squadbots-companion": "1",
+            "x-squadbots-companion-device": "phone-1",
           },
           body: JSON.stringify({
             version: 1,
@@ -9601,7 +9601,7 @@ describe("bot memory API", () => {
       expect(before.body.sections[0]).toEqual({
         id: "persona",
         label: "Identity",
-        text: "You are Kiwi, a personal bot in Softbots. Role: Tracker. About: Files bugs.",
+        text: "You are Kiwi, a personal bot in Squadbots. Role: Tracker. About: Files bugs.",
         bytes: 75,
       });
       expect(before.body.sections.map((s: { id: string }) => s.id)).not.toContain("soul");

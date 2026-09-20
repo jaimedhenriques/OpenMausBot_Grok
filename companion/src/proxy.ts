@@ -220,14 +220,14 @@ const forwardHeaders = (req: IncomingMessage, authenticatedDeviceId?: string, mu
     // Lets a response whose URL is intentionally loopback-only (the VPS SSH
     // viewer) fail before opening a tunnel a phone cannot reach. This header
     // carries no authority; it only narrows behavior at the harness.
-    "x-softbots-companion": "1",
+    "x-squadbots-companion": "1",
   };
   // Never forward a caller-supplied device header. This value comes only
   // from the registry entry which authenticated the bearer above, allowing
   // the harness to bind an encrypted credential to the same paired phone.
   if (authenticatedDeviceId && /^[\w-]{1,128}$/.test(authenticatedDeviceId)) {
-    out["x-softbots-companion-device"] = authenticatedDeviceId;
-    if (mutationToken) out["x-softbots-companion-auth"] = mutationToken;
+    out["x-squadbots-companion-device"] = authenticatedDeviceId;
+    if (mutationToken) out["x-squadbots-companion-auth"] = mutationToken;
   }
   const contentType = req.headers["content-type"];
   if (contentType) out["content-type"] = String(contentType);
@@ -288,7 +288,7 @@ export function createProxyHandler(options: ProxyOptions) {
     // The computer owner enables this capability per device, off by default.
     if (isCloudDesktopAccess(method, path) && !device?.cloudDesktopAccess) {
       return sendJson(res, 403, {
-        error: "cloud desktop access is off for this device — enable it in Softbots → Settings → Remote access",
+        error: "cloud desktop access is off for this device — enable it in Squadbots → Settings → Remote access",
       });
     }
 
@@ -365,7 +365,7 @@ export function createProxyHandler(options: ProxyOptions) {
           const fail = () => {
             if (finished) return;
             finished = true;
-            sendJson(res, 502, { error: "Softbots is not ready on this computer" });
+            sendJson(res, 502, { error: "Squadbots is not ready on this computer" });
           };
           harness.on("data", (chunk: Buffer) => {
             size += chunk.length;
@@ -392,13 +392,13 @@ export function createProxyHandler(options: ProxyOptions) {
             if (
               (harness.statusCode ?? 500) < 200 ||
               (harness.statusCode ?? 500) >= 300 ||
-              (identity as { app?: unknown } | null)?.app !== "softbots"
+              (identity as { app?: unknown } | null)?.app !== "squadbots"
             ) {
               fail();
               return;
             }
             finished = true;
-            sendJson(res, 200, { app: "softbots" });
+            sendJson(res, 200, { app: "squadbots" });
           });
           return;
         }
@@ -528,7 +528,7 @@ export function createProxyHandler(options: ProxyOptions) {
           if (size > MAX_JSON_BODY_BYTES) {
             harness.destroy();
             if (res.headersSent) res.destroy();
-            else sendJson(res, 502, { error: "the response from Softbots was too large" });
+            else sendJson(res, 502, { error: "the response from Squadbots was too large" });
             return;
           }
           chunks.push(chunk);
@@ -627,8 +627,8 @@ export function createProxyHandler(options: ProxyOptions) {
         res,
         timedOut ? 504 : 502,
         timedOut
-          ? { error: "Softbots did not respond" }
-          : { error: "Softbots is not running on this computer" },
+          ? { error: "Squadbots did not respond" }
+          : { error: "Squadbots is not running on this computer" },
       );
     });
     req.pipe(upstream);

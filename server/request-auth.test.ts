@@ -144,9 +144,9 @@ describe("resolveRequestAuth", () => {
   it("accepts authenticated relay mutations without exposing the desktop owner capability", () => {
     const headers = {
       host: "127.0.0.1:8799",
-      "x-softbots-companion": "1",
-      "x-softbots-companion-device": "phone-1",
-      "x-softbots-companion-auth": "relay-secret",
+      "x-squadbots-companion": "1",
+      "x-squadbots-companion-device": "phone-1",
+      "x-squadbots-companion-auth": "relay-secret",
     };
     const check = (method: string, path: string, overrides: Record<string, string> = {}, relay = "relay-secret") =>
       resolveRequestAuth(request({ ...headers, ...overrides }, method), {
@@ -160,10 +160,10 @@ describe("resolveRequestAuth", () => {
       ["GET", "/api/events"], ["PATCH", "/api/bots/b/profile"],
     ]) expect(check(method, path).auth?.kind, path).toBe("loopback");
     const forged: Record<string, string>[] = [
-      { "x-softbots-companion-auth": "" },
-      { "x-softbots-companion-auth": "desktop-secret" },
-      { "x-softbots-companion-device": "" },
-      { "x-softbots-companion": "0" },
+      { "x-squadbots-companion-auth": "" },
+      { "x-squadbots-companion-auth": "desktop-secret" },
+      { "x-squadbots-companion-device": "" },
+      { "x-squadbots-companion": "0" },
       { origin: "https://evil.example" },
       { "x-forwarded-for": "203.0.113.1" },
       { host: "remote.example" },
@@ -259,7 +259,7 @@ describe("resolveRequestAuth", () => {
     const desktop = resolveRequestAuth(
       request({
         host: "127.0.0.1:8799",
-        "x-softbots-desktop-owner": "owner-token-123",
+        "x-squadbots-desktop-owner": "owner-token-123",
       }, "POST"),
       options("/api/routines"),
     );
@@ -387,7 +387,7 @@ describe("resolveRequestAuth", () => {
   });
 });
 
-describe("an IPC listener (softbots serve --tunnel) is remote by construction", () => {
+describe("an IPC listener (squadbots serve --tunnel) is remote by construction", () => {
   // SAFETY: only headers, method and the socket peer are read; a unix-socket peer has no address
   const overSocket = (headers: Record<string, string>) => ({ headers, method: "GET", socket: {} }) as unknown as IncomingMessage;
 

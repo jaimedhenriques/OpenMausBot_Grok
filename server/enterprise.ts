@@ -151,7 +151,7 @@ export function entitled(feature: string, now: number = Date.now()): boolean {
 export function describeEdition(status: EditionStatus): string {
   if (status.edition === "enterprise") {
     const until = status.expiresAt ? ` until ${status.expiresAt}` : "";
-    return `softbots enterprise edition for ${status.customer}${until}: ${status.features.join(", ") || "no features"}`;
+    return `squadbots enterprise edition for ${status.customer}${until}: ${status.features.join(", ") || "no features"}`;
   }
-  return `softbots open-source edition${status.notice ? ` (${status.notice})` : ""}`;
+  return `squadbots open-source edition${status.notice ? ` (${status.notice})` : ""}`;
 }

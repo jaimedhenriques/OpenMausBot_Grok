@@ -26,7 +26,7 @@ let home = "";
 let base = "";
 let stderr = "";
 
-const envelope = (payload: Record<string, string>) => `<softbots-goal>${JSON.stringify(payload)}</softbots-goal>`;
+const envelope = (payload: Record<string, string>) => `<squadbots-goal>${JSON.stringify(payload)}</squadbots-goal>`;
 
 // turn 1: assign the worker that never frees up; turn 2 (after the harness
 // note): reassign to the helper; turn 3: complete

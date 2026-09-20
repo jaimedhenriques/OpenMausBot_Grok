@@ -245,7 +245,7 @@ function registryComponent(pkg, cargoLockPackages) {
     ],
     properties: [
       { name: "openmausbot:cargo:package-id", value: pkg.id },
-      { name: "softbots:cargo:crate-sha256", value: locked.checksum },
+      { name: "squadbots:cargo:crate-sha256", value: locked.checksum },
     ],
   };
 }
@@ -287,10 +287,10 @@ function interComponent() {
     ],
     properties: [
       {
-        name: "softbots:font:name-table-version",
+        name: "squadbots:font:name-table-version",
         value: "Version 4.001;git-66647c0bb",
       },
-      { name: "softbots:font:embedded-sha256", value: INTER_FONT_SHA256 },
+      { name: "squadbots:font:embedded-sha256", value: INTER_FONT_SHA256 },
     ],
   };
 }
@@ -588,25 +588,25 @@ const bom = {
         },
       ],
       properties: [
-        { name: "softbots:archive:sha256", value: ARCHIVE_SHA256 },
-        { name: "softbots:cargo-lock:sha256", value: CARGO_LOCK_SHA256 },
-        { name: "softbots:target", value: "x86_64-unknown-linux-gnu" },
-        { name: "softbots:feature", value: "cua-driver/portal-input" },
+        { name: "squadbots:archive:sha256", value: ARCHIVE_SHA256 },
+        { name: "squadbots:cargo-lock:sha256", value: CARGO_LOCK_SHA256 },
+        { name: "squadbots:target", value: "x86_64-unknown-linux-gnu" },
+        { name: "squadbots:feature", value: "cua-driver/portal-input" },
         {
-          name: "softbots:registry-component-count",
+          name: "squadbots:registry-component-count",
           value: String(EXPECTED_REGISTRY_UNION_COUNT),
         },
         {
-          name: "softbots:trycua-component-count",
+          name: "squadbots:trycua-component-count",
           value: String(TRYCUA_COMPONENTS.length),
         },
         {
-          name: "softbots:file:cua-driver:sha256",
+          name: "squadbots:file:cua-driver:sha256",
           value:
             "ed5844fadf07b9b72c4a3b3802e1c47233c166d66d6198608d5991f807aab4ac",
         },
         {
-          name: "softbots:file:cua-cursor-theme:sha256",
+          name: "squadbots:file:cua-cursor-theme:sha256",
           value:
             "e589b2b7521bbfeaf9e2bfce668a38e80ed1b9790b1327b13d374fc331d8312a",
         },

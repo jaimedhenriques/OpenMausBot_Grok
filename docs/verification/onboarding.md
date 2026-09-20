@@ -9,7 +9,7 @@ node --experimental-strip-types scripts/control-omb.ts ui launch
 In a second terminal, pass its exact printed handle:
 
 ```sh
-node --experimental-strip-types scripts/verify-onboarding-ui.ts /tmp/softbots-verify-data-XXXXXX/ui.json
+node --experimental-strip-types scripts/verify-onboarding-ui.ts /tmp/squadbots-verify-data-XXXXXX/ui.json
 ```
 
 Use a fresh fixture. The recipe clears only its browser storage, then enables

@@ -1,6 +1,6 @@
 // Cua-backed Local VM lifecycle and health checks.
 //
-// Softbots owns only the sandbox boundary: image preparation, container
+// Squadbots owns only the sandbox boundary: image preparation, container
 // lifecycle, resource limits, loopback viewer, and target-scoped lease in the
 // harness. Desktop automation itself is Cua Driver. Agents connect directly to
 // `cua-driver mcp` inside the container; this module never reimplements clicks,
@@ -35,11 +35,11 @@ export const BASE_IMAGE = `${BASE_IMAGE_REPOSITORY}@${BASE_IMAGE_DIGEST}`;
 // tags, then may otherwise resolve the same name to Docker Hub when running it.
 // Image and container labels below remain the authoritative compatibility
 // check, not the mutable tag.
-export const IMAGE_REPOSITORY = "localhost/softbots/cua-local-vm";
+export const IMAGE_REPOSITORY = "localhost/squadbots/cua-local-vm";
 export const IMAGE_LAYER_VERSION = "5";
 export const IMAGE_LAYER_LABEL = "com.softbots.image-layer";
 export const IMAGE = `${IMAGE_REPOSITORY}:driver-${CUA_DRIVER_VERSION}-v${IMAGE_LAYER_VERSION}`;
-export const CONTAINER = "softbots-computer";
+export const CONTAINER = "squadbots-computer";
 export const MANAGED_LABEL = "com.softbots.local-vm";
 export const DRIVER_LABEL = "com.softbots.cua-driver";
 export const BASE_IMAGE_LABEL = "com.softbots.cua-base";
@@ -48,8 +48,8 @@ export const TARGET_LABEL = "com.softbots.local-vm-target";
 export const VM_WORKSPACE_DIR = join(DATA_DIR, "vm-home");
 export const VM_WORKSPACE_GUEST = "/home/cua/workspace";
 export const DISPLAY = ":1";
-export const CUA_SOCKET = "/run/user/1000/softbots-cua.sock";
-export const CUA_EXECUTABLE = "/usr/local/libexec/softbots/cua-driver";
+export const CUA_SOCKET = "/run/user/1000/squadbots-cua.sock";
+export const CUA_EXECUTABLE = "/usr/local/libexec/squadbots/cua-driver";
 
 const RUNTIMES = ["docker", "podman", "container"] as const;
 export type Runtime = (typeof RUNTIMES)[number];
@@ -175,11 +175,11 @@ RUN printf '%s\\n' \\
       'migrate_profile google-chrome' \\
       'migrate_profile chromium' \\
       'find "$profiles" \\( -name SingletonLock -o -name SingletonSocket -o -name SingletonCookie -o -name .parentlock \\) -delete' \\
-      > /usr/local/bin/prepare-softbots-workspace.sh \\
-    && chmod 0755 /usr/local/bin/prepare-softbots-workspace.sh
+      > /usr/local/bin/prepare-squadbots-workspace.sh \\
+    && chmod 0755 /usr/local/bin/prepare-squadbots-workspace.sh
 RUN printf '%s\\n' \\
       '#!/bin/sh' \\
-      '/usr/local/bin/prepare-softbots-workspace.sh' \\
+      '/usr/local/bin/prepare-squadbots-workspace.sh' \\
       'attempt=0' \\
       'until DISPLAY=:1 xset q >/dev/null 2>&1; do' \\
       '  attempt=$((attempt + 1))' \\
@@ -187,12 +187,12 @@ RUN printf '%s\\n' \\
       '  sleep 1' \\
       'done' \\
       'exec env CUA_DRIVER_INSTALL_CHANNEL=python_package CUA_DRIVER_RS_TELEMETRY_ENABLED=0 ${CUA_EXECUTABLE} serve --socket ${CUA_SOCKET} --permission-mode standard' \\
-      > /usr/local/bin/start-softbots-cua-driver.sh \\
-    && chmod 0755 /usr/local/bin/start-softbots-cua-driver.sh
+      > /usr/local/bin/start-squadbots-cua-driver.sh \\
+    && chmod 0755 /usr/local/bin/start-squadbots-cua-driver.sh
 RUN printf '%s\\n' \\
       '' \\
-      '[program:softbots-cua-driver]' \\
-      'command=/usr/local/bin/start-softbots-cua-driver.sh' \\
+      '[program:squadbots-cua-driver]' \\
+      'command=/usr/local/bin/start-squadbots-cua-driver.sh' \\
       'user=cua' \\
       'environment=HOME="/home/cua",USER="cua",DISPLAY=":1"' \\
       'autorestart=true' \\
@@ -381,7 +381,7 @@ function statusProblem(status: ContainerComputerStatus): string | null {
   }
   if (status.container === "missing") return "Create the Local VM";
   if (!status.imageMatches) return "The existing Local VM uses an older desktop or Cua Driver; recreate it";
-  if (!status.managed) return "The existing container was not created by Softbots; recreate it";
+  if (!status.managed) return "The existing container was not created by Squadbots; recreate it";
   if (status.network === "unsafe") return "The existing Local VM exposes its viewer publicly; recreate it";
   if (status.security === "unsafe") return "The existing Local VM is missing safety limits; recreate it";
   if (status.persistence === "unsafe") return "The existing Local VM is missing its durable workspace; recreate it";
@@ -403,7 +403,7 @@ export function imageLabelsMatch(labels: Record<string, string> | undefined): bo
 }
 
 /** Ownership is intentionally independent of the current image/driver
- * versions. An older Softbots container must stay removable (and eligible
+ * versions. An older Squadbots container must stay removable (and eligible
  * for idle cleanup), while imageMatches keeps readiness version-strict. */
 function containerOwnershipLabelsMatch(
   labels: Record<string, string> | undefined,
@@ -504,7 +504,7 @@ export async function containerComputerStatus(
     status.image = imageLabelsMatch(image.labels);
     status.image_id = image.id;
   } catch {
-    // The prepared Softbots derivative has not been built yet.
+    // The prepared Squadbots derivative has not been built yet.
   }
 
   try {
@@ -617,7 +617,7 @@ export async function containerComputerStatus(
       ) {
         throw new Error(`Cua health report is ${report.overall ?? "invalid"}`);
       }
-      const readinessShot = "/tmp/softbots-readiness.png";
+      const readinessShot = "/tmp/squadbots-readiness.png";
       await runner(
         status.runtime,
         cuaExecArgs([
@@ -962,7 +962,7 @@ async function ensureVmWorkspace(platform: NodeJS.Platform, target: LocalVmTarge
 
 async function prepareManagedImage(runtime: Runtime, runner: CommandRunner): Promise<void> {
   await runner(runtime, ["pull", BASE_IMAGE], 10 * 60_000);
-  const context = await mkdtemp(join(tmpdir(), "softbots-cua-image-"));
+  const context = await mkdtemp(join(tmpdir(), "squadbots-cua-image-"));
   try {
     await writeFile(join(context, "Dockerfile"), managedImageDockerfile(), { mode: 0o600 });
     await runner(runtime, ["build", "-t", IMAGE, context], 10 * 60_000);
@@ -1004,7 +1004,7 @@ export async function containerComputerAction(
   if (action === "remove" && !before.managed) {
     throw Object.assign(
       new Error(
-        `The existing container named ${target.containerName} was not created by Softbots; remove it manually in ${runtime}`,
+        `The existing container named ${target.containerName} was not created by Squadbots; remove it manually in ${runtime}`,
       ),
       { status: 409 },
     );
@@ -1081,7 +1081,7 @@ export async function containerComputerFrame(
   }
   if (cacheable) screenshotStatusCache.set(target.key, { status, expiresAt: now + SCREENSHOT_STATUS_TTL_MS });
   try {
-    const screenshot = "/tmp/softbots-preview.png";
+    const screenshot = "/tmp/squadbots-preview.png";
     await runner(
       status.runtime,
       cuaExecArgs([

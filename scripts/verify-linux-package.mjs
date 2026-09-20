@@ -399,7 +399,7 @@ function verifyCloudflaredResources(resources, label, { directoryMode = 0o755 } 
 const appImage = exactlyOne(".AppImage");
 const deb = exactlyOne(".deb");
 const unpacked = path.join(releaseDir, "linux-unpacked");
-const executable = path.join(unpacked, "softbots");
+const executable = path.join(unpacked, "squadbots");
 const resources = path.join(unpacked, "resources");
 
 requireExecutable(appImage);
@@ -423,7 +423,7 @@ const fields = execFileSync(
   { encoding: "utf8" },
 );
 for (const expected of [
-  "Package: softbots",
+  "Package: squadbots",
   "Architecture: amd64",
   "Maintainer: Jaime Henriques",
   "Section: utils",
@@ -455,7 +455,7 @@ try {
     "usr",
     "share",
     "applications",
-    "ai.squadbots.app.desktop",
+    "ai.softbots.app.desktop",
   );
   const scalableIcon = path.join(
     extracted,
@@ -465,16 +465,16 @@ try {
     "hicolor",
     "scalable",
     "apps",
-    "softbots.svg",
+    "squadbots.svg",
   );
   requireFile(desktopFile);
   requireFile(scalableIcon);
   const desktop = readFileSync(desktopFile, "utf8");
   for (const expected of [
     "Name=Squadbots",
-    "Exec=/opt/Squadbots/softbots %U",
-    "Icon=softbots",
-    "StartupWMClass=ai.squadbots.app",
+    "Exec=/opt/Squadbots/squadbots %U",
+    "Icon=squadbots",
+    "StartupWMClass=ai.softbots.app",
     "Categories=Utility;",
   ]) {
     if (!desktop.includes(expected)) fail(`desktop entry is missing ${JSON.stringify(expected)}`);

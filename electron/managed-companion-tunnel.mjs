@@ -294,7 +294,7 @@ async function verifyHostedEndpoint(
   const text = await response.text();
   if (Buffer.byteLength(text) > 4096) return false;
   try {
-    return JSON.parse(text)?.app === "softbots";
+    return JSON.parse(text)?.app === "squadbots";
   } catch {
     return false;
   }

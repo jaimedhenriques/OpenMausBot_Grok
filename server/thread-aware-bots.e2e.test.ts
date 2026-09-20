@@ -123,7 +123,7 @@ const mintedToken = async (botId: string, threadId: string, depth = 0): Promise<
     "POST",
     "/api/testing/internal-capability",
     { botId, threadId, kind: "agents", depth },
-    { "x-softbots-test-capability": TEST_CAPABILITY_KEY },
+    { "x-squadbots-test-capability": TEST_CAPABILITY_KEY },
   );
   expect(minted.status).toBe(201);
   return { authorization: `Bearer ${minted.body.token}` };

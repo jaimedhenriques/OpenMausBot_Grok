@@ -1,4 +1,4 @@
-// Rung three of the hosting ladder: `softbots serve --tunnel` gives a
+// Rung three of the hosting ladder: `squadbots serve --tunnel` gives a
 // server a public HTTPS address (https://c-<id>.softbots.com) with no
 // domain, no proxy and no open port, through the same control plane and
 // Cloudflare tunnel the desktop app already uses. Headless, so:

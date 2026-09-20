@@ -1,5 +1,5 @@
 {
-  "name": "softbots",
+  "name": "squadbots",
   "private": true,
   "version": "0.1.84",
   "description": "A local-first chat app for running a team of AI agents.",
@@ -13,7 +13,7 @@
     "email": "jaimedhenriques@users.noreply.github.com"
   },
   "license": "Apache-2.0",
-  "desktopName": "ai.squadbots.app.desktop",
+  "desktopName": "ai.softbots.app.desktop",
   "type": "module",
   "main": "electron/main.mjs",
   "engines": {
@@ -27,12 +27,12 @@
     "check:contrast": "node scripts/check-skin-contrast.mjs",
     "i18n:check": "node scripts/generate-locale.mjs --check",
     "dev": "vite",
-    "docs:dev": "pnpm --filter @softbots/docs dev",
-    "docs:build": "pnpm --filter @softbots/docs build",
-    "docs:preview": "pnpm --filter @softbots/docs preview",
+    "docs:dev": "pnpm --filter @squadbots/docs dev",
+    "docs:build": "pnpm --filter @squadbots/docs build",
+    "docs:preview": "pnpm --filter @squadbots/docs preview",
     "companion": "node --experimental-strip-types companion/src/index.ts",
-    "omb": "node --experimental-strip-types server/softbots.ts",
-    "pair": "node --experimental-strip-types server/softbots.ts pair",
+    "omb": "node --experimental-strip-types server/squadbots.ts",
+    "pair": "node --experimental-strip-types server/squadbots.ts pair",
     "dev:server": "node --experimental-strip-types server/index.ts",
     "mcp": "node --experimental-strip-types scripts/mcp-server.ts",
     "control:omb": "node --experimental-strip-types scripts/control-omb.ts",
@@ -77,10 +77,10 @@
     "broker:check": "pnpm broker:types && tsc -p cloudflare/composio-broker/tsconfig.json",
     "broker:test": "vitest run --config cloudflare/composio-broker/vitest.config.ts",
     "broker:deploy": "wrangler deploy --config cloudflare/composio-broker/wrangler.jsonc",
-    "control-plane:types": "pnpm --filter @softbots/control-plane types",
-    "control-plane:check": "pnpm --filter @softbots/control-plane check",
-    "control-plane:test": "pnpm --filter @softbots/control-plane test",
-    "control-plane:dry-run": "pnpm --filter @softbots/control-plane dry-run"
+    "control-plane:types": "pnpm --filter @squadbots/control-plane types",
+    "control-plane:check": "pnpm --filter @squadbots/control-plane check",
+    "control-plane:test": "pnpm --filter @squadbots/control-plane test",
+    "control-plane:dry-run": "pnpm --filter @squadbots/control-plane dry-run"
   },
   "dependencies": {
     "@clack/prompts": "1.7.0",

@@ -61,7 +61,7 @@ struct SettingsView: View {
                     .accessibilityHint(notificationAccessibilityHint)
                 }
             } footer: {
-                Text("Alerts arrive while Softbots is open or was recently in the background. Closed-app delivery is not available yet.")
+                Text("Alerts arrive while Squadbots is open or was recently in the background. Closed-app delivery is not available yet.")
             }
 
             Section {
@@ -470,7 +470,7 @@ struct ConnectionSecurityView: View {
             }
             Button("Cancel", role: .cancel) {}
         } message: {
-            Text("This removes the connection from this device only. It does not revoke this device on your Mac. To remove Mac-side access, open Softbots → Settings → Phone and remove it there.")
+            Text("This removes the connection from this device only. It does not revoke this device on your Mac. To remove Mac-side access, open Squadbots → Settings → Phone and remove it there.")
         }
     }
 
@@ -481,7 +481,7 @@ struct ConnectionSecurityView: View {
         case .live:
             return Text("This computer is connected and responding normally.")
         case .connecting:
-            return Text("Softbots is trying the saved connection automatically.")
+            return Text("Squadbots is trying the saved connection automatically.")
         case let .offline(reason):
             return Text(verbatim: reason)
         case .unauthorized:

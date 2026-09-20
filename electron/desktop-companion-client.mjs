@@ -24,7 +24,7 @@ const MAX_ERROR_BYTES = 64 * 1024;
 export function desktopCompanionRendererArguments(localOrigin, remoteAccess) {
   return [
     `--omb-local-origin=${localOrigin}`,
-    ...(remoteAccess ? ["--softbots-remote-client"] : []),
+    ...(remoteAccess ? ["--squadbots-remote-client"] : []),
   ];
 }
 

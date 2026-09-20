@@ -288,7 +288,7 @@ export function modelInvocation(platform = process.platform, comSpec = process.e
 }
 
 function runModel(prompt) {
-  const workDir = mkdtempSync(join(tmpdir(), "softbots-locale-"));
+  const workDir = mkdtempSync(join(tmpdir(), "squadbots-locale-"));
   try {
     const invocation = modelInvocation();
     const stdout = execFileSync(invocation.command, invocation.args, {

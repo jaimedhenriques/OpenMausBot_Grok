@@ -117,7 +117,7 @@ describe.skipIf(process.platform === "win32" || process.getuid?.() === 0)("fleet
   });
 
   it("updates managed models through the real tenant helper and refuses a symlink without touching its target", async () => {
-    fixture.home = join(root, "var/lib/softbots/acme");
+    fixture.home = join(root, "var/lib/squadbots/acme");
     mkdirSync(fixture.home, { recursive: true, mode: 0o700 });
     const directory = join(fixture.home, ".config", "opencode");
     mkdirSync(directory, { recursive: true, mode: 0o700 });

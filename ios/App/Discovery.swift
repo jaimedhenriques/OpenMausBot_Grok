@@ -1,7 +1,7 @@
 // Finding computers on the network, so nobody types an IP address.
 //
 // The other half of `server/mdns.ts`: the harness advertises
-// `_softbots._tcp` while its companion listener is up, and this browses
+// `_squadbots._tcp` while its companion listener is up, and this browses
 // for it. NWBrowser is first-party and does the mDNS work; all that is left
 // is resolving each result to a host and port.
 //
@@ -52,7 +52,7 @@ final class Discovery: ObservableObject {
         let parameters = NWParameters()
         parameters.includePeerToPeer = false
         let browser = NWBrowser(
-            for: .bonjour(type: "_softbots._tcp", domain: nil),
+            for: .bonjour(type: "_squadbots._tcp", domain: nil),
             using: parameters
         )
 

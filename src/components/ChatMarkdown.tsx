@@ -428,7 +428,7 @@ export function markdownImageName(src: string, alt?: string): string {
   const supplied = alt?.trim();
   if (supplied) return supplied;
   try {
-    const path = decodeURIComponent(new URL(src, "https://softbots.invalid").pathname);
+    const path = decodeURIComponent(new URL(src, "https://squadbots.invalid").pathname);
     const name = path.split(/[\\/]/).filter(Boolean).at(-1)?.trim();
     if (name) return name;
   } catch {

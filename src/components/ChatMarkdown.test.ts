@@ -164,17 +164,17 @@ describe("#Title thread links in markdown", () => {
   });
 
   it("renders a sent canonical link as a chip that opens the thread", () => {
-    const markup = render("done in [QA PR 245](softbots://thread/qa-245?bot=scout) today");
+    const markup = render("done in [QA PR 245](squadbots://thread/qa-245?bot=scout) today");
     expect(markup).toContain('<button type="button" data-thread-link="qa-245"');
     expect(markup).toContain(">QA PR 245</button>");
-    expect(markup).not.toContain('href="softbots://');
+    expect(markup).not.toContain('href="squadbots://');
   });
 
   it("keeps a dead thread link as plain text, never an external anchor", () => {
-    const markup = render("see [Gone](softbots://thread/dead?bot=scout)");
+    const markup = render("see [Gone](squadbots://thread/dead?bot=scout)");
     expect(markup).toContain(">Gone<");
     expect(markup).not.toContain("data-thread-link");
-    expect(markup).not.toContain('href="softbots://');
+    expect(markup).not.toContain('href="squadbots://');
     expect(markup).not.toContain('target="_blank"');
   });
 });

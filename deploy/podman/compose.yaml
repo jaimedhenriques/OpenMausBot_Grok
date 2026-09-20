@@ -1,4 +1,4 @@
-name: ${COMPOSE_PROJECT_NAME:-softbots-podman}
+name: ${COMPOSE_PROJECT_NAME:-squadbots-podman}
 services:
   omb:
     build:
@@ -6,7 +6,7 @@ services:
       dockerfile: deploy/podman/Containerfile
       args:
         ENGINES: ${ENGINES:-}
-    image: localhost/softbots-podman:${OMB_IMAGE_TAG:-local}
+    image: localhost/squadbots-podman:${OMB_IMAGE_TAG:-local}
     init: true
     userns_mode: keep-id:uid=1001,gid=1001
     user: "1001:1001"
@@ -27,7 +27,7 @@ services:
       OMB_PUBLIC_URL: ${OMB_PUBLIC_URL:-http://localhost:8080}
       OMB_WEBHOOK_PUBLIC_URL: ${OMB_PUBLIC_URL:-http://localhost:8080}
     healthcheck:
-      test: [CMD-SHELL, 'curl -fsS http://127.0.0.1:$$OMB_PORT/api/health | grep -q softbots']
+      test: [CMD-SHELL, 'curl -fsS http://127.0.0.1:$$OMB_PORT/api/health | grep -q squadbots']
       interval: 15s
       timeout: 5s
       start_period: 30s

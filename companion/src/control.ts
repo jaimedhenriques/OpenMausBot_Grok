@@ -41,7 +41,7 @@ export interface ControlOptions {
    * owned by a device whose access changed or was revoked. */
   disconnectDevice?: (deviceId: string) => void;
   /** Re-read Tailscale after the sidecar has started. People commonly install,
-   * sign in, or enable Tailscale while Softbots is already running. */
+   * sign in, or enable Tailscale while Squadbots is already running. */
   refreshTailscale?: () => Promise<void>;
 }
 

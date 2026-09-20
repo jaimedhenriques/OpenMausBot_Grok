@@ -42,7 +42,7 @@ describe("updateClaudeCli", () => {
     };
 
     await expect(updateClaudeCli("claude", {}, execute)).rejects.toThrow(
-      "Claude finished updating, but Softbots could not verify",
+      "Claude finished updating, but Squadbots could not verify",
     );
   });
 });

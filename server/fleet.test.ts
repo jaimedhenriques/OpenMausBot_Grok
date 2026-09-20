@@ -48,22 +48,22 @@ describe("fleet naming", () => {
 
 describe("rendered files", () => {
   it("renders one template unit for every workspace, hardened and parameterised by slug", () => {
-    const unit = templateUnit({ node: "/usr/bin/node", script: "/usr/lib/node_modules/softbots/cli.js", layout });
+    const unit = templateUnit({ node: "/usr/bin/node", script: "/usr/lib/node_modules/squadbots/cli.js", layout });
     expect(unit).toContain("User=omb-%i");
-    expect(unit).toContain("EnvironmentFile=/etc/softbots/instances/%i.env");
-    expect(unit).toContain("ExecStart=/usr/bin/node /usr/lib/node_modules/softbots/cli.js serve --port ${OMB_PORT} --data-dir ${OMB_DATA_DIR} --public-url ${OMB_PUBLIC_URL} --label %i --no-pair");
-    for (const line of ["PrivateTmp=yes", "NoNewPrivileges=yes", "ProtectSystem=strict", "ReadWritePaths=/var/lib/softbots/%i"]) expect(unit).toContain(line);
+    expect(unit).toContain("EnvironmentFile=/etc/squadbots/instances/%i.env");
+    expect(unit).toContain("ExecStart=/usr/bin/node /usr/lib/node_modules/squadbots/cli.js serve --port ${OMB_PORT} --data-dir ${OMB_DATA_DIR} --public-url ${OMB_PUBLIC_URL} --label %i --no-pair");
+    for (const line of ["PrivateTmp=yes", "NoNewPrivileges=yes", "ProtectSystem=strict", "ReadWritePaths=/var/lib/squadbots/%i"]) expect(unit).toContain(line);
     expect(templateUnit({ node: "/usr/bin/node", script: "/src/server/cli.ts", layout })).toContain("--experimental-strip-types /src/server/cli.ts");
   });
 
   it("requires the loopback fence to start successfully before every tenant instance", () => {
-    const unit = templateUnit({ node: "/usr/bin/node", script: "/src/server/softbots.ts", layout });
+    const unit = templateUnit({ node: "/usr/bin/node", script: "/src/server/squadbots.ts", layout });
     const header = unit.split("[Service]")[0];
-    expect(header).toContain("After=network-online.target softbots-fence.service\n");
-    expect(header).toContain("Requires=softbots-fence.service\n");
+    expect(header).toContain("After=network-online.target squadbots-fence.service\n");
+    expect(header).toContain("Requires=squadbots-fence.service\n");
     const fence = fenceUnit(layout);
-    expect(fence).toContain("Type=oneshot\nRemainAfterExit=yes\nExecStart=/usr/sbin/nft -f /etc/softbots/fence.nft\n");
-    expect(fence).not.toContain("Before=softbots@.service");
+    expect(fence).toContain("Type=oneshot\nRemainAfterExit=yes\nExecStart=/usr/sbin/nft -f /etc/squadbots/fence.nft\n");
+    expect(fence).not.toContain("Before=squadbots@.service");
   });
 
   it("fences each workspace's loopback ports to its own user, Caddy and root", () => {
@@ -71,7 +71,7 @@ describe("rendered files", () => {
       { slug: "globex", host: "globex.x", port: 8820, webhookPort: 8821, status: "running", createdAt: "" },
       { slug: "acme", host: "acme.x", port: 8810, webhookPort: 8811, status: "running", createdAt: "" },
     ]);
-    expect(rules).toContain("add table inet softbots\nflush table inet softbots");
+    expect(rules).toContain("add table inet squadbots\nflush table inet squadbots");
     expect(rules.indexOf("omb-acme")).toBeLessThan(rules.indexOf("omb-globex"));
     expect(rules).toContain("oif lo tcp dport { 8810, 8811 } meta skuid != { omb-acme, caddy, root } reject");
     expect(fenceRules([])).not.toContain("reject");
@@ -96,8 +96,8 @@ describe("rendered files", () => {
 
   it("writes the environment, the first config and the sign-in edits the server reads live", () => {
     const workspace: FleetWorkspace = { slug: "acme", host: "acme.agentada.cc", port: 8810, webhookPort: 8811, status: "running", createdAt: "" };
-    expect(instanceEnv({ workspace, dataDir: "/var/lib/softbots/acme/.softbots", licenseKey: "omb1.k" })).toBe(
-      "OMB_DATA_DIR=/var/lib/softbots/acme/.softbots\nOMB_PORT=8810\nOMB_WEBHOOK_PORT=8811\nOMB_PUBLIC_URL=https://acme.agentada.cc\nOMB_LICENSE_KEY=omb1.k\n",
+    expect(instanceEnv({ workspace, dataDir: "/var/lib/squadbots/acme/.softbots", licenseKey: "omb1.k" })).toBe(
+      "OMB_DATA_DIR=/var/lib/squadbots/acme/.softbots\nOMB_PORT=8810\nOMB_WEBHOOK_PORT=8811\nOMB_PUBLIC_URL=https://acme.agentada.cc\nOMB_LICENSE_KEY=omb1.k\n",
     );
     expect(JSON.parse(initialConfig({ admins: ["ada@example.test"], members: ["@acme.test"], anthropicKey: "sk-ant-x", monthlyCapUsd: 50 }))).toEqual({
       signIn: { admins: ["ada@example.test"], members: ["@acme.test"] }, anthropic: { key: "sk-ant-x" }, budgets: { monthlyUsd: 50 },
@@ -121,19 +121,19 @@ describe("rendered files", () => {
 
 describe("plans", () => {
   it("initialises the server once: folders, registry, templates, fence, the Caddy import, and reloads", () => {
-    const { steps, registry } = initPlan({ domain: "AgentAda.cc", node: "/usr/bin/node", script: "/usr/lib/node_modules/softbots/cli.js", layout });
+    const { steps, registry } = initPlan({ domain: "AgentAda.cc", node: "/usr/bin/node", script: "/usr/lib/node_modules/squadbots/cli.js", layout });
     expect(registry).toEqual({ version: 1, domain: "agentada.cc", nextPort: 8810, workspaces: {} });
-    expect(writesOf(steps)).toEqual(["/etc/softbots/fleet.json", "/etc/systemd/system/softbots@.service", "/etc/softbots/fence.nft", "/etc/systemd/system/softbots-fence.service"]);
+    expect(writesOf(steps)).toEqual(["/etc/squadbots/fleet.json", "/etc/systemd/system/squadbots@.service", "/etc/squadbots/fence.nft", "/etc/systemd/system/squadbots-fence.service"]);
     expect(steps.find((step) => step.kind === "append-once")).toEqual({ kind: "append-once", path: "/etc/caddy/Caddyfile", line: "import /etc/caddy/omb.d/*.caddy" });
-    expect(argvOf(steps)).toEqual(["systemctl daemon-reload", "systemctl enable --now softbots-fence.service", "systemctl reload caddy"]);
+    expect(argvOf(steps)).toEqual(["systemctl daemon-reload", "systemctl enable --now squadbots-fence.service", "systemctl reload caddy"]);
     expect(() => initPlan({ domain: "not a domain", node: "n", script: "s", layout })).toThrow("domain name");
     // with an operator, the agent unit is written and started, and the registry remembers who
-    const withAgent = initPlan({ domain: "agentada.cc", node: "/usr/bin/node", script: "/usr/lib/node_modules/softbots/cli.js", operator: "maus", layout });
+    const withAgent = initPlan({ domain: "agentada.cc", node: "/usr/bin/node", script: "/usr/lib/node_modules/squadbots/cli.js", operator: "maus", layout });
     expect(withAgent.registry.operator).toBe("maus");
-    const agent = withAgent.steps.find((step) => step.kind === "write" && step.path === "/etc/systemd/system/softbots-fleet.service");
-    expect(agent).toMatchObject({ content: expect.stringContaining("fleet agent --socket /run/softbots/fleet.sock --group maus") });
-    expect(agent).toMatchObject({ content: expect.stringContaining("RuntimeDirectory=softbots") });
-    expect(argvOf(withAgent.steps)).toContain("systemctl enable --now softbots-fleet.service");
+    const agent = withAgent.steps.find((step) => step.kind === "write" && step.path === "/etc/systemd/system/squadbots-fleet.service");
+    expect(agent).toMatchObject({ content: expect.stringContaining("fleet agent --socket /run/squadbots/fleet.sock --group maus") });
+    expect(agent).toMatchObject({ content: expect.stringContaining("RuntimeDirectory=squadbots") });
+    expect(argvOf(withAgent.steps)).toContain("systemctl enable --now squadbots-fleet.service");
     expect(() => initPlan({ domain: "agentada.cc", node: "n", script: "s", operator: "Not A User", layout })).toThrow("Unix user");
   });
 
@@ -153,15 +153,15 @@ describe("plans", () => {
     expect(plan.steps[2]).toMatchObject({ kind: "write", path: layout.registryFile });
     expect(checkpoints.every((checkpoint) => checkpoint.nextPort === 8820)).toBe(true);
     expect(argvOf(plan.steps)).toEqual([
-      "useradd --system --create-home --home-dir /var/lib/softbots/acme --shell /usr/sbin/nologin --user-group omb-acme",
-      "nft -f /etc/softbots/fence.nft",
+      "useradd --system --create-home --home-dir /var/lib/squadbots/acme --shell /usr/sbin/nologin --user-group omb-acme",
+      "nft -f /etc/squadbots/fence.nft",
       "systemctl daemon-reload",
-      "systemctl enable --now softbots@acme.service",
+      "systemctl enable --now squadbots@acme.service",
       "systemctl reload caddy",
     ]);
     const config = plan.steps.find((step) => step.kind === "write" && step.path.endsWith("/acme/.softbots/config.json"));
     expect(config).toMatchObject({ mode: 0o600, owner: "omb-acme" });
-    const env = plan.steps.find((step) => step.kind === "write" && step.path === "/etc/softbots/instances/acme.env");
+    const env = plan.steps.find((step) => step.kind === "write" && step.path === "/etc/squadbots/instances/acme.env");
     expect(env).toMatchObject({ mode: 0o600 });
     // root keeps the environment file: it carries the licence key
     expect(env).not.toHaveProperty("owner");
@@ -180,11 +180,11 @@ describe("plans", () => {
     const created = createPlan({ registry: emptyRegistry("agentada.cc"), slug: "acme", seed: { admins: ["a@b.test"], members: [] }, now, layout });
     const suspended = suspendPlan({ registry: created.registry, slug: "acme", layout });
     expect(suspended.registry.workspaces.acme?.status).toBe("suspended");
-    expect(argvOf(suspended.steps)).toEqual(["systemctl disable --now softbots@acme.service", "systemctl reload caddy"]);
+    expect(argvOf(suspended.steps)).toEqual(["systemctl disable --now squadbots@acme.service", "systemctl reload caddy"]);
     expect(suspended.steps.find((step) => step.kind === "write" && step.path.endsWith("acme.caddy"))).toMatchObject({ content: expect.stringContaining("503") });
     const resumed = resumePlan({ registry: suspended.registry, slug: "acme", layout });
     expect(resumed.registry.workspaces.acme?.status).toBe("running");
-    expect(argvOf(resumed.steps)).toEqual(["systemctl enable --now softbots@acme.service", "systemctl reload caddy"]);
+    expect(argvOf(resumed.steps)).toEqual(["systemctl enable --now squadbots@acme.service", "systemctl reload caddy"]);
     const kept = deletePlan({ registry: resumed.registry, slug: "acme", keepData: true, layout });
     expect(kept.registry.workspaces.acme).toMatchObject({ status: "retained", port: 8810 });
     expect(argvOf(kept.steps).some((argv) => argv.startsWith("userdel"))).toBe(false);
@@ -199,7 +199,7 @@ describe("plans", () => {
       expect(() => deletePlan({ registry: incomplete, slug: "acme", keepData: false, layout })).toThrow("operator recovery");
     }
     const two = createPlan({ registry: created.registry, slug: "globex", seed: { admins: ["g@x.test"], members: [] }, now, layout }).registry;
-    expect(argvOf(upgradePlan({ registry: suspendPlan({ registry: two, slug: "globex", layout }).registry }))).toEqual(["npm install -g softbots@latest", "systemctl restart softbots@acme.service"]);
+    expect(argvOf(upgradePlan({ registry: suspendPlan({ registry: two, slug: "globex", layout }).registry }))).toEqual(["npm install -g squadbots@latest", "systemctl restart squadbots@acme.service"]);
   });
 
   it("seeds only the trusted portal gateway and reserves the portal hostname", () => {
@@ -221,20 +221,20 @@ describe("plans", () => {
 
   it("renders privileged steps but never recommends root writes through tenant paths", () => {
     const lines = describeSteps([
-      { kind: "mkdir", path: "/var/lib/softbots/acme/.softbots", mode: 0o700, owner: "omb-acme" },
-      { kind: "write", path: "/var/lib/softbots/acme/.softbots/config.json", content: "secret", mode: 0o600, owner: "omb-acme" },
-      { kind: "write", path: "/etc/softbots/instances/acme.env", content: "OMB_PORT=8810\n", mode: 0o600 },
+      { kind: "mkdir", path: "/var/lib/squadbots/acme/.softbots", mode: 0o700, owner: "omb-acme" },
+      { kind: "write", path: "/var/lib/squadbots/acme/.softbots/config.json", content: "secret", mode: 0o600, owner: "omb-acme" },
+      { kind: "write", path: "/etc/squadbots/instances/acme.env", content: "OMB_PORT=8810\n", mode: 0o600 },
       { kind: "run", argv: ["useradd", "--comment", "Acme Inc", "omb-acme"], why: "the account" },
       { kind: "append-once", path: "/etc/caddy/Caddyfile", line: "import /etc/caddy/omb.d/*.caddy" },
       { kind: "note", text: "done" },
     ]);
     expect(lines).toEqual([
-      "# Create /var/lib/softbots/acme/.softbots mode 700 as omb-acme (use fleet --yes; never root chown on tenant paths)",
-      "# Write /var/lib/softbots/acme/.softbots/config.json mode 600 as omb-acme (use fleet --yes; tenant content omitted)",
-      "cat > /etc/softbots/instances/acme.env <<'OMB_EOF'",
+      "# Create /var/lib/squadbots/acme/.softbots mode 700 as omb-acme (use fleet --yes; never root chown on tenant paths)",
+      "# Write /var/lib/squadbots/acme/.softbots/config.json mode 600 as omb-acme (use fleet --yes; tenant content omitted)",
+      "cat > /etc/squadbots/instances/acme.env <<'OMB_EOF'",
       "OMB_PORT=8810",
       "OMB_EOF",
-      "chmod 600 /etc/softbots/instances/acme.env",
+      "chmod 600 /etc/squadbots/instances/acme.env",
       "useradd --comment 'Acme Inc' omb-acme   # the account",
       "grep -qxF 'import /etc/caddy/omb.d/*.caddy' /etc/caddy/Caddyfile || printf '\\n%s\\n' 'import /etc/caddy/omb.d/*.caddy' >> /etc/caddy/Caddyfile",
       "# done",
@@ -252,8 +252,8 @@ describe("plans", () => {
       options: { baseURL: seed.openrouterUrl, apiKey: seed.openrouterKey }, models: { "anthropic/claude-sonnet-4": { name: "anthropic/claude-sonnet-4" } },
     } } });
     expect(plan.steps.filter((step) => step.kind === "mkdir" && step.path.includes("/.config"))).toEqual([
-      { kind: "mkdir", path: "/var/lib/softbots/acme/.config", mode: 0o700, owner: "omb-acme" },
-      { kind: "mkdir", path: "/var/lib/softbots/acme/.config/opencode", mode: 0o700, owner: "omb-acme" },
+      { kind: "mkdir", path: "/var/lib/squadbots/acme/.config", mode: 0o700, owner: "omb-acme" },
+      { kind: "mkdir", path: "/var/lib/squadbots/acme/.config/opencode", mode: 0o700, owner: "omb-acme" },
     ]);
     expect(JSON.parse(initialConfig(seed)).defaultModelSelection).toEqual({ instanceId: "opencodeGo", model: `${MANAGED_OPENROUTER}/anthropic/claude-sonnet-4` });
     expect(JSON.parse(initialConfig({ ...seed, openrouterDefault: false, anthropicKey: "other-scoped-token" }))).not.toHaveProperty("defaultModelSelection");

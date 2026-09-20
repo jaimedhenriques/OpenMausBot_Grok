@@ -827,7 +827,7 @@ export class RoutineManager {
       if (run.status === "running" || run.status === "waiting") {
         run.status = "failed";
         if (run.target === "room-goal") run.goalStatus = "failed";
-        run.error = "Softbots restarted while this routine was running";
+        run.error = "Squadbots restarted while this routine was running";
         run.attention = undefined;
         run.finishedAt = this.now();
         recovered.push(cloneRun(run));

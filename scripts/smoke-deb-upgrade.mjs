@@ -17,7 +17,7 @@ const candidate = path.resolve(process.argv[2] ?? "");
 if (!candidate.endsWith(".deb") || !fs.existsSync(candidate)) fail("pass the newly built DEB path");
 
 try {
-  const status = execFileSync("dpkg-query", ["-W", "-f=${db:Status-Abbrev}", "softbots"], {
+  const status = execFileSync("dpkg-query", ["-W", "-f=${db:Status-Abbrev}", "squadbots"], {
     encoding: "utf8",
     stdio: ["ignore", "pipe", "ignore"],
   }).trim();
@@ -32,7 +32,7 @@ const legacyRoot = path.join(temporary, "legacy-package");
 const controlRoot = path.join(legacyRoot, "DEBIAN");
 const legacyApp = path.join(legacyRoot, "opt", "Squadbots");
 const legacyResources = path.join(legacyApp, "resources");
-const legacyDeb = path.join(temporary, "softbots_0.1.7_amd64.deb");
+const legacyDeb = path.join(temporary, "squadbots_0.1.7_amd64.deb");
 
 try {
   fs.mkdirSync(controlRoot, { recursive: true, mode: 0o755 });
@@ -42,10 +42,10 @@ try {
   fs.writeFileSync(
     path.join(controlRoot, "control"),
     [
-      "Package: softbots",
+      "Package: squadbots",
       "Version: 0.1.7",
       "Architecture: amd64",
-      "Maintainer: Squadbots CI <ci@softbots.invalid>",
+      "Maintainer: Squadbots CI <ci@squadbots.invalid>",
       "Description: Legacy Squadbots directory-mode upgrade fixture",
       "",
     ].join("\n"),
@@ -100,7 +100,7 @@ try {
   ) {
     fail(`upgraded Chromium sandbox is not root:root 4755: ${chromiumSandbox}`);
   }
-  const installedVersion = execFileSync("dpkg-query", ["-W", "-f=${Version}", "softbots"], {
+  const installedVersion = execFileSync("dpkg-query", ["-W", "-f=${Version}", "squadbots"], {
     encoding: "utf8",
   }).trim();
   console.log(

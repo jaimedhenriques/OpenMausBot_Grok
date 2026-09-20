@@ -252,7 +252,7 @@ async function start({ resourcesPath, harnessPort, mutationToken, hostedUrl = nu
   child.once("spawn", () => {
     // Never expose this capability in argv, environment, logs or the renderer.
     try {
-      child.postMessage({ type: "softbots:companion-mutation-token", token: mutationToken });
+      child.postMessage({ type: "squadbots:companion-mutation-token", token: mutationToken });
     } catch {
       log?.("companion authorization could not be initialized");
       child.kill();

@@ -59,7 +59,7 @@ const memory = z.object({
 });
 
 const backupSchema = z.object({
-  format: z.literal("softbots.backup"),
+  format: z.literal("squadbots.backup"),
   version: z.literal(1),
   name,
   exportedAt: timestamp,

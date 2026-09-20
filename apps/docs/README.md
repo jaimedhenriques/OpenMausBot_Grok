@@ -1,4 +1,4 @@
-# Softbots documentation
+# Squadbots documentation
 
 The public documentation site is a Next.js 16 + Fumadocs app. User-facing content lives in `content/docs`; the repository's top-level `docs` folder remains available for implementation notes and detailed platform records.
 
@@ -17,8 +17,8 @@ The site opens at `http://localhost:3000`.
 
 ```bash
 pnpm docs:build
-pnpm --filter @softbots/docs types:check
-pnpm --filter @softbots/docs lint
+pnpm --filter @squadbots/docs types:check
+pnpm --filter @squadbots/docs lint
 ```
 
 The changelog reads published releases from `milind-soni/OpenMausBot` plus the
@@ -32,7 +32,7 @@ This deploys only the public documentation. It does not deploy the Electron app,
 local harness, credentials, agents, or user data. The changelog page uses Next.js
 incremental regeneration so published releases appear without a source commit.
 
-Create a second Vercel project beside the existing `softbots.com` project:
+Create a second Vercel project beside the existing `squadbots.com` project:
 
 1. Import the `milind-soni/OpenMausBot` repository.
 2. Set **Root Directory** to `apps/docs`.
@@ -46,6 +46,6 @@ the `DOCS_DEPLOY_HOOK_URL` Actions secret. Without the optional hook, the next
 normal docs deployment still pulls the current published releases.
 
 Vercel will build the Next.js docs app, publish every push to `main`, and create
-preview URLs for documentation pull requests. Keep `softbots.com` on the
+preview URLs for documentation pull requests. Keep `squadbots.com` on the
 existing marketing project and add a Docs link there after the new domain is
 live.

@@ -6,7 +6,7 @@ import Security
 /// The access group is deliberately explicit on every operation. Omitting
 /// `kSecAttrAccessGroup` silently selects each target's private default group,
 /// which would make a token saved by the app invisible to the share extension.
-enum SoftbotsSharedKeychain {
+enum SquadbotsSharedKeychain {
     private static let service = "com.softbots.companion.token"
 
     static func save(_ token: String, for connectionID: String) throws {
@@ -28,7 +28,7 @@ enum SoftbotsSharedKeychain {
 
     @discardableResult
     static func remove(_ connectionID: String) -> Bool {
-        guard let accessGroup = SoftbotsSharedConfiguration.keychainAccessGroup else {
+        guard let accessGroup = SquadbotsSharedConfiguration.keychainAccessGroup else {
             return false
         }
         return remove(connectionID, accessGroup: accessGroup)
@@ -56,7 +56,7 @@ enum SoftbotsSharedKeychain {
     @discardableResult
     static func removeIncludingLegacyItem(_ connectionID: String) -> Bool {
         let sharedRemoved = remove(connectionID)
-        guard let legacyGroup = SoftbotsSharedConfiguration.legacyAppKeychainAccessGroup else {
+        guard let legacyGroup = SquadbotsSharedConfiguration.legacyAppKeychainAccessGroup else {
             return false
         }
         let legacyRemoved = remove(connectionID, accessGroup: legacyGroup)
@@ -64,15 +64,15 @@ enum SoftbotsSharedKeychain {
     }
 
     private static func requiredAccessGroup() throws -> String {
-        guard let accessGroup = SoftbotsSharedConfiguration.keychainAccessGroup else {
-            throw SoftbotsSharedKeychainError.configurationMissing
+        guard let accessGroup = SquadbotsSharedConfiguration.keychainAccessGroup else {
+            throw SquadbotsSharedKeychainError.configurationMissing
         }
         return accessGroup
     }
 
     private static func requiredLegacyAccessGroup() throws -> String {
-        guard let accessGroup = SoftbotsSharedConfiguration.legacyAppKeychainAccessGroup else {
-            throw SoftbotsSharedKeychainError.configurationMissing
+        guard let accessGroup = SquadbotsSharedConfiguration.legacyAppKeychainAccessGroup else {
+            throw SquadbotsSharedKeychainError.configurationMissing
         }
         return accessGroup
     }
@@ -118,7 +118,7 @@ enum SoftbotsSharedKeychain {
             }
         }
         guard status == errSecSuccess else {
-            throw SoftbotsSharedKeychainError.security(status)
+            throw SquadbotsSharedKeychainError.security(status)
         }
     }
 
@@ -133,11 +133,11 @@ enum SoftbotsSharedKeychain {
         let status = SecItemCopyMatching(query as CFDictionary, &item)
         if status == errSecItemNotFound { return nil }
         guard status == errSecSuccess else {
-            throw SoftbotsSharedKeychainError.security(status)
+            throw SquadbotsSharedKeychainError.security(status)
         }
         guard let data = item as? Data,
               let token = String(data: data, encoding: .utf8) else {
-            throw SoftbotsSharedKeychainError.security(errSecDecode)
+            throw SquadbotsSharedKeychainError.security(errSecDecode)
         }
         return token
     }
@@ -153,7 +153,7 @@ enum SoftbotsSharedKeychain {
     }
 }
 
-enum SoftbotsSharedKeychainError: LocalizedError {
+enum SquadbotsSharedKeychainError: LocalizedError {
     case configurationMissing
     case security(OSStatus)
 

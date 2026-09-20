@@ -1,5 +1,5 @@
 // Many client workspaces on one Linux server: each is its own OS user, its
-// own `softbots@<slug>` service on its own loopback ports, its own data
+// own `squadbots@<slug>` service on its own loopback ports, its own data
 // folder, brand, sign-in list and keys, reached at <slug>.<domain> through
 // the system Caddy. This module only PLANS: it renders files and fixed
 // argument lists as steps, so what the CLI does as root is inspectable and
@@ -33,18 +33,18 @@ export interface FleetLayout {
 export function fleetLayout(root = "/"): FleetLayout {
   const at = (...parts: string[]) => join(root, ...parts);
   return {
-    etcDir: at("etc", "softbots"),
-    registryFile: at("etc", "softbots", "fleet.json"),
-    instancesDir: at("etc", "softbots", "instances"),
-    unitFile: at("etc", "systemd", "system", "softbots@.service"),
-    fenceFile: at("etc", "softbots", "fence.nft"),
-    fenceUnitFile: at("etc", "systemd", "system", "softbots-fence.service"),
+    etcDir: at("etc", "squadbots"),
+    registryFile: at("etc", "squadbots", "fleet.json"),
+    instancesDir: at("etc", "squadbots", "instances"),
+    unitFile: at("etc", "systemd", "system", "squadbots@.service"),
+    fenceFile: at("etc", "squadbots", "fence.nft"),
+    fenceUnitFile: at("etc", "systemd", "system", "squadbots-fence.service"),
     caddyDir: at("etc", "caddy", "omb.d"),
     caddyfile: at("etc", "caddy", "Caddyfile"),
-    homesDir: at("var", "lib", "softbots"),
-    agentUnitFile: at("etc", "systemd", "system", "softbots-fleet.service"),
-    socketPath: at("run", "softbots", "fleet.sock"),
-    auditFile: at("var", "log", "softbots", "fleet.jsonl"),
+    homesDir: at("var", "lib", "squadbots"),
+    agentUnitFile: at("etc", "systemd", "system", "squadbots-fleet.service"),
+    socketPath: at("run", "squadbots", "fleet.sock"),
+    auditFile: at("var", "log", "squadbots", "fleet.jsonl"),
   };
 }
 
@@ -53,16 +53,16 @@ export function agentUnit(spec: { node: string; script: string; operator: string
   const layout = spec.layout ?? fleetLayout();
   const strip = spec.script.endsWith(".ts") ? " --experimental-strip-types" : "";
   return [
-    "# Written by `softbots fleet init`. The operator workspace creates and manages workspaces through this.",
+    "# Written by `squadbots fleet init`. The operator workspace creates and manages workspaces through this.",
     "[Unit]",
-    "Description=Softbots fleet agent",
+    "Description=Squadbots fleet agent",
     "After=network-online.target",
     "Wants=network-online.target",
     "",
     "[Service]",
     "Type=simple",
     `ExecStart=${spec.node}${strip} ${spec.script} fleet agent --socket ${layout.socketPath} --group ${spec.operator}`,
-    "RuntimeDirectory=softbots",
+    "RuntimeDirectory=squadbots",
     "RuntimeDirectoryMode=0755",
     "Restart=always",
     "RestartSec=3",
@@ -151,12 +151,12 @@ export function templateUnit(spec: { node: string; script: string; layout?: Flee
   const layout = spec.layout ?? fleetLayout();
   const strip = spec.script.endsWith(".ts") ? " --experimental-strip-types" : "";
   return [
-    "# Written by `softbots fleet init`. One unit for every workspace: %i is the slug.",
+    "# Written by `squadbots fleet init`. One unit for every workspace: %i is the slug.",
     "[Unit]",
-    "Description=Softbots workspace %i",
-    "After=network-online.target softbots-fence.service",
+    "Description=Squadbots workspace %i",
+    "After=network-online.target squadbots-fence.service",
     "Wants=network-online.target",
-    "Requires=softbots-fence.service",
+    "Requires=squadbots-fence.service",
     "",
     "[Service]",
     "Type=simple",
@@ -186,9 +186,9 @@ export function templateUnit(spec: { node: string; script: string; layout?: Flee
 
 export function fenceUnit(layout = fleetLayout()): string {
   return [
-    "# Written by `softbots fleet init`: keeps each workspace's loopback ports to its own user.",
+    "# Written by `squadbots fleet init`: keeps each workspace's loopback ports to its own user.",
     "[Unit]",
-    "Description=Softbots per-workspace loopback fence",
+    "Description=Squadbots per-workspace loopback fence",
     "",
     "[Service]",
     "Type=oneshot",
@@ -205,7 +205,7 @@ export function fenceUnit(layout = fleetLayout()): string {
  * loopback ports, so a shell-capable bot cannot reach a sibling's API.
  * Written whole each time, so `nft -f` is idempotent. */
 export function fenceRules(workspaces: FleetWorkspace[]): string {
-  const lines = ["#!/usr/sbin/nft -f", "# Written by `softbots fleet`; regenerated on every create, suspend, resume and delete.", "add table inet softbots", "flush table inet softbots", "table inet softbots {", "\tchain output {", "\t\ttype filter hook output priority 0; policy accept;"];
+  const lines = ["#!/usr/sbin/nft -f", "# Written by `squadbots fleet`; regenerated on every create, suspend, resume and delete.", "add table inet squadbots", "flush table inet squadbots", "table inet squadbots {", "\tchain output {", "\t\ttype filter hook output priority 0; policy accept;"];
   for (const workspace of [...workspaces].sort((a, b) => a.slug.localeCompare(b.slug))) {
     if (workspace.status !== "running" && workspace.status !== "suspended" && workspace.status !== "retained" && !workspace.accountCreated) continue;
     lines.push(`\t\toif lo tcp dport { ${workspace.port}, ${workspace.webhookPort} } meta skuid != { ${fleetUser(workspace.slug)}, caddy, root } reject`);
@@ -321,8 +321,8 @@ export function initPlan(input: { domain: string; node: string; script: string; 
     ...(input.operator ? [{ kind: "write" as const, path: layout.agentUnitFile, content: agentUnit({ node: input.node, script: input.script, operator: input.operator, layout }), mode: 0o644 }] : []),
     { kind: "append-once", path: layout.caddyfile, line: caddyImportLine(layout) },
     { kind: "run", argv: ["systemctl", "daemon-reload"], why: "load the workspace template and the fence unit" },
-    { kind: "run", argv: ["systemctl", "enable", "--now", "softbots-fence.service"], why: "apply the loopback fence now and at boot" },
-    ...(input.operator ? [{ kind: "run" as const, argv: ["systemctl", "enable", "--now", "softbots-fleet.service"], why: `start the fleet agent for ${input.operator}` }] : []),
+    { kind: "run", argv: ["systemctl", "enable", "--now", "squadbots-fence.service"], why: "apply the loopback fence now and at boot" },
+    ...(input.operator ? [{ kind: "run" as const, argv: ["systemctl", "enable", "--now", "squadbots-fleet.service"], why: `start the fleet agent for ${input.operator}` }] : []),
     { kind: "run", argv: ["systemctl", "reload", "caddy"], why: "start serving the workspaces folder" },
     { kind: "note", text: `point *.${registry.domain} at this server (a wildcard A/AAAA record); each workspace gets its own certificate when created` },
     ...(input.operator ? [{ kind: "note" as const, text: `the workspace running as ${input.operator} can now manage workspaces from Settings → Workspaces` }] : []),
@@ -395,14 +395,14 @@ export function createPlan(input: {
     { kind: "write", path: join(layout.instancesDir, `${workspace.slug}.env`), content: instanceEnv({ workspace, dataDir, licenseKey: input.licenseKey, portalUrl: input.seed.portalUrl }), mode: 0o600 },
     ...(input.memoryMax
       ? [
-          { kind: "mkdir" as const, path: join(layout.unitFile.replace(/softbots@\.service$/, ""), `softbots@${workspace.slug}.service.d`), mode: 0o755 },
-          { kind: "write" as const, path: join(layout.unitFile.replace(/softbots@\.service$/, ""), `softbots@${workspace.slug}.service.d`, "limits.conf"), content: `[Service]\nMemoryMax=${input.memoryMax}\n`, mode: 0o644 },
+          { kind: "mkdir" as const, path: join(layout.unitFile.replace(/squadbots@\.service$/, ""), `squadbots@${workspace.slug}.service.d`), mode: 0o755 },
+          { kind: "write" as const, path: join(layout.unitFile.replace(/squadbots@\.service$/, ""), `squadbots@${workspace.slug}.service.d`, "limits.conf"), content: `[Service]\nMemoryMax=${input.memoryMax}\n`, mode: 0o644 },
         ]
       : []),
     { kind: "write", path: layout.fenceFile, content: fenceRules(Object.values(registry.workspaces)), mode: 0o600 },
     { kind: "run", argv: ["nft", "-f", layout.fenceFile], why: "fence the new ports to their user" },
     { kind: "run", argv: ["systemctl", "daemon-reload"], why: "pick up the workspace's environment and limits" },
-    { kind: "run", argv: ["systemctl", "enable", "--now", `softbots@${workspace.slug}.service`], why: "start the workspace now and at boot" },
+    { kind: "run", argv: ["systemctl", "enable", "--now", `squadbots@${workspace.slug}.service`], why: "start the workspace now and at boot" },
     { kind: "health", url: `http://127.0.0.1:${workspace.port}/api/health`, why: "wait for the workspace to answer" },
     { kind: "write", path: join(layout.caddyDir, `${workspace.slug}.caddy`), content: caddySite(workspace), mode: 0o644 },
     { kind: "run", argv: ["systemctl", "reload", "caddy"], why: `serve https://${workspace.host} and fetch its certificate` },
@@ -432,7 +432,7 @@ export function suspendPlan(input: { registry: FleetRegistry; slug: string; layo
   return {
     registry,
     steps: [
-      { kind: "run", argv: ["systemctl", "disable", "--now", `softbots@${workspace.slug}.service`], why: "stop the workspace and keep it stopped at boot" },
+      { kind: "run", argv: ["systemctl", "disable", "--now", `squadbots@${workspace.slug}.service`], why: "stop the workspace and keep it stopped at boot" },
       { kind: "write", path: join(layout.caddyDir, `${workspace.slug}.caddy`), content: caddySite(workspace), mode: 0o644 },
       { kind: "run", argv: ["systemctl", "reload", "caddy"], why: "show the suspended page instead" },
       { kind: "write", path: layout.registryFile, content: `${JSON.stringify(registry, null, 2)}\n`, mode: 0o600 },
@@ -446,7 +446,7 @@ export function resumePlan(input: { registry: FleetRegistry; slug: string; layou
   return {
     registry,
     steps: [
-      { kind: "run", argv: ["systemctl", "enable", "--now", `softbots@${workspace.slug}.service`], why: "start the workspace again" },
+      { kind: "run", argv: ["systemctl", "enable", "--now", `squadbots@${workspace.slug}.service`], why: "start the workspace again" },
       { kind: "health", url: `http://127.0.0.1:${workspace.port}/api/health`, why: "wait for the workspace to answer" },
       { kind: "write", path: join(layout.caddyDir, `${workspace.slug}.caddy`), content: caddySite(workspace), mode: 0o644 },
       { kind: "run", argv: ["systemctl", "reload", "caddy"], why: "serve it again" },
@@ -463,15 +463,15 @@ export function deletePlan(input: { registry: FleetRegistry; slug: string; keepD
   assertManagedWorkspace(workspace);
   const { [input.slug]: _gone, ...rest } = input.registry.workspaces;
   const registry: FleetRegistry = { ...input.registry, workspaces: input.keepData ? { ...rest, [input.slug]: { ...workspace, status: "retained" } } : rest };
-  const unitsDir = layout.unitFile.replace(/softbots@\.service$/, "");
+  const unitsDir = layout.unitFile.replace(/squadbots@\.service$/, "");
   return {
     registry,
     steps: [
-      { kind: "run", argv: ["systemctl", "disable", "--now", `softbots@${workspace.slug}.service`], why: "stop the workspace" },
+      { kind: "run", argv: ["systemctl", "disable", "--now", `squadbots@${workspace.slug}.service`], why: "stop the workspace" },
       { kind: "remove", path: join(layout.caddyDir, `${workspace.slug}.caddy`) },
       { kind: "run", argv: ["systemctl", "reload", "caddy"], why: "stop serving its address" },
       { kind: "remove", path: join(layout.instancesDir, `${workspace.slug}.env`) },
-      { kind: "remove", path: join(unitsDir, `softbots@${workspace.slug}.service.d`, "limits.conf") },
+      { kind: "remove", path: join(unitsDir, `squadbots@${workspace.slug}.service.d`, "limits.conf") },
       { kind: "write", path: layout.fenceFile, content: fenceRules(Object.values(registry.workspaces)), mode: 0o600 },
       { kind: "run", argv: ["nft", "-f", layout.fenceFile], why: input.keepData ? "keep the retained account's fence" : "drop its fence rule" },
       // Retain the nologin account too: recycling its UID would give a new
@@ -487,14 +487,14 @@ export function deletePlan(input: { registry: FleetRegistry; slug: string; keepD
 export function upgradePlan(input: { registry: FleetRegistry }): FleetStep[] {
   const running = Object.values(input.registry.workspaces).filter((workspace) => workspace.status === "running").sort((a, b) => a.slug.localeCompare(b.slug));
   return [
-    { kind: "run", argv: ["npm", "install", "-g", "softbots@latest"], why: "install the release every workspace runs from" },
-    ...running.map((workspace) => ({ kind: "run" as const, argv: ["systemctl", "restart", `softbots@${workspace.slug}.service`], why: `restart ${workspace.slug} on the new release` })),
+    { kind: "run", argv: ["npm", "install", "-g", "squadbots@latest"], why: "install the release every workspace runs from" },
+    ...running.map((workspace) => ({ kind: "run" as const, argv: ["systemctl", "restart", `squadbots@${workspace.slug}.service`], why: `restart ${workspace.slug} on the new release` })),
     ...running.map((workspace) => ({ kind: "health" as const, url: `http://127.0.0.1:${workspace.port}/api/health`, why: `wait for ${workspace.slug}` })),
   ];
 }
 
 /** A workspace's sign-in list edited from outside, the same shape
- * `softbots access` writes; the server reads it live. */
+ * `squadbots access` writes; the server reads it live. */
 export function applySignIn(configText: string, action: "add" | "remove", email: string, chatOnly: boolean): { config: string; summary: string } {
   const entry = email.trim().toLowerCase();
   assertEmailOrDomain(entry);

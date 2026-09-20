@@ -41,9 +41,9 @@ const yamlEsmPlugin = {
 // Every file run as its own process. Keep in sync with the spawn sites above.
 const ENTRY_POINTS = [
   "index.ts",
-  // the `softbots` command (serve/pair/sessions/status) for the npm
+  // the `squadbots` command (serve/pair/sessions/status) for the npm
   // package, the container image and checkouts; pair-cli.ts stays as an alias
-  "softbots.ts",
+  "squadbots.ts",
   "pair-cli.ts",
   // The packaged smoke probe imports this manifest directly. Importing the
   // shared avatar contract widens TypeScript's inferred emit root to the repo,
@@ -93,7 +93,7 @@ await build({
   logLevel: "info",
 });
 
-// `softbots serve --tunnel` (server/tunnel.ts) spawns the connector guardian
+// `squadbots serve --tunnel` (server/tunnel.ts) spawns the connector guardian
 // as its own process, so it has to exist as a file beside the server, not only
 // as code inlined into the bundle that imports its neighbours. Bundled under
 // its own name: the same code the desktop app runs from

@@ -1,10 +1,10 @@
-appId: ai.squadbots.app
+appId: ai.softbots.app
 productName: Squadbots
 artifactName: Squadbots-${version}-${arch}.${ext}
 
 protocols:
   - name: Squadbots package install
-    schemes: [softbots]
+    schemes: [squadbots]
 
 # In-app auto-update reads latest-mac.yml + the .zip (macOS) or latest.yml +
 # the NSIS .exe (Windows) from the PUBLIC releases in this source repo.
@@ -174,7 +174,7 @@ linux:
   # lone 1024px PNG is not indexed by GNOME's hicolor theme on Ubuntu 24.04.
   icon: build/icon.svg
   category: Utility
-  executableName: softbots
+  executableName: squadbots
   synopsis: Your own team of AI bots, in a chat app
   description: A local-first chat app for running a team of AI agents.
   maintainer: Jaime Henriques <jaimedhenriques@users.noreply.github.com>
@@ -189,8 +189,8 @@ linux:
       to: cloudflared/cloudflared
     - from: dist-native/browser/linux-x64
       to: browser-engine
-    - from: build/linux-softbots-browser.apparmor
-      to: softbots-browser.apparmor
+    - from: build/linux-squadbots-browser.apparmor
+      to: squadbots-browser.apparmor
   desktop:
     entry:
       Name: Squadbots

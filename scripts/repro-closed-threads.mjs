@@ -91,7 +91,7 @@ await api("PATCH", `/api/bots/${quinn.id}/tasks/${quinn.threadId}`, { title: "My
 // a couple of threads the PERSON opened, so we can see what the bot's pile does to them
 for (const title of ["Plan the launch", "Draft release notes"]) await api("POST", `/api/bots/${parker.id}/tasks`, { title });
 
-const minted = await api("POST", "/api/testing/internal-capability", { botId: parker.id, threadId: parker.threadId, kind: "agents", depth: 0 }, { "x-softbots-test-capability": TEST_KEY });
+const minted = await api("POST", "/api/testing/internal-capability", { botId: parker.id, threadId: parker.threadId, kind: "agents", depth: 0 }, { "x-squadbots-test-capability": TEST_KEY });
 if (minted.status !== 201) throw new Error(`mint: ${minted.status} ${JSON.stringify(minted.body)}`);
 const asParker = { authorization: `Bearer ${minted.body.token}` };
 

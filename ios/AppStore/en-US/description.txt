@@ -1,4 +1,4 @@
-SoftbotsMobile is the private iPhone companion for Softbots on your computer.
+SquadbotsMobile is the private iPhone companion for Squadbots on your computer.
 
 Keep your AI team moving when you step away from your desk:
 
@@ -14,16 +14,16 @@ Keep your AI team moving when you step away from your desk:
 
 YOUR COMPUTER STAYS IN CHARGE
 
-SoftbotsMobile connects to the companion service on your own computer. Your bot transcripts remain in Softbots’s local storage; the optional hosted connection transports them to your computer without creating a developer-hosted transcript copy.
+SquadbotsMobile connects to the companion service on your own computer. Your bot transcripts remain in Squadbots’s local storage; the optional hosted connection transports them to your computer without creating a developer-hosted transcript copy.
 
-When a bot requests a supported API key, the phone can send it over Secure phone access or Tailscale, encrypted for the paired computer. Apple Passwords is built in, and other enabled Password AutoFill providers work too. The value is never added to chat or retained by SoftbotsMobile.
+When a bot requests a supported API key, the phone can send it over Secure phone access or Tailscale, encrypted for the paired computer. Apple Passwords is built in, and other enabled Password AutoFill providers work too. The value is never added to chat or retained by SquadbotsMobile.
 
 PAIR ONCE, REVOKE ANY TIME
 
-Pair with a short-lived code from Softbots’s Companion panel. The computer stores only a hash of the phone credential and lets you revoke the device at any time.
+Pair with a short-lived code from Squadbots’s Companion panel. The computer stores only a hash of the phone credential and lets you revoke the device at any time.
 
 USE IT AT HOME OR AWAY
 
-Bonjour finds your computer on a trusted local network. For remote access, use Tailscale on both devices or enable the optional email-verified HTTPS connection in Softbots’s desktop Companion settings.
+Bonjour finds your computer on a trusted local network. For remote access, use Tailscale on both devices or enable the optional email-verified HTTPS connection in Squadbots’s desktop Companion settings.
 
-Requires Softbots running on a Mac, Windows, or Linux computer. Tailscale is optional and is not affiliated with Softbots.
+Requires Squadbots running on a Mac, Windows, or Linux computer. Tailscale is optional and is not affiliated with Squadbots.

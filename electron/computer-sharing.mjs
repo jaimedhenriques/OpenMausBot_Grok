@@ -126,7 +126,7 @@ export function createComputerSharing({ file, fetch: fetchImpl, environments, cu
   };
   const identity = async env => {
     await requireEnabled();
-    const [auth, descriptor] = await Promise.all([request(env, "/api/auth/session"), request(env, "/.well-known/softbots/environment")]);
+    const [auth, descriptor] = await Promise.all([request(env, "/api/auth/session"), request(env, "/.well-known/squadbots/environment")]);
     await requireEnabled();
     if (auth.kind !== "session" || !uuid(auth.id) || !uuid(descriptor.environmentId)) throw new Error("Complete workspace pairing or sign-in first");
     if (descriptor.capabilities?.sharedComputers !== true) throw new Error("Update this server to enable computer sharing");

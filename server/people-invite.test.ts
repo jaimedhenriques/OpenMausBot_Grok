@@ -74,7 +74,7 @@ function send(path: string, init: CallInit, headers: Record<string, string>): Pr
 }
 
 /** The box itself: a loopback Host and Origin, nothing forwarded. This is the
- * owner, the way `softbots` on the server or a bootstrap script talks. */
+ * owner, the way `squadbots` on the server or a bootstrap script talks. */
 const owner = (path: string, init: CallInit = {}) => send(path, init, { host: `127.0.0.1:${port}`, origin: `http://127.0.0.1:${port}` });
 
 /** A browser somewhere else, reaching the server through its proxy. */
@@ -156,7 +156,7 @@ describe("adding people to a hosted workspace", () => {
   let bobTicket = "";
 
   it("offers no email sign-in until the owner names the first admin", async () => {
-    expect((await remote("/.well-known/softbots/environment")).body.capabilities.emailSignIn).toBe(false);
+    expect((await remote("/.well-known/squadbots/environment")).body.capabilities.emailSignIn).toBe(false);
     const early = await remote("/api/auth/email/start", { body: { email: ADA } });
     expect(early.status).toBe(404);
     expect(early.body.error).toMatch(/not set up/);
@@ -164,7 +164,7 @@ describe("adding people to a hosted workspace", () => {
     const saved = await owner("/api/config", { method: "PUT", body: { signIn: { admins: [ADA], members: [] } } });
     expect(saved.status).toBe(200);
     expect((await owner("/api/config")).body.signIn).toEqual({ admins: [ADA], members: [] });
-    expect((await remote("/.well-known/softbots/environment")).body.capabilities.emailSignIn).toBe(true);
+    expect((await remote("/.well-known/squadbots/environment")).body.capabilities.emailSignIn).toBe(true);
     expect(stub.calls).not.toContain("POST /api/auth/email-otp/send-verification-otp");
   });
 

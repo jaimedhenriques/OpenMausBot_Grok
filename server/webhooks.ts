@@ -228,7 +228,7 @@ function serializePayload(payload: JsonValue): string {
     }
   }
   if (text.length <= MAX_EVENT_CHARS) return text;
-  return `${text.slice(0, MAX_EVENT_CHARS)}\n\n[Payload truncated by Softbots]`;
+  return `${text.slice(0, MAX_EVENT_CHARS)}\n\n[Payload truncated by Squadbots]`;
 }
 
 function previewPayload(payload: JsonValue): string {
@@ -406,15 +406,15 @@ export class WebhookManager {
     }
   }
 
-  test(id: string, payload: JsonValue = { event: "softbots.test", message: "Test webhook delivery" }): WebhookReceiveResult | null {
+  test(id: string, payload: JsonValue = { event: "squadbots.test", message: "Test webhook delivery" }): WebhookReceiveResult | null {
     const trigger = this.webhooks.find((candidate) => candidate.id === id);
     if (!trigger) return null;
-    const eventName = trigger.eventTypes?.[0] ?? "softbots.test";
+    const eventName = trigger.eventTypes?.[0] ?? "squadbots.test";
     return this.dispatch(trigger, {
       payload,
       contentType: "application/json",
       eventName,
-      userAgent: "Softbots webhook tester",
+      userAgent: "Squadbots webhook tester",
       deliveryId: `test-${randomUUID()}`,
     });
   }

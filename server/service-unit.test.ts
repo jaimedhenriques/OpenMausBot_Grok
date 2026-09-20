@@ -4,7 +4,7 @@ import { launchdPlist, serviceCommand, servicePlan, systemdUnit, unstableInstall
 
 const spec: ServiceSpec = {
   node: "/usr/bin/node",
-  script: "/usr/lib/node_modules/softbots/cli.js",
+  script: "/usr/lib/node_modules/squadbots/cli.js",
   serveArgs: ["--port", "8799", "--data-dir", "/home/maus/.softbots", "--domain", "maus.example.com", "--no-pair"],
   dataDir: "/home/maus/.softbots",
   user: "maus",
@@ -15,23 +15,23 @@ const spec: ServiceSpec = {
 
 describe("service units", () => {
   it("runs the same serve command, with strip-types only for a checkout", () => {
-    expect(serviceCommand(spec)).toEqual(["/usr/bin/node", "/usr/lib/node_modules/softbots/cli.js", "serve", ...spec.serveArgs]);
-    expect(serviceCommand({ ...spec, script: "/srv/Softbots/server/softbots.ts" })[1]).toBe("--experimental-strip-types");
+    expect(serviceCommand(spec)).toEqual(["/usr/bin/node", "/usr/lib/node_modules/squadbots/cli.js", "serve", ...spec.serveArgs]);
+    expect(serviceCommand({ ...spec, script: "/srv/Squadbots/server/squadbots.ts" })[1]).toBe("--experimental-strip-types");
   });
 
   it("renders a systemd unit that restarts, runs as the user, and grants low ports only for --domain", () => {
     const unit = systemdUnit(spec);
-    expect(unit).toContain("Description=Softbots (agentada)");
+    expect(unit).toContain("Description=Squadbots (agentada)");
     expect(unit).toContain("User=maus");
     expect(unit).toContain("Environment=OMB_DATA_DIR=/home/maus/.softbots");
-    expect(unit).toContain("ExecStart=/usr/bin/node /usr/lib/node_modules/softbots/cli.js serve --port 8799 --data-dir /home/maus/.softbots --domain maus.example.com --no-pair");
+    expect(unit).toContain("ExecStart=/usr/bin/node /usr/lib/node_modules/squadbots/cli.js serve --port 8799 --data-dir /home/maus/.softbots --domain maus.example.com --no-pair");
     expect(unit).toContain("Restart=always");
     expect(unit).toContain("AmbientCapabilities=CAP_NET_BIND_SERVICE");
     expect(unit).toContain("WantedBy=multi-user.target");
     const local = systemdUnit({ ...spec, bindsLowPorts: false, serveArgs: ["--port", "8799", "--data-dir", "/home/maus/.softbots"] });
     expect(local).not.toContain("CAP_NET_BIND_SERVICE");
     // a path with a space is quoted for systemd
-    expect(systemdUnit({ ...spec, dataDir: "/home/maus/My Data", serveArgs: ["--data-dir", "/home/maus/My Data"] })).toContain('ExecStart=/usr/bin/node /usr/lib/node_modules/softbots/cli.js serve --data-dir "/home/maus/My Data"');
+    expect(systemdUnit({ ...spec, dataDir: "/home/maus/My Data", serveArgs: ["--data-dir", "/home/maus/My Data"] })).toContain('ExecStart=/usr/bin/node /usr/lib/node_modules/squadbots/cli.js serve --data-dir "/home/maus/My Data"');
   });
 
   it("renders a launchd agent that keeps the server alive and logs under the data dir", () => {
@@ -46,11 +46,11 @@ describe("service units", () => {
   });
 
   it("refuses to point a service at an npx cache, and knows where each platform's file goes", () => {
-    expect(unstableInstallWarning("/home/maus/.npm/_npx/abc123/node_modules/softbots/cli.js")).toMatch(/npm install -g softbots/);
-    expect(unstableInstallWarning("/usr/lib/node_modules/softbots/cli.js")).toBeNull();
+    expect(unstableInstallWarning("/home/maus/.npm/_npx/abc123/node_modules/squadbots/cli.js")).toMatch(/npm install -g squadbots/);
+    expect(unstableInstallWarning("/usr/lib/node_modules/squadbots/cli.js")).toBeNull();
     const linux = servicePlan("linux", "/home/maus/.softbots");
-    expect(linux?.installed).toBe("/etc/systemd/system/softbots.service");
-    expect(linux?.activate.join("\n")).toContain("systemctl enable --now softbots");
+    expect(linux?.installed).toBe("/etc/systemd/system/squadbots.service");
+    expect(linux?.activate.join("\n")).toContain("systemctl enable --now squadbots");
     const mac = servicePlan("darwin", "/Users/maus/.softbots", "/Users/maus");
     expect(mac?.installed).toBe("/Users/maus/Library/LaunchAgents/com.softbots.serve.plist");
     expect(mac?.activate.join("\n")).toContain("launchctl bootstrap gui/$(id -u)");

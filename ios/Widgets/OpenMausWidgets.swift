@@ -7,7 +7,7 @@ import SwiftUI
 import WidgetKit
 
 @main
-struct SoftbotsWidgets: WidgetBundle {
+struct SquadbotsWidgets: WidgetBundle {
     var body: some Widget {
         BotActivityWidget()
     }

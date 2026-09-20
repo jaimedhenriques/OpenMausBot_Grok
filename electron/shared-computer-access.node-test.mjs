@@ -45,7 +45,7 @@ function stubWorkspace() {
   const fetchImpl = async (url, init) => {
     const route = new URL(url).pathname;
     if (route === "/api/auth/session") return json({ kind: "session", id: sessionId });
-    if (route === "/.well-known/softbots/environment") return json({ environmentId, capabilities: { sharedComputers: true } });
+    if (route === "/.well-known/squadbots/environment") return json({ environmentId, capabilities: { sharedComputers: true } });
     const body = init?.body ? JSON.parse(init.body) : {};
     if (route === "/api/shared-computers/connect") { state.connected = body; return json({}); }
     if (route.endsWith("/poll")) {
@@ -244,10 +244,10 @@ test("a protected directory spelled in another case is still refused", async t =
   grant.protectedPaths = [path.join(dir, "Squadbots")];
   folder.write = true;
   await assert.rejects(run({ action: "read_file", path: "Squadbots/credentials.bin" }), /Desktop credentials/);
-  await assert.rejects(run({ action: "read_file", path: "softbots/credentials.bin" }), /Desktop credentials/);
-  await assert.rejects(run({ action: "read_file", path: "SOFTBOTS/credentials.bin" }), /Desktop credentials/);
-  await assert.rejects(run({ action: "list_files", path: "softbots" }), /Desktop credentials/);
-  await assert.rejects(run({ action: "write_file", path: "softbots/computer-sharing.json", content: "{}" }), /sharing settings/);
+  await assert.rejects(run({ action: "read_file", path: "squadbots/credentials.bin" }), /Desktop credentials/);
+  await assert.rejects(run({ action: "read_file", path: "SQUADBOTS/credentials.bin" }), /Desktop credentials/);
+  await assert.rejects(run({ action: "list_files", path: "squadbots" }), /Desktop credentials/);
+  await assert.rejects(run({ action: "write_file", path: "squadbots/computer-sharing.json", content: "{}" }), /sharing settings/);
 });
 
 test("a protected directory spelled in another Unicode normalization is still refused", async t => {

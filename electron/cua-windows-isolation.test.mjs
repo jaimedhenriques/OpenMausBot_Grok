@@ -32,7 +32,7 @@ beforeEach(async () => {
     get(target, key) { return key === "platform" ? "win32" : Reflect.get(target, key); },
   }));
   vi.stubEnv("CUA_DRIVER_PATH", join(fixture.home, "cua-driver.exe"));
-  vi.stubEnv("SOFTBOTS_CUA_EMBEDDED", "");
+  vi.stubEnv("SQUADBOTS_CUA_EMBEDDED", "");
   vi.resetModules();
   cua = await import("./cua.mjs");
 });

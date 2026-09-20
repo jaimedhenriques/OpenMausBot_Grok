@@ -34,7 +34,7 @@ describe("pairing devices from a hosted server's settings", () => {
     expect(pairingBlockedReason({ kind: "unauthenticated", error: "pair" })).toBeNull();
     const html = renderToStaticMarkup(createElement(ServerPairingCard, { initialSession: chatOnly }));
     expect(html).toContain("data-server-pairing-chat-only");
-    expect(html).toContain("softbots pair");
+    expect(html).toContain("squadbots pair");
     expect(html).not.toContain("Create pairing code");
     const admin = renderToStaticMarkup(createElement(ServerPairingCard, { initialSession: { ...chatOnly, scopes: ["admin", "client"] } }));
     expect(admin).toContain("Create pairing code");

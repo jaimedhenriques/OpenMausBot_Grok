@@ -1,4 +1,4 @@
-// A stand-in for cloudflare/control-plane for tests of `softbots login`
+// A stand-in for cloudflare/control-plane for tests of `squadbots login`
 // and `serve --tunnel`: the routes the desktop's control-plane client uses,
 // answering in the shapes its validators accept. Authorization is only "is
 // this a credential this stub issued". Records every call so a test can
@@ -80,7 +80,7 @@ export async function startControlPlaneStub(options: { otp?: string; endpointUrl
     const byCredential = () => [...installations.values()].find((inst) => inst.credential === bearer) ?? null;
     const account = accountTokens.has(bearer);
 
-    if (method === "GET" && path === "/healthz") return send(200, { ok: true, service: "softbots-control-plane" });
+    if (method === "GET" && path === "/healthz") return send(200, { ok: true, service: "squadbots-control-plane" });
     if (method === "POST" && path === "/api/auth/email-otp/send-verification-otp") {
       await readJson(req);
       return send(200, { success: true });

@@ -1,6 +1,6 @@
 // Sign in with your email on a hosted server. The emailed code comes from the
-// Softbots control plane (the account service the desktop companion and
-// `softbots login` already use), and this server decides who is welcome
+// Squadbots control plane (the account service the desktop companion and
+// `squadbots login` already use), and this server decides who is welcome
 // with an allow-list its owner controls. The result is an ordinary local
 // session, the same thing a pairing code produces, so every gate applies.
 //

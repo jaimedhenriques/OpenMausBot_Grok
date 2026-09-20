@@ -64,7 +64,7 @@ read-only:
   wait --bot ID [--task ID] [--timeout 30] [--url URL]
   wait --channel ID [--task ID] [--timeout 30] [--url URL]
 
-mutating (an explicit --url or SOFTBOTS_URL/OMB_PORT is required):
+mutating (an explicit --url or SQUADBOTS_URL/OMB_PORT is required):
   new-bot --name NAME [--url URL]
   new-channel --name NAME --members ID,ID [--url URL]
   send --bot ID --text TEXT [--task ID] [--dry-run] [--url URL]
@@ -123,7 +123,7 @@ function positiveInteger(value: unknown, name: string, fallback: number, maximum
 function configuredUrl(raw: unknown, env: NodeJS.ProcessEnv, requiredForMutation: boolean): string | undefined {
   const explicit = typeof raw === "string" && raw.trim()
     ? raw.trim()
-    : env.SOFTBOTS_URL?.trim() || (env.OMB_PORT ? `http://127.0.0.1:${env.OMB_PORT}` : "");
+    : env.SQUADBOTS_URL?.trim() || (env.OMB_PORT ? `http://127.0.0.1:${env.OMB_PORT}` : "");
   if (!explicit) {
     if (requiredForMutation) {
       throw new ControlOmbError(
@@ -182,7 +182,7 @@ export async function runControlOmb(
     const health = rawHealth as { status: string; endpoint?: string; app: string; packaged: boolean };
     const instances = (models as { instances?: Array<{ instanceId?: string; snapshot?: { state?: string } }> }).instances ?? [];
     return {
-      ok: health.app === "softbots"
+      ok: health.app === "squadbots"
         && instances.some((instance) => instance.snapshot?.state === "available"),
       health: endpoint ? { ...health, endpoint } : health,
       availableEngines: instances
@@ -405,11 +405,11 @@ export async function launchVerificationServer(
   const url = `http://127.0.0.1:${port}`;
   // Native browser daemons use UNIX sockets; a macOS temp home can exceed
   // their path limit. This is still an owned, randomly named fixture only.
-  const dataDir = mkdtempSync(join(browser && process.platform !== "win32" ? "/tmp" : tmpdir(), "softbots-verify-data-"));
+  const dataDir = mkdtempSync(join(browser && process.platform !== "win32" ? "/tmp" : tmpdir(), "squadbots-verify-data-"));
   const fixtureTemp = join(dataDir, "tmp");
   const fixtureDumpPath = join(dataDir, "fake-claude-dump.json");
   mkdirSync(fixtureTemp, { recursive: true });
-  const evidenceDir = join(tmpdir(), "softbots-verification-evidence");
+  const evidenceDir = join(tmpdir(), "squadbots-verification-evidence");
   mkdirSync(evidenceDir, { recursive: true });
   const logPath = join(evidenceDir, `server-${Date.now()}-${process.pid}.log`);
   writeFileSync(join(dataDir, "config.json"), JSON.stringify({
@@ -463,7 +463,7 @@ export async function launchVerificationServer(
           signal: signal ? AbortSignal.any([signal, timeout]) : timeout,
         });
         const body = response.ok ? await response.json() as { app?: string } : null;
-        if (body?.app === "softbots") break;
+        if (body?.app === "squadbots") break;
       } catch {
         // The server is still starting.
       }

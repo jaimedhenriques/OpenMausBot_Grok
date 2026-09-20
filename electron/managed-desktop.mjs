@@ -25,13 +25,13 @@ export function createManagedDesktopRelay({ timeoutMs = 15_000 } = {}) {
         const requestId = randomUUID();
         const timer = setTimeout(() => settle(requestId, true), timeoutMs); timer.unref?.();
         pending.set(requestId, { proc, resolve, reject, timer });
-        try { proc.postMessage({ type: "softbots:managed-desktop", requestId, connection }); }
+        try { proc.postMessage({ type: "squadbots:managed-desktop", requestId, connection }); }
         catch { settle(requestId, true); }
       });
     },
     receive(proc, raw) {
       const message = raw?.data ?? raw;
-      if (message?.type !== "softbots:managed-desktop-result") return false;
+      if (message?.type !== "squadbots:managed-desktop-result") return false;
       if (pending.get(message.requestId)?.proc === proc && typeof message.ok === "boolean") settle(message.requestId, !message.ok);
       return true;
     },

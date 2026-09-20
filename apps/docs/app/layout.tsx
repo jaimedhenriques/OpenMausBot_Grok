@@ -8,12 +8,12 @@ const inter = Inter({ subsets: ['latin'] });
 export const metadata: Metadata = {
   metadataBase: new URL('https://docs.softbots.com'),
   title: {
-    default: 'Softbots Docs',
-    template: '%s · Softbots Docs',
+    default: 'Squadbots Docs',
+    template: '%s · Squadbots Docs',
   },
   description: 'Install, configure, and extend your local-first team of AI agents.',
   openGraph: {
-    title: 'Softbots Docs',
+    title: 'Squadbots Docs',
     description: 'Your own team of AI agents, in a chat app.',
     type: 'website',
   },

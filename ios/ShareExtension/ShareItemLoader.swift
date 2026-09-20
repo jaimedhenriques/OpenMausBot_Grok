@@ -40,7 +40,7 @@ enum ShareItemLoadingError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .appGroupUnavailable:
-            return "Softbots couldn't open its secure sharing folder. Open the app once, then try again."
+            return "Squadbots couldn't open its secure sharing folder. Open the app once, then try again."
         case .nothingSupported:
             return "There isn't any text, link, image, or supported document to send."
         case .tooManyItems:
@@ -52,7 +52,7 @@ enum ShareItemLoadingError: LocalizedError {
         case let .unsupportedDocument(name):
             return "\(name) isn't a supported document. Try PDF, text, Word, Excel, or PowerPoint."
         case let .unreadable(name):
-            return "Softbots couldn't read \(name). Try exporting it to Files first."
+            return "Squadbots couldn't read \(name). Try exporting it to Files first."
         }
     }
 }
@@ -74,13 +74,13 @@ enum ShareItemLoader {
         guard providers.count <= AttachmentPolicy.maximumItems else {
             throw ShareItemLoadingError.tooManyItems
         }
-        SoftbotsSharedInbox.removeDirectories(olderThan: 0)
+        SquadbotsSharedInbox.removeDirectories(olderThan: 0)
         guard let container = FileManager.default.containerURL(
-            forSecurityApplicationGroupIdentifier: SoftbotsSharedConfiguration.appGroupIdentifier
+            forSecurityApplicationGroupIdentifier: SquadbotsSharedConfiguration.appGroupIdentifier
         ) else { throw ShareItemLoadingError.appGroupUnavailable }
 
         let inboxRoot = container.appendingPathComponent(
-            SoftbotsSharedInbox.directoryName,
+            SquadbotsSharedInbox.directoryName,
             isDirectory: true
         )
         let inbox = inboxRoot

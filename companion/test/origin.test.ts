@@ -24,10 +24,10 @@ describe("private managed origin", () => {
     ).toBe("/tmp/omb-companion-origin-test/origin.sock");
     expect(
       companionOriginSocket(
-        "\\\\.\\pipe\\softbots-companion-origin-42-12345678-1234-1234-1234-123456789abc",
+        "\\\\.\\pipe\\squadbots-companion-origin-42-12345678-1234-1234-1234-123456789abc",
         "win32",
       ),
-    ).toContain("softbots-companion-origin-42");
+    ).toContain("squadbots-companion-origin-42");
     expect(companionOriginSocket("\\\\.\\pipe\\foreign", "win32")).toBeNull();
   });
 
@@ -40,7 +40,7 @@ describe("private managed origin", () => {
       const socketPath = path.join(directory, "origin.sock");
       const server = createServer((_incoming, response) => {
         response.writeHead(200, { "content-type": "application/json" });
-        response.end(JSON.stringify({ app: "softbots" }));
+        response.end(JSON.stringify({ app: "squadbots" }));
       });
       await listenCompanionOrigin(server, socketPath);
       expect(fs.statSync(socketPath).mode & 0o777).toBe(0o600);
@@ -54,7 +54,7 @@ describe("private managed origin", () => {
         outgoing.once("error", reject);
         outgoing.end();
       });
-      expect(JSON.parse(body)).toEqual({ app: "softbots" });
+      expect(JSON.parse(body)).toEqual({ app: "squadbots" });
       await new Promise<void>((resolve) => server.close(() => resolve()));
     },
   );

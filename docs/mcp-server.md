@@ -1,7 +1,7 @@
-# Softbots MCP server
+# Squadbots MCP server
 
-The Softbots desktop app includes a local stdio MCP server. It lets another MCP client coordinate your
-Softbots team while the desktop app and its harness are running.
+The Squadbots desktop app includes a local stdio MCP server. It lets another MCP client coordinate your
+Squadbots team while the desktop app and its harness are running.
 
 ## What it can do
 
@@ -16,14 +16,14 @@ change credentials, or control computer/VM lifecycle. Those actions stay in the 
 
 ## From a source checkout
 
-Start Softbots, then configure the MCP client to run:
+Start Squadbots, then configure the MCP client to run:
 
 ```json
 {
   "mcpServers": {
-    "softbots": {
+    "squadbots": {
       "command": "pnpm",
-      "args": ["--dir", "/absolute/path/to/Softbots", "mcp"]
+      "args": ["--dir", "/absolute/path/to/Squadbots", "mcp"]
     }
   }
 }
@@ -33,7 +33,7 @@ Packaged desktop builds require a paired session for tools that create,
 change, send, switch, interrupt, or run anything. Read-only tools work on
 loopback without one. To authorize an external MCP client:
 
-1. In Softbots, open **Settings → Phone → Set up a phone** and reveal the
+1. In Squadbots, open **Settings → Phone → Set up a phone** and reveal the
    one-time pairing code.
 2. Exchange it locally (remove spaces from the displayed code):
 
@@ -51,7 +51,7 @@ loopback without one. To authorize an external MCP client:
    "env": {
      "ELECTRON_RUN_AS_NODE": "1",
      "OMB_PORT": "8799",
-     "SOFTBOTS_TOKEN": "omb_sess_..."
+     "SQUADBOTS_TOKEN": "omb_sess_..."
    }
    ```
 
@@ -68,7 +68,7 @@ macOS example:
 ```json
 {
   "mcpServers": {
-    "softbots": {
+    "squadbots": {
       "command": "/Applications/Squadbots.app/Contents/MacOS/Squadbots",
       "args": ["/Applications/Squadbots.app/Contents/Resources/server/mcp-server.js"],
       "env": { "ELECTRON_RUN_AS_NODE": "1" }
@@ -77,25 +77,25 @@ macOS example:
 }
 ```
 
-On Windows, use the installed `Softbots.exe` as `command`, the adjacent
+On Windows, use the installed `Squadbots.exe` as `command`, the adjacent
 `resources\\server\\mcp-server.js` as the argument, and the same `ELECTRON_RUN_AS_NODE=1` environment value.
-The usual per-user install is under `%LOCALAPPDATA%\\Programs\\Softbots`.
+The usual per-user install is under `%LOCALAPPDATA%\\Programs\\Squadbots`.
 
-On Ubuntu `.deb` installs, the executable is normally `/opt/Softbots/softbots` and the script is
-`/opt/Softbots/resources/server/mcp-server.js`. Use the same environment value.
+On Ubuntu `.deb` installs, the executable is normally `/opt/Squadbots/squadbots` and the script is
+`/opt/Squadbots/resources/server/mcp-server.js`. Use the same environment value.
 
 ## Connection discovery
 
-With no configuration, the MCP process probes Softbots's three desktop ports (`8799`, `18799`, and `28799`)
-and accepts only a health response that identifies itself as Softbots. This handles the desktop's normal
+With no configuration, the MCP process probes Squadbots's three desktop ports (`8799`, `18799`, and `28799`)
+and accepts only a health response that identifies itself as Squadbots. This handles the desktop's normal
 fallback when another local process already owns port 8799.
 
-Set `OMB_PORT` to force one local port, or `SOFTBOTS_URL` to use an explicit HTTP(S) origin. Cleartext remote
+Set `OMB_PORT` to force one local port, or `SQUADBOTS_URL` to use an explicit HTTP(S) origin. Cleartext remote
 HTTP is rejected unless `ALLOW_INSECURE_HTTP=true`; HTTPS should be used outside loopback. An optional
-`SOFTBOTS_TOKEN` is sent as a bearer token for authenticated reverse proxies. When a token is set, an
-explicit `SOFTBOTS_URL` or `OMB_PORT` is required so the credential is never sent while probing unrelated
-local ports. `SOFTBOTS_MCP_TIMEOUT_MS` can set an HTTP timeout between 1,000 and 120,000 milliseconds.
-In packaged builds, `SOFTBOTS_TOKEN` is required for mutating tools as
+`SQUADBOTS_TOKEN` is sent as a bearer token for authenticated reverse proxies. When a token is set, an
+explicit `SQUADBOTS_URL` or `OMB_PORT` is required so the credential is never sent while probing unrelated
+local ports. `SQUADBOTS_MCP_TIMEOUT_MS` can set an HTTP timeout between 1,000 and 120,000 milliseconds.
+In packaged builds, `SQUADBOTS_TOKEN` is required for mutating tools as
 described above; it is not a generic reverse-proxy secret.
 
 ## Tools

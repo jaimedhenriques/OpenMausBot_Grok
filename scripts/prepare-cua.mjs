@@ -45,7 +45,7 @@ async function binaryVersion(candidate) {
 }
 
 async function officialBinary() {
-  const cache = join(root, "node_modules", ".cache", "softbots", `cua-driver-${release.version}`);
+  const cache = join(root, "node_modules", ".cache", "squadbots", `cua-driver-${release.version}`);
   const cachedBinary = join(cache, "cua-driver");
   if ((await binaryVersion(cachedBinary)) === expectedVersion) return cachedBinary;
 
@@ -157,7 +157,7 @@ await build({
       'export { requestMacOSPermissions, hasRequiredMacOSPermissions } from "@trycua/cua-driver/electron";',
     ].join("\n"),
     resolveDir: root,
-    sourcefile: "softbots-cua-entry.mjs",
+    sourcefile: "squadbots-cua-entry.mjs",
     loader: "js",
   },
   bundle: true,
@@ -165,7 +165,7 @@ await build({
   target: "node20",
   format: "esm",
   banner: {
-    js: 'import { createRequire as __softbotsCreateRequire } from "node:module"; const require = __softbotsCreateRequire(import.meta.url);',
+    js: 'import { createRequire as __squadbotsCreateRequire } from "node:module"; const require = __squadbotsCreateRequire(import.meta.url);',
   },
   outfile: bundle,
   logLevel: "silent",
@@ -180,7 +180,7 @@ await writeFile(
   bundle,
   bundledSource.replace(
     resolverPattern,
-    `${resolvers[0]}\n      if (process.env.SOFTBOTS_CUA_SDK_LIBRARY) return resolveOverride(opts.crateName, process.env.SOFTBOTS_CUA_SDK_LIBRARY);`,
+    `${resolvers[0]}\n      if (process.env.SQUADBOTS_CUA_SDK_LIBRARY) return resolveOverride(opts.crateName, process.env.SQUADBOTS_CUA_SDK_LIBRARY);`,
   ),
 );
 

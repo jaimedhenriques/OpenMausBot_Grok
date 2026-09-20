@@ -14,8 +14,8 @@ plugins {
 //     keys: `storeFile` (a path, absolute or relative to `android/`),
 //     `storePassword`, `keyAlias`, and optionally `keyPassword`.
 //   * the environment — for CI, where the material arrives as secrets:
-//     SOFTBOTS_KEYSTORE_FILE, SOFTBOTS_KEYSTORE_PASSWORD,
-//     SOFTBOTS_KEY_ALIAS, and optionally SOFTBOTS_KEY_PASSWORD.
+//     SQUADBOTS_KEYSTORE_FILE, SQUADBOTS_KEYSTORE_PASSWORD,
+//     SQUADBOTS_KEY_ALIAS, and optionally SQUADBOTS_KEY_PASSWORD.
 //
 // The environment wins over the file, so a runner cannot silently inherit a
 // stale `keystore.properties` left behind in a cached workspace.
@@ -34,23 +34,23 @@ private fun signingMaterial(property: String, environment: String): String? =
     (System.getenv(environment) ?: keystoreProperties.getProperty(property))
         ?.takeIf(String::isNotBlank)
 
-private val storeFilePath = signingMaterial("storeFile", "SOFTBOTS_KEYSTORE_FILE")
-private val storePasswordValue = signingMaterial("storePassword", "SOFTBOTS_KEYSTORE_PASSWORD")
-private val keyAliasValue = signingMaterial("keyAlias", "SOFTBOTS_KEY_ALIAS")
+private val storeFilePath = signingMaterial("storeFile", "SQUADBOTS_KEYSTORE_FILE")
+private val storePasswordValue = signingMaterial("storePassword", "SQUADBOTS_KEYSTORE_PASSWORD")
+private val keyAliasValue = signingMaterial("keyAlias", "SQUADBOTS_KEY_ALIAS")
 // A PKCS12 keystore — keytool's default since JDK 9, and what `-storetype PKCS12`
 // produces — holds one password for the store and the key alike, so the key
 // password may be left out rather than repeated.
 private val keyPasswordValue =
-    signingMaterial("keyPassword", "SOFTBOTS_KEY_PASSWORD") ?: storePasswordValue
+    signingMaterial("keyPassword", "SQUADBOTS_KEY_PASSWORD") ?: storePasswordValue
 
 // All three required values, or none of them. A build handed some of them is a
 // build somebody meant to sign, and answering that with an unsigned APK would
 // hand back something that looks finished and cannot be published. It stops here
 // instead, naming what is missing.
 private val releaseSigningMaterial = mapOf(
-    "storeFile / SOFTBOTS_KEYSTORE_FILE" to storeFilePath,
-    "storePassword / SOFTBOTS_KEYSTORE_PASSWORD" to storePasswordValue,
-    "keyAlias / SOFTBOTS_KEY_ALIAS" to keyAliasValue,
+    "storeFile / SQUADBOTS_KEYSTORE_FILE" to storeFilePath,
+    "storePassword / SQUADBOTS_KEYSTORE_PASSWORD" to storePasswordValue,
+    "keyAlias / SQUADBOTS_KEY_ALIAS" to keyAliasValue,
 )
 private val releaseKeystore: java.io.File? = when {
     releaseSigningMaterial.values.all { it == null } -> null
@@ -95,7 +95,7 @@ android {
     compileSdk = 37
 
     defaultConfig {
-        applicationId = "com.softbots.companion"
+        applicationId = "com.openmausbot.companion"
         minSdk = 26
         targetSdk = 37
         versionCode = appVersionCode

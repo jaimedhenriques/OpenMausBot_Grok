@@ -10,7 +10,7 @@ import {
 } from "./team-library.ts";
 
 const manifest = {
-  format: "softbots.team",
+  format: "squadbots.team",
   version: 2,
   team: {
     name: "Engineering",
@@ -27,7 +27,7 @@ const manifest = {
 };
 
 const catalog = {
-  format: "softbots.catalog",
+  format: "squadbots.catalog",
   version: 1,
   teams: [
     {
@@ -71,7 +71,7 @@ describe("team library", () => {
     }) as unknown as typeof fetch;
 
     const loaded = await fetchLibraryTeam("engineering", fetcher);
-    if (loaded.format !== "softbots.team") throw new Error("expected a legacy team");
+    if (loaded.format !== "squadbots.team") throw new Error("expected a legacy team");
     expect(loaded.team.name).toBe("Engineering");
     expect(fetcher).toHaveBeenCalledTimes(2);
   });
@@ -103,7 +103,7 @@ describe("team library", () => {
     ) as unknown as typeof fetch;
 
     const loaded = await fetchGithubTeam("https://github.com/acme/team", fetcher);
-    if (loaded.format !== "softbots.team") throw new Error("expected a legacy team");
+    if (loaded.format !== "squadbots.team") throw new Error("expected a legacy team");
     expect(loaded.team.members[0]?.name).toBe("Ada");
     expect(fetcher).toHaveBeenCalledTimes(6);
   });

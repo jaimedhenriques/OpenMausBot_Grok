@@ -3,7 +3,7 @@
 /// keychain item.
 enum Keychain {
     static func save(_ token: String, for connectionId: String) throws {
-        try SoftbotsSharedKeychain.save(token, for: connectionId)
+        try SquadbotsSharedKeychain.save(token, for: connectionId)
     }
 
     /// The stored token: nil only when there genuinely is not one.
@@ -21,13 +21,13 @@ enum Keychain {
     /// So: `errSecItemNotFound` is the only nil. Everything else throws, and
     /// the caller decides whether to wait or to give up.
     static func token(for connectionId: String) throws -> String? {
-        try SoftbotsSharedKeychain.tokenMigratingLegacyItem(for: connectionId)
+        try SquadbotsSharedKeychain.tokenMigratingLegacyItem(for: connectionId)
     }
 
     @discardableResult
     static func remove(_ connectionId: String) -> Bool {
-        SoftbotsSharedKeychain.removeIncludingLegacyItem(connectionId)
+        SquadbotsSharedKeychain.removeIncludingLegacyItem(connectionId)
     }
 }
 
-typealias KeychainError = SoftbotsSharedKeychainError
+typealias KeychainError = SquadbotsSharedKeychainError

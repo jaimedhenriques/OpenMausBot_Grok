@@ -496,7 +496,7 @@ export async function stageLinuxCua({
     rootDirectory,
     "node_modules",
     ".cache",
-    "softbots",
+    "squadbots",
     LINUX_CUA_RELEASE.archiveName,
   );
   const archive = await readVerifiedArchive({

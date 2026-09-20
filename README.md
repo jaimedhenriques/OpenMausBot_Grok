@@ -1,11 +1,11 @@
-> ⚠️ **No affiliation with any cryptocurrency.** Squadbots has no token. Any coin using the Softbots, Maus, or SupaMaus name is not created, endorsed, or affiliated with this project or its maintainer. I have received no tokens, payment, or allocation from anyone, and I will not be endorsing any token.
+> ⚠️ **No affiliation with any cryptocurrency.** Squadbots has no token. Any coin using the Squadbots, Maus, or SupaMaus name is not created, endorsed, or affiliated with this project or its maintainer. I have received no tokens, payment, or allocation from anyone, and I will not be endorsing any token.
 
 <div align="center">
 
 # Squadbots
 
 
-> **Squadbots** is Soft.s Squadbots desktop (Helix Soft / [squadbots.ai](https://squadbots.ai)) — fork of [OpenMausBot](https://github.com/milind-soni/OpenMausBot) (Apache 2.0). Soft GTM SEND = **HOLD** until stranger E2E + publish readiness.
+> **Squadbots** is an approval-first desktop and mobile workspace, based on [OpenMausBot](https://github.com/milind-soni/OpenMausBot) under Apache 2.0. Release and paid-conversion paths remain held until end-to-end and publish-readiness evidence is complete.
 
 
 **Your own team of AI bots, in a chat app.**
@@ -25,20 +25,20 @@ Talk to them like contacts. Watch them work. Approve what matters.
 
 <br>
 
-<a href="https://github.com/jaimedhenriques/OpenMausBot_Grok/releases/latest/download/Softbots.dmg">
-  <img src="https://img.shields.io/github/v/release/jaimedhenriques/OpenMausBot_Grok?style=for-the-badge&label=%E2%AC%87%EF%B8%8F%20%20Download%20for%20Mac%20%28Apple%20silicon%29&labelColor=070707&color=1084fe&cacheSeconds=300" alt="Download the latest Softbots for Mac with Apple silicon (.dmg)" height="40">
+<a href="https://github.com/jaimedhenriques/OpenMausBot_Grok/releases/latest/download/Squadbots.dmg">
+  <img src="https://img.shields.io/github/v/release/jaimedhenriques/OpenMausBot_Grok?style=for-the-badge&label=%E2%AC%87%EF%B8%8F%20%20Download%20for%20Mac%20%28Apple%20silicon%29&labelColor=070707&color=1084fe&cacheSeconds=300" alt="Download the latest Squadbots for Mac with Apple silicon (.dmg)" height="40">
 </a>
 &nbsp;
-<a href="https://github.com/jaimedhenriques/OpenMausBot_Grok/releases/latest/download/Softbots-intel.dmg">
-  <img src="https://img.shields.io/github/v/release/jaimedhenriques/OpenMausBot_Grok?style=for-the-badge&label=%E2%AC%87%EF%B8%8F%20%20Download%20for%20Mac%20%28Intel%29&labelColor=070707&color=2a9d8f&cacheSeconds=300" alt="Download the latest Softbots for Intel Macs (.dmg)" height="40">
+<a href="https://github.com/jaimedhenriques/OpenMausBot_Grok/releases/latest/download/Squadbots-intel.dmg">
+  <img src="https://img.shields.io/github/v/release/jaimedhenriques/OpenMausBot_Grok?style=for-the-badge&label=%E2%AC%87%EF%B8%8F%20%20Download%20for%20Mac%20%28Intel%29&labelColor=070707&color=2a9d8f&cacheSeconds=300" alt="Download the latest Squadbots for Intel Macs (.dmg)" height="40">
 </a>
 &nbsp;
-<a href="https://github.com/jaimedhenriques/OpenMausBot_Grok/releases/latest/download/Softbots-setup.exe">
-  <img src="https://img.shields.io/github/v/release/jaimedhenriques/OpenMausBot_Grok?style=for-the-badge&label=%E2%AC%87%EF%B8%8F%20%20Download%20for%20Windows&labelColor=070707&color=4cc2ff&cacheSeconds=300" alt="Download the latest Softbots for Windows (.exe)" height="40">
+<a href="https://github.com/jaimedhenriques/OpenMausBot_Grok/releases/latest/download/Squadbots-setup.exe">
+  <img src="https://img.shields.io/github/v/release/jaimedhenriques/OpenMausBot_Grok?style=for-the-badge&label=%E2%AC%87%EF%B8%8F%20%20Download%20for%20Windows&labelColor=070707&color=4cc2ff&cacheSeconds=300" alt="Download the latest Squadbots for Windows (.exe)" height="40">
 </a>
 &nbsp;
-<a href="https://github.com/jaimedhenriques/OpenMausBot_Grok/releases/latest/download/Softbots-amd64.deb">
-  <img src="https://img.shields.io/github/v/release/jaimedhenriques/OpenMausBot_Grok?style=for-the-badge&label=%E2%AC%87%EF%B8%8F%20%20Download%20for%20Ubuntu&labelColor=070707&color=e95420&cacheSeconds=300" alt="Download the latest Softbots for Ubuntu (.deb)" height="40">
+<a href="https://github.com/jaimedhenriques/OpenMausBot_Grok/releases/latest/download/Squadbots-amd64.deb">
+  <img src="https://img.shields.io/github/v/release/jaimedhenriques/OpenMausBot_Grok?style=for-the-badge&label=%E2%AC%87%EF%B8%8F%20%20Download%20for%20Ubuntu&labelColor=070707&color=e95420&cacheSeconds=300" alt="Download the latest Squadbots for Ubuntu (.deb)" height="40">
 </a>
 
 <sub>[latest release](https://github.com/jaimedhenriques/OpenMausBot_Grok/releases/latest) &nbsp;·&nbsp; macOS: Apple silicon & Intel · signed & notarized .dmg &nbsp;·&nbsp; Windows: x64 installer &nbsp;·&nbsp; Ubuntu 24.04 x64: .deb or AppImage beta &nbsp;·&nbsp; [all releases](https://github.com/jaimedhenriques/OpenMausBot_Grok/releases)</sub>
@@ -262,10 +262,10 @@ See [MCP server setup and tool reference](docs/mcp-server.md).
 
 | | Download | Install |
 |---|---|---|
-| **macOS** (Apple silicon) | [Softbots.dmg](https://github.com/jaimedhenriques/OpenMausBot_Grok/releases/latest/download/Softbots.dmg) | Drag it to Applications, open it. Signed & notarized. |
-| **macOS** (Intel) | [Softbots-intel.dmg](https://github.com/jaimedhenriques/OpenMausBot_Grok/releases/latest/download/Softbots-intel.dmg) | Same app, built for Intel Macs. Signed & notarized. |
-| **Windows** (x64) | [Softbots-setup.exe](https://github.com/jaimedhenriques/OpenMausBot_Grok/releases/latest/download/Softbots-setup.exe) | Run it — one-click, per-user, no admin rights. The installer isn't code-signed yet, so SmartScreen shows "unknown publisher": **More info → Run anyway**. |
-| **Ubuntu 24.04** (x64) | [Softbots-amd64.deb](https://github.com/jaimedhenriques/OpenMausBot_Grok/releases/latest/download/Softbots-amd64.deb) · [Softbots.AppImage](https://github.com/jaimedhenriques/OpenMausBot_Grok/releases/latest/download/Softbots.AppImage) | Install the `.deb` with APT (recommended), or make the AppImage executable and run it. Beta; GNOME is the supported desktop. |
+| **macOS** (Apple silicon) | [Squadbots.dmg](https://github.com/jaimedhenriques/OpenMausBot_Grok/releases/latest/download/Squadbots.dmg) | Drag it to Applications, open it. Signed & notarized. |
+| **macOS** (Intel) | [Squadbots-intel.dmg](https://github.com/jaimedhenriques/OpenMausBot_Grok/releases/latest/download/Squadbots-intel.dmg) | Same app, built for Intel Macs. Signed & notarized. |
+| **Windows** (x64) | [Squadbots-setup.exe](https://github.com/jaimedhenriques/OpenMausBot_Grok/releases/latest/download/Squadbots-setup.exe) | Run it — one-click, per-user, no admin rights. The installer isn't code-signed yet, so SmartScreen shows "unknown publisher": **More info → Run anyway**. |
+| **Ubuntu 24.04** (x64) | [Squadbots-amd64.deb](https://github.com/jaimedhenriques/OpenMausBot_Grok/releases/latest/download/Squadbots-amd64.deb) · [Squadbots.AppImage](https://github.com/jaimedhenriques/OpenMausBot_Grok/releases/latest/download/Squadbots.AppImage) | Install the `.deb` with APT (recommended), or make the AppImage executable and run it. Beta; GNOME is the supported desktop. |
 
 See the [Ubuntu Desktop guide](docs/linux-desktop.md) for installation, capabilities, and troubleshooting.
 Any desktop build can also pair as a client to another Windows, macOS, or Ubuntu host over Tailscale; see [desktop-to-desktop companion mode](docs/desktop-companion.md).
@@ -274,7 +274,7 @@ Any desktop build can also pair as a client to another Windows, macOS, or Ubuntu
 **From source:**
 
 ```sh
-git clone https://github.com/jaimedhenriques/OpenMausBot_Grok && cd Softbots
+git clone https://github.com/jaimedhenriques/OpenMausBot_Grok && cd Squadbots
 pnpm install
 
 pnpm dev:server    # harness server → 127.0.0.1:8799
@@ -385,11 +385,11 @@ which takes care of receipts and taxes; nothing about the app ever sits behind a
 With Node 24 or newer, install once and run:
 
 ```sh
-npm install -g softbots
-softbots
+npm install -g squadbots
+squadbots
 ```
 
-Or use `npx softbots` without a global install. First launch guides you with
+Or use `npx squadbots` without a global install. First launch guides you with
 arrow-key choices: choose AI access, sign in or paste a hidden API key, choose
 a model, and optionally connect a phone. Next time, the same command reuses your
 saved setup and opens the local workspace. Keep the terminal open; Ctrl-C stops
@@ -404,7 +404,7 @@ cannot use a localhost link. `--local` ignores saved remote access for one launc
 `--no-pair` suppresses phone prompts and invitations but does not disable a saved
 remote connection.
 
-Run `softbots setup` to reconfigure without resetting bots or conversations;
+Run `squadbots setup` to reconfigure without resetting bots or conversations;
 the saved model default applies only to new bots. Native setup confirms provider
 sign-in; API setup asks before a potentially billable test message. API keys are
 saved as plaintext, not encrypted, in private `config.json` (`0600` on Unix).
@@ -412,8 +412,8 @@ See the [short setup guide](docs/cli-onboarding.md) for account differences,
 phone choices, credential storage, and cancellation.
 
 For a background service on a VPS or an always-on computer, use
-`npx softbots serve` with explicit remote options: `--tunnel` after
-`npx softbots login` for a managed public address, `--tailscale` for your
+`npx squadbots serve` with explicit remote options: `--tunnel` after
+`npx squadbots login` for a managed public address, `--tailscale` for your
 tailnet, or the Docker stack for your own domain. These are separate from
 AI-provider sign-in. Devices pair once with a short code. The deployment guide is
 [docs/deploy-vps.md](docs/deploy-vps.md); the reference is

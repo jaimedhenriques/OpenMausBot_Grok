@@ -19,7 +19,7 @@ export function codexDeveloperInstructions(config: unknown, botInstructions: str
   // Native rules previously outranked the bot's user-message prefix. Keep
   // them last in the combined developer block to preserve that precedence.
   return configured
-    ? `${botInstructions || "No Softbots bot-specific instructions remain."}\n\n${configured}`
+    ? `${botInstructions || "No Squadbots bot-specific instructions remain."}\n\n${configured}`
     : botInstructions;
 }
 
@@ -53,8 +53,8 @@ export async function syncCodexInstructions(
           role: "developer",
           content: [{
             type: "input_text",
-            text: "The following replaces the previous developer instruction block supplied by Softbots, including its native configured rules and bot-specific instructions. Other Codex instructions and permissions still apply.\n\n"
-              + (instructions || "No Softbots bot-specific instructions remain."),
+            text: "The following replaces the previous developer instruction block supplied by Squadbots, including its native configured rules and bot-specific instructions. Other Codex instructions and permissions still apply.\n\n"
+              + (instructions || "No Squadbots bot-specific instructions remain."),
           }],
         }],
       });

@@ -45,7 +45,7 @@ const ENV_NAME = /^[A-Za-z_][A-Za-z0-9_]*$/;
 /** An HTTP header field name: RFC 9110 token characters. */
 const HEADER_NAME = /^[!#$%&'*+.^_`|~0-9A-Za-z-]{1,128}$/;
 
-/** Names used to route Softbots's built-in MCP proxies and their ephemeral
+/** Names used to route Squadbots's built-in MCP proxies and their ephemeral
  * capabilities. Codex exposes MCP env names through one app-server process;
  * a custom server must never request one of these names or it could redirect
  * a built-in proxy or receive that proxy's bearer. */
@@ -90,8 +90,8 @@ const RESERVED_MCP_NAMES = new Set([
   "browser",
   "phone",
   "dweb",
-  "softbots_connectors",
-  "softbots_phone",
+  "squadbots_connectors",
+  "squadbots_phone",
 ]);
 
 const stdioEntrySchema = z.object({

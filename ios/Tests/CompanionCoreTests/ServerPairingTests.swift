@@ -2,7 +2,7 @@ import Foundation
 import XCTest
 @testable import CompanionCore
 
-/// Pairing with a server directly (`softbots serve`, the Docker stack):
+/// Pairing with a server directly (`squadbots serve`, the Docker stack):
 /// the `https://host/pair#code=…` link, `POST /api/auth/pair`, and the
 /// connection that comes out of it.
 private final class ServerRequestStub: URLProtocol {
@@ -109,7 +109,7 @@ final class ServerPairingTests: XCTestCase {
             XCTAssertNil(PairingInvite.parse(try XCTUnwrap(URL(string: bad))), bad)
         }
         // the companion's own invites still parse
-        XCTAssertNotNil(PairingInvite.parse(try XCTUnwrap(URL(string: "softbots://pair?address=192.168.1.9:8810&code=123456"))))
+        XCTAssertNotNil(PairingInvite.parse(try XCTUnwrap(URL(string: "squadbots://pair?address=192.168.1.9:8810&code=123456"))))
     }
 
     func testServerCodesAreDistinguishedFromCompanionCredentialsByShape() {
@@ -166,7 +166,7 @@ final class ServerPairingTests: XCTestCase {
         let connection = try XCTUnwrap(Connection.parse("https://c-7f3a9c.softbots.com"))
         let environment = try await CompanionClient(connection: connection, token: nil, session: session).environment()
         XCTAssertEqual(environment, ServerEnvironment(environmentId: "env_7f3a9c", label: "cab mini", platform: "linux", version: "0.1.55"))
-        XCTAssertEqual(ServerRequestStub.captured().first?.url?.path, "/.well-known/softbots/environment")
+        XCTAssertEqual(ServerRequestStub.captured().first?.url?.path, "/.well-known/squadbots/environment")
     }
 
     func testConnectionsSavedBeforeServerPairingStillDecodeAsCompanionOnes() throws {

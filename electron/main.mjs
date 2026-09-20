@@ -93,7 +93,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 // 127.0.0.1 explicitly — vite binds IPv4; a bare "localhost" here can
 // resolve to ::1 and paint a black window
 const DEV_URL = process.env.ELECTRON_START_URL ?? "http://127.0.0.1:5199";
-const DEFAULT_COMPOSIO_BROKER_URL = "https://softbots-composio.milindsoni201.workers.dev";
+const DEFAULT_COMPOSIO_BROKER_URL = "https://squadbots-composio.milindsoni201.workers.dev";
 let SERVER_PORT = 8799;
 const APP_ICON = path.join(__dirname, "resources/app-icon.png");
 let desktopViewerWindow = null;
@@ -189,7 +189,7 @@ function applyUnreadBadge(win = mainWindow) {
 // intercepting input. This app is not graphics-heavy, so reliability wins.
 if (process.platform === "linux") {
   app.disableHardwareAcceleration();
-  app.setDesktopName("ai.squadbots.app.desktop");
+  app.setDesktopName("ai.softbots.app.desktop");
 }
 
 // One instance per user: without this lock a second launch forks a second
@@ -1113,7 +1113,7 @@ async function runCompanyBackup(kind, input, scheduled = null) {
     }
     if (status.busy) throw companyBackupDeferred();
     const transfers = createCompanyBackups({
-      tempRoot: path.join(app.getPath("temp"), "softbots-company-backups"),
+      tempRoot: path.join(app.getPath("temp"), "squadbots-company-backups"),
       localRequest: (route, init) => localBackupRequest(proc, route, init),
       portalRequest: (route, options) => client.requestBackup(route, { ...options, generation }),
       availableBytes: async temporary => {
@@ -1143,7 +1143,7 @@ async function runCompanyBackup(kind, input, scheduled = null) {
 function syncDesktopMutationToken(proc) {
   try {
     proc.postMessage({
-      type: "softbots:desktop-mutation-token",
+      type: "squadbots:desktop-mutation-token",
       token: desktopMutationToken,
       companionToken: companionMutationToken,
     });
@@ -1323,7 +1323,7 @@ function syncManagedComposioCredentials() {
   if (!serverProc) return;
   try {
     serverProc.postMessage({
-      type: "softbots:managed-composio",
+      type: "squadbots:managed-composio",
       access: managedComposioAccess(composioBrokerUrl(), secureCredentials),
     });
   } catch (error) {
@@ -1453,7 +1453,7 @@ function openDesktopViewer(owner, rawUrl, rawTitle, contextId) {
       sandbox: true,
       // Keep provider cookies away from the app renderer and discard them on
       // app exit. The secret-bearing URL is sufficient to authenticate.
-      partition: "softbots-desktop-viewer",
+      partition: "squadbots-desktop-viewer",
     },
   });
   desktopViewerWindow = viewer;
@@ -1538,7 +1538,7 @@ function ensureDesktopWorkspace(owner) {
   const manager = createDesktopWorkspaceManager({
     owner,
     createView: (options) => new WebContentsView(options),
-    partitionPrefix: `softbots-desktop-workspace-${randomUUID()}`,
+    partitionPrefix: `squadbots-desktop-workspace-${randomUUID()}`,
     notify: (state) => {
       if (!owner.isDestroyed() && !owner.webContents.isDestroyed()) {
         owner.webContents.send("desktop-workspace:state", state);
@@ -2684,7 +2684,7 @@ app.whenReady().then(async () => {
     }
   }
   if (app.isPackaged) {
-    app.setAsDefaultProtocolClient("softbots");
+    app.setAsDefaultProtocolClient("squadbots");
     // Chromium adds this capability below JavaScript, so renderer requests
     // can mutate the local harness while a Full-access shell using curl
     // cannot impersonate the person operating the desktop app.

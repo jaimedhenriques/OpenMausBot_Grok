@@ -833,7 +833,7 @@ describe("RoutineManager", () => {
         routineName: "Morning brief",
         status: "failed",
         threadId: "thread-1",
-        error: "Softbots restarted while this routine was running",
+        error: "Squadbots restarted while this routine was running",
       },
     ]);
   });
