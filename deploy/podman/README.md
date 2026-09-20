@@ -1,12 +1,12 @@
 # Self-host the full stack with rootless Podman
 
-Run the Softbots server, Caddy, and per-bot Linux desktops with one Podman
+Run the Squadbots server, Caddy, and per-bot Linux desktops with one Podman
 engine. Docker Engine, Docker Desktop, and Docker Compose are not required;
 `podman-compose` provides the Compose commands. The existing
 [`deploy/docker-compose.yml`](../docker-compose.yml) remains an independent option.
 
 ```text
-Browser -> loopback Caddy :8080 -> Softbots :8799
+Browser -> loopback Caddy :8080 -> Squadbots :8799
                                     |
                              rootless Podman socket
                                     |
