@@ -329,7 +329,7 @@ async function api(port: number, path: string, init: { method?: string; body?: s
 async function serverUp(port: number, pid?: number): Promise<boolean> {
   try {
     const { status, body } = await api(port, "/api/health");
-    return status === 200 && body?.app === "squadbots" && (pid === undefined || body.pid === pid);
+    return status === 200 && body?.app === "softbots" && (pid === undefined || body.pid === pid);
   } catch {
     return false;
   }
@@ -340,7 +340,7 @@ async function serverUp(port: number, pid?: number): Promise<boolean> {
 export async function isWorkspaceRunning(options: CliOptions): Promise<boolean> {
   try {
     const { status, body } = await api(options.port, "/api/health");
-    if (status !== 200 || body?.app !== "squadbots") return false;
+    if (status !== 200 || body?.app !== "softbots") return false;
     const expected = readFileSync(join(options.dataDir, "environment-id"), "utf8").trim();
     const descriptor = await api(options.port, "/.well-known/squadbots/environment");
     return /^[0-9a-f-]{36}$/i.test(expected) && descriptor.status === 200 && descriptor.body?.environmentId === expected;

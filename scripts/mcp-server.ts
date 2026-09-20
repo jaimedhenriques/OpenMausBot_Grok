@@ -91,7 +91,7 @@ export async function probeBaseUrls(candidates: string[]): Promise<string> {
       const health = await fetchJson(`${candidate}/api/health`, {
         signal: AbortSignal.timeout(Math.min(requestTimeoutMs(), 2_000)),
       });
-      if (health?.app !== "squadbots") {
+      if (health?.app !== "softbots") {
         failures.push(`${candidate} answered, but it was not Squadbots`);
         continue;
       }
@@ -793,11 +793,11 @@ export async function handleToolCall(
   switch (name) {
     case "get_system_health": {
       const res = await fetcher("/api/health");
-      if (res?.app !== "squadbots") throw new Error("The configured endpoint is not an Squadbots server");
+      if (res?.app !== "softbots") throw new Error("The configured endpoint is not an Squadbots server");
       return {
         status: "connected",
         endpoint: discoveredBaseUrl ?? OMB_BASE_URL,
-        app: "squadbots",
+        app: "softbots",
         packaged: Boolean(res.static),
       };
     }

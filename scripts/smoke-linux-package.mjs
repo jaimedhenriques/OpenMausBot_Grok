@@ -282,7 +282,7 @@ try {
     location,
     title,
   } = result;
-  if (health?.app !== "squadbots" || health.static !== true) {
+  if (health?.app !== "softbots" || health.static !== true) {
     throw new Error(`unexpected embedded health response: ${JSON.stringify(health)}`);
   }
   if (!/Squadbots|Squadbots/.test(String(title))) throw new Error(`unexpected renderer title: ${title}`);
