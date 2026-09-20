@@ -299,7 +299,7 @@ if (process.versions.electron && process.argv.includes(flag)) {
     await evaluate("document.querySelector('dialog input').scrollIntoView({block:'center'}); document.querySelector('dialog input').focus();");
     await screenshot("company-backup-replace-narrow.png");
     await click("Replace workspace");
-    await until(() => evaluate("document.body.textContent.includes('Fully quit OpenMausBot') && !document.querySelector('dialog[open]')"), "restart-required confirmation");
+    await until(() => evaluate("document.body.textContent.includes('Fully quit Squadbots') && !document.querySelector('dialog[open]')"), "restart-required confirmation");
     const restoreId = await evaluate(`localStorage.getItem(${JSON.stringify(MARKER)})`);
     assert.match(restoreId, /^[a-f0-9-]{36}$/); assert.equal(restoreCalls, 1);
     assert.equal((await localJson("/api/workspace-backup/status")).pendingRestore, true);
@@ -309,7 +309,7 @@ if (process.versions.electron && process.argv.includes(flag)) {
 
     // A new renderer instance, not the component's transient restart state.
     win.destroy(); win = await open(true); await win.loadURL(url);
-    await until(() => evaluate("document.body.textContent.includes('Fully quit OpenMausBot')"), "pending restore on reopen");
+    await until(() => evaluate("document.body.textContent.includes('Fully quit Squadbots')"), "pending restore on reopen");
     assert.equal(await evaluate("document.body.textContent.includes('Back up this workspace')"), false);
     checks.push("pending restore survives closing and reopening the renderer");
     const restarted = new Promise((done, reject) => {
@@ -360,7 +360,7 @@ if (process.versions.electron && process.argv.includes(flag)) {
       await until(() => evaluate(`document.body.textContent.includes(${JSON.stringify(latest.id)})`), "scheduled archive appears without refresh");
       const native = createCompanyBackups({ localRequest, portalRequest, tempRoot: join(output, "transfer-cache"), allowLoopbackForTests: true });
       const preview = await native.prepareRestore({ id: latest.id });
-      assert.equal(preview.summary.format, "openmaus.workspace-backup");
+      assert.equal(preview.summary.format, "softbots.workspace-backup");
       // Check the real staged manifest rather than trusting captured IPC input.
       assert.match(preview.id, /^[a-f0-9-]{36}$/);
       const staged = JSON.parse(readFileSync(join(fixtureDataDir, ".backups", preview.id, "staged", "manifest.json"), "utf8"));

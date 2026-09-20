@@ -58,7 +58,7 @@ const entryPoint = (resourcesPath) =>
 // stayed closed until the user rediscovered the switch. The position of the
 // toggle is state worth keeping, and it lives in the app's own userData —
 // like cua-connection.json — because the app owns the toggle. Not in the
-// sidecar's ~/.openmausbot-companion, which is the child process's directory,
+// sidecar's ~/.softbots-companion, which is the child process's directory,
 // and not in the harness's config.json, which is somebody else's data layout.
 
 const settingsFile = () => path.join(app.getPath("userData"), "companion-settings.json");
@@ -252,7 +252,7 @@ async function start({ resourcesPath, harnessPort, mutationToken, hostedUrl = nu
   child.once("spawn", () => {
     // Never expose this capability in argv, environment, logs or the renderer.
     try {
-      child.postMessage({ type: "openmausbot:companion-mutation-token", token: mutationToken });
+      child.postMessage({ type: "softbots:companion-mutation-token", token: mutationToken });
     } catch {
       log?.("companion authorization could not be initialized");
       child.kill();
@@ -404,7 +404,7 @@ export async function companionState() {
 }
 
 /** Re-read Tailscale without restarting the sidecar or dropping connected
- * phones. Tailscale may be installed, signed in, or enabled after OpenMausBot
+ * phones. Tailscale may be installed, signed in, or enabled after Squadbots
  * starts, so startup-only detection makes an otherwise healthy route look
  * permanently unavailable. */
 export async function companionRefreshTailscale() {
