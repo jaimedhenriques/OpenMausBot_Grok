@@ -41,7 +41,7 @@ export const brandSchema = z
 
 export type Brand = z.infer<typeof brandSchema>;
 
-export const DEFAULT_BRAND: Brand = { name: "Softbots" };
+export const DEFAULT_BRAND: Brand = { name: "Squadbots" };
 
 export interface BrandStatus {
   brand: Brand;
