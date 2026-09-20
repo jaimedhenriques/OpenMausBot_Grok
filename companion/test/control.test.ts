@@ -264,7 +264,7 @@ describe("hosted endpoint advertisement", () => {
     expect(published.body.endpoints[0]).toEqual({
       kind: "hosted",
       priority: 0,
-      url: "https://c-opaque.softbots.test",
+      url: "https://c-opaque.squadbots.test",
     });
 
     expect(
@@ -291,7 +291,7 @@ describe("hosted endpoint advertisement", () => {
       { url: false },
       [],
       null,
-      "https://c-opaque.softbots.test",
+      "https://c-opaque.squadbots.test",
     ]) {
       const result = await ask("PUT", "/hosted-endpoint", headers, JSON.stringify(body));
       expect(result).toEqual({ status: 400, body: { error: "invalid JSON body" } });

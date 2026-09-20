@@ -602,7 +602,7 @@ describe("CodexDriver turns (fake app-server)", () => {
     });
     await recorder.until((event) => event.type === "turn.completed");
     const seen = JSON.parse(readFileSync(dump, "utf8"));
-    expect(seen.argv.join(" ")).toContain("mcp_servers.softbots_connectors.command");
+    expect(seen.argv.join(" ")).toContain("mcp_servers.squadbots_connectors.command");
     expect(seen.argv.join(" ")).toContain("OMB_CONNECTOR_TOKEN");
     expect(seen.argv.join(" ")).not.toContain("per-turn-connector-token");
     expect(seen.env.OMB_CONNECTOR_TOKEN).toBe("per-turn-connector-token");
@@ -639,7 +639,7 @@ describe("CodexDriver turns (fake app-server)", () => {
     expect(seen.env.NOTES_TOKEN).toBe("tok-notes");
     // the built-in keeps codex's pre-quieted approval mode; the custom
     // server does NOT — its tool calls arrive as approval cards
-    expect(argv).toContain('mcp_servers.softbots_connectors.default_tools_approval_mode');
+    expect(argv).toContain('mcp_servers.squadbots_connectors.default_tools_approval_mode');
     expect(argv).not.toContain('mcp_servers.notes.default_tools_approval_mode');
   });
 

@@ -392,13 +392,13 @@ export function createProxyHandler(options: ProxyOptions) {
             if (
               (harness.statusCode ?? 500) < 200 ||
               (harness.statusCode ?? 500) >= 300 ||
-              (identity as { app?: unknown } | null)?.app !== "squadbots"
+              (identity as { app?: unknown } | null)?.app !== "softbots"
             ) {
               fail();
               return;
             }
             finished = true;
-            sendJson(res, 200, { app: "squadbots" });
+            sendJson(res, 200, { app: "softbots" });
           });
           return;
         }

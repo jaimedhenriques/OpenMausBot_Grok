@@ -149,11 +149,11 @@ export function managedCodexArgs(config: NonNullable<CodexConfig["managed"]>): s
   // https://learn.chatgpt.com/docs/config-file/config-reference
   return [
     "-c", 'model_provider="squadbots_company"',
-    "-c", 'model_providers.softbots_company.name="Company"',
-    "-c", `model_providers.softbots_company.base_url=${JSON.stringify(config.url)}`,
-    "-c", 'model_providers.softbots_company.env_key="SQUADBOTS_COMPANY_API_KEY"',
-    "-c", 'model_providers.softbots_company.wire_api="responses"',
-    "-c", "model_providers.softbots_company.requires_openai_auth=false",
+    "-c", 'model_providers.squadbots_company.name="Company"',
+    "-c", `model_providers.squadbots_company.base_url=${JSON.stringify(config.url)}`,
+    "-c", 'model_providers.squadbots_company.env_key="SQUADBOTS_COMPANY_API_KEY"',
+    "-c", 'model_providers.squadbots_company.wire_api="responses"',
+    "-c", "model_providers.squadbots_company.requires_openai_auth=false",
     "-c", 'cli_auth_credentials_store="ephemeral"',
     "-c", "shell_environment_policy.ignore_default_excludes=false",
   ];

@@ -1164,7 +1164,7 @@ describe("harness HTTP API", () => {
   it("identifies itself on /api/health", async () => {
     const { status, body } = await api("GET", "/api/health");
     expect(status).toBe(200);
-    expect(body.app).toBe("squadbots");
+    expect(body.app).toBe("softbots");
     expect(typeof body.pid).toBe("number");
     expect(body.static).toBe(true);
   });
