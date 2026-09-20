@@ -2008,8 +2008,8 @@ function createWindow() {
             }
             const [initialCapabilities, healthResponse, ownerMutationResponse] = await Promise.all([
               window.ogb.getCapabilities(),
-              fetch("/api/health"),
-              fetch("/api/auth/stream-ticket", { method: "POST" }),
+              fetch(new URL("/api/health", window.location.href)),
+              fetch(new URL("/api/auth/stream-ticket", window.location.href), { method: "POST" }),
             ]);
             if (!healthResponse.ok) {
               throw new Error(\`health request failed: \${healthResponse.status} \${healthResponse.statusText}\`);
