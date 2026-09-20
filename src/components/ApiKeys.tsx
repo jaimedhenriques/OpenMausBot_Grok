@@ -360,7 +360,7 @@ export function VpsConnection() {
       <div className="mb-1.5 text-[12px] leading-relaxed text-ink-secondary">
         {t("keys.vps.descBefore")}
         <a
-          href="https://github.com/milind-soni/OpenMausBot/blob/main/docs/byo-vps.md"
+          href="https://github.com/jaimedhenriques/OpenMausBot_Grok/blob/main/docs/byo-vps.md"
           target="_blank"
           rel="noopener noreferrer"
           className="text-accent hover:underline"
@@ -391,6 +391,41 @@ export function VpsConnection() {
           title={!alias.trim() && configured ? t("keys.vps.removeAlias") : t("common.save")}
         >
           {saving ? <Loader2 size={13} className="animate-spin" /> : !alias.trim() && configured ? t("keys.clear") : <><Check size={13} />{t("common.save")}</>}
+        </button>
+      </div>
+      {error && <div className="mt-1 text-[12px] text-danger">{error}</div>}
+    </div>
+  );
+}
+
+
+export const DEEPSEEK_API_BASE_URL = "https://api.deepseek.com";
+
+/** First-class DeepSeek route through the existing write-only compatible-provider store. */
+export function DeepSeekProviderPreset() {
+  const { state, dispatch } = useStore();
+  const current = state.config?.openaiCompat?.url ?? "";
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const selected = current.replace(/\/$/, "") === DEEPSEEK_API_BASE_URL;
+  const select = () => {
+    if (saving || selected) return;
+    setSaving(true);
+    setError(null);
+    api("/api/config", { method: "PUT", body: JSON.stringify({ openaiCompat: { url: DEEPSEEK_API_BASE_URL, provider: "deepseek" } }) })
+      .then((status: ConfigStatus) => dispatch({ type: "configStatus", config: status }))
+      .catch((e) => setError(e.message))
+      .finally(() => setSaving(false));
+  };
+  return (
+    <div className="rounded-lg border border-hairline/40 bg-inset px-3 py-2.5">
+      <div className="flex items-start justify-between gap-3">
+        <div>
+          <div className="text-[13px] font-medium text-ink">{t("keys.deepseek.title")}</div>
+          <p className="mt-0.5 text-[11.5px] leading-relaxed text-ink-secondary">{t("keys.deepseek.desc")}</p>
+        </div>
+        <button type="button" onClick={select} disabled={saving || selected} className="shrink-0 rounded-lg bg-control px-3 py-1.5 text-[12px] text-ink hover:bg-raised-hover disabled:opacity-60">
+          {saving ? <Loader2 size={13} className="animate-spin" /> : selected ? t("keys.deepseek.selected") : t("keys.deepseek.use")}
         </button>
       </div>
       {error && <div className="mt-1 text-[12px] text-danger">{error}</div>}

@@ -12,7 +12,7 @@ function fixture({ remote = false, company = true, remoteClient = false, storage
   const location = { origin: remote ? "https://remote.invalid" : origin };
   let bridge;
   const context = vm.createContext({
-    process: { platform: "fixture", argv: [`--omb-local-origin=${origin}`, ...(company ? ["--omb-company-desktop=1"] : []), ...(remoteClient ? ["--openmausbot-remote-client"] : [])] },
+    process: { platform: "fixture", argv: [`--omb-local-origin=${origin}`, ...(company ? ["--omb-company-desktop=1"] : []), ...(remoteClient ? ["--squadbots-remote-client"] : [])] },
     location, TextEncoder,
     localStorage: storage ?? { getItem: key => values.get(key) ?? null },
     require: name => {

@@ -1,0 +1,44 @@
+name: Open Code Review pilot
+
+# The pilot is deliberately manual-only. Do not add pull_request or
+# pull_request_target until review quality, cost and permissions are accepted.
+on:
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: Pull request number to review
+        required: true
+        type: number
+
+# Minimum permissions for reading repository content and posting PR feedback.
+# Outdated-thread resolution stays off because it would require contents: write.
+permissions:
+  contents: read
+  pull-requests: write
+
+concurrency:
+  group: open-code-review-${{ inputs.pr_number }}
+  cancel-in-progress: true
+
+jobs:
+  review:
+    name: Review PR #${{ inputs.pr_number }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Run pinned Open Code Review pilot
+        uses: alibaba/open-code-review@85cecfe5f935da2b2aae8f91ce4fee8ed343a681 # v1.12.7
+        with:
+          github_token: ${{ github.token }}
+          pr_number: ${{ inputs.pr_number }}
+          llm_url: ${{ vars.OCR_LLM_URL }}
+          llm_auth_token: ${{ secrets.OCR_LLM_AUTH_TOKEN }}
+          llm_model: ${{ vars.OCR_LLM_MODEL }}
+          llm_use_anthropic: ${{ vars.OCR_LLM_USE_ANTHROPIC }}
+          ocr_version: '1.12.7'
+          review_concurrency: '2'
+          max_tokens_budget: '8000'
+          upload_artifacts: 'false'
+          sticky_summary: 'true'
+          incremental: 'false'
+          resolve_outdated: 'false'

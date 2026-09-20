@@ -28,7 +28,7 @@ Sign in and pair a browser:
 
 ```sh
 docker compose exec omb codex login --device-auth
-docker compose exec omb node dist-server/openmausbot.js pair
+docker compose exec omb node dist-server/squadbots.js pair
 ```
 
 On Windows, `./maus.ps1` forwards arguments to Compose using the repository

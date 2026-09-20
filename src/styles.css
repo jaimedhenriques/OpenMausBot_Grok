@@ -110,7 +110,6 @@
   --color-accent-border: #459ffe;
   /* the ring a keyboard user follows; sits on the accent so focus reads as
      "the app is talking to you", not as a browser default */
-  --color-focus: #459ffe;
   --color-accent-text: #7fc0ff;
   --color-bubble-user: #5a5a5a;
   --color-success: #38d591;
@@ -136,6 +135,7 @@
   --color-scrollbar: #3d3d3d;
   /* second speed line of the mascot — contrasts against the app ground */
   --color-maus-line: #fcfcfc;
+  --color-focus: #1084fe;
 }
 
 /* ── Midnight ──────────────────────────────────────────────────────────────
@@ -164,6 +164,7 @@
   --color-ink: #fcfcfc;
   --color-ink-secondary: #fcfcfc99;
   --color-accent: #1084fe;
+  --color-focus: #1084fe;
   --color-accent-border: #459ffe;
   --color-accent-text: #7fc0ff;
   --color-accent-ink: #ffffff;
@@ -212,10 +213,10 @@
   --color-ink-secondary: #6b6559; /* #8b8578 was 3.67:1 → 5.78:1 */
 
   /* Two accent tones: the fill carries white, the text stands on white. */
-  --color-accent: #a05f25;        /* #b06a2c darkened → 5.05:1 */
+  --color-accent: #a05f25;
+  --color-focus: #a05f25;        /* #b06a2c darkened → 5.05:1 */
   --color-accent-border: #b06a2c; /* the original tone lives on as the border */
   --color-accent-text: #96551f;   /* for links on a light ground — 5.81:1 */
-  --color-focus: #96551f;         /* the ring rides the accent, not Grok blue */
   --color-accent-ink: #ffffff;
   --color-bubble-user: #f2e9dc;   /* your own messages in the badge beige */
   --color-bubble-user-ink: #1a1a18;   /* = ink: unchanged */
@@ -271,9 +272,9 @@
 
   /* Brass. Bright fill, dark lettering — the inversion described above. */
   --color-accent: #d99a3e;
+  --color-focus: #d99a3e;
   --color-accent-border: #e8b25e;
   --color-accent-text: #e0a44c;   /* 8.6:1 on the ground, for links */
-  --color-focus: #e0a44c;         /* the ring rides the accent, not Grok blue */
   --color-accent-ink: #1c150c;    /* 7.4:1 on the brass fill */
   --color-bubble-user: #2a2318;   /* your own messages, one step out of the card */
   --color-bubble-user-ink: #f4efe4;   /* = ink: unchanged */
@@ -334,10 +335,10 @@
                                      as a foreign object on a tinted ground */
   --color-ink-secondary: #4d5c5b; /* 7.0:1 on white, 5.8:1 on the ground */
 
-  --color-accent: #11736d;        /* deep teal, carries white at 5.68:1 */
+  --color-accent: #11736d;
+  --color-focus: #11736d;        /* deep teal, carries white at 5.68:1 */
   --color-accent-border: #14807a;
   --color-accent-text: #0d5f5a;   /* 7.5:1 on a card */
-  --color-focus: #0d5f5a;         /* the ring rides the accent, not Grok blue */
   --color-accent-ink: #ffffff;
   --color-bubble-user: #cfe4e1;
   --color-bubble-user-ink: #14201f;   /* = ink: unchanged */
@@ -379,9 +380,9 @@
   --color-ink-secondary: #b3b8c2;
 
   --color-accent: #4f75a2;
+  --color-focus: #4f75a2;
   --color-accent-border: #698fbb;
   --color-accent-text: #8fb4df;
-  --color-focus: #8fb4df;
   --color-accent-ink: #ffffff;
   --color-bubble-user: #30343a;
   --color-bubble-user-ink: #f2f4f7;   /* = ink: unchanged */
@@ -423,9 +424,9 @@
   --color-ink-secondary: #59616c;
 
   --color-accent: #355f8a;
+  --color-focus: #355f8a;
   --color-accent-border: #4978a6;
   --color-accent-text: #2c5680;
-  --color-focus: #2c5680;
   --color-accent-ink: #ffffff;
   --color-bubble-user: #e1e6ed;
   --color-bubble-user-ink: #1d2229;   /* = ink: unchanged */
@@ -466,9 +467,9 @@
   --color-ink-secondary: #b9afbd;
 
   --color-accent: #765683;
+  --color-focus: #9670a3;
   --color-accent-border: #9670a3;
   --color-accent-text: #c49bd2;
-  --color-focus: #c49bd2;
   --color-accent-ink: #ffffff;
   --color-bubble-user: #332b38;
   --color-bubble-user-ink: #f4eff6;   /* = ink: unchanged */
@@ -520,9 +521,9 @@
      unread dot it is mostly used for, not for a filled button's label. The
      fill is darkened until white clears AA; the dot keeps reading as blue. */
   --color-accent: #0b62c4;
+  --color-focus: #0b62c4;
   --color-accent-border: #1084fe;
   --color-accent-text: #0b5cb8;
-  --color-focus: #0b62c4;
   --color-accent-ink: #ffffff;
   /* The composer is the page with a ring around it, not a grey slab —
      the one surface where this skin departs from `raised`. */
@@ -545,6 +546,51 @@
   --radius-lg: 8px;
   --radius-xl: 14px;
 }
+
+/* ── Soft Taste ────────────────────────────────────────────────────────────
+   Otter App Store floor for Squadbots: soft blue / lavender / white, squircles.
+   Default Squadbots skin. No dark AI-slop. Soft GTM SEND HOLD.
+   ───────────────────────────────────────────────────────────────────────── */
+[data-skin="soft-taste"] {
+  --code-color-scheme: light;
+  --color-app: #f7f8fc;
+  --color-panel: #eef0f8;
+  --color-raised: #ffffff;
+  --color-raised-hover: #e4e7f4;
+  --color-composer: #ffffff;
+  --color-composer-ring: #d5daf0;
+  --color-card: #ffffff;
+  --color-menu: #ffffff;
+  --color-inset: #e8ebf6;
+  --color-control: #dde1f2;
+  --color-hairline: #c4c9df;
+
+  --color-ink: #1a1f33;
+  --color-ink-secondary: #5c647c;
+
+  --color-accent: #5b7cfa;
+  --color-focus: #5b7cfa;
+  --color-accent-border: #7b94fc;
+  --color-accent-text: #3d5fd4;
+  --color-accent-ink: #101735;
+  --color-bubble-user: #e4e8fa;
+  --color-bubble-user-ink: #1a1f33;
+
+  --color-success: #2f7a55;
+  --color-danger: #c23d4a;
+  --color-danger-ink: #ffffff;
+  --color-success-ink: #ffffff;
+  --color-warning: #8a5a14;
+  --color-scrollbar: #b4bad4;
+  --color-maus-line: #5c647c;
+
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "SF Pro Text",
+    "Segoe UI", system-ui, sans-serif;
+  --radius-lg: 16px;
+  --radius-xl: 22px;
+}
+
+
 
 /* Shiki emits both palettes so cached blocks follow the nearest skin without
    re-tokenizing. Scope the scheme to code; native controls keep their styling. */
@@ -1341,7 +1387,6 @@ body {
     --color-accent: #7fc0ff;
     --color-accent-text: #7fc0ff;
     --color-accent-ink: #070707;
-    --color-focus: #7fc0ff;
     --color-danger: #ff7788;
     --color-danger-ink: #070707;
     --color-success: #63b58a;

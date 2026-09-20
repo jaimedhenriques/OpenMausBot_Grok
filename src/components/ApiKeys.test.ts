@@ -3,7 +3,8 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { StoreProvider } from "@/state/store";
 import * as store from "@/state/store";
-import { ApiKeyRow, OpenAiCompatUrl } from "./ApiKeys";
+import { ApiKeyRow, DeepSeekProviderPreset, OpenAiCompatUrl } from "./ApiKeys";
+import en from "@/locales/en.json";
 
 afterEach(() => { vi.unstubAllGlobals(); vi.restoreAllMocks(); });
 
@@ -13,6 +14,11 @@ const render = (element: React.ReactElement) => {
 };
 
 describe("provider key rows", () => {
+  it("states the bring-your-own provider and shared-inference boundary", () => {
+    expect(en["keys.providers.subtitle"]).toContain("Bring your own provider connection");
+    expect(en["keys.providers.subtitle"]).toContain("provider usage may cost money");
+    expect(en["keys.providers.subtitle"]).toContain("No shared Squadbots inference or credits are included");
+  });
   it("describes a stored key as configured without claiming an authenticated connection", () => {
     vi.spyOn(store, "useStore").mockReturnValue({
       state: { ...store.initialState, config: {
@@ -47,6 +53,14 @@ describe("provider key rows", () => {
     expect(openai).toContain("sk-or-v1-…");
 
     expect(render(createElement(ApiKeyRow, { section: "xai", testProvider: "xai" }))).toContain("xAI API key");
+  });
+
+  it("offers DeepSeek as a first-class BYO route without a shared key", () => {
+    const html = render(createElement(DeepSeekProviderPreset));
+    expect(html).toContain("DeepSeek API");
+    expect(html).toContain("your own DeepSeek key");
+    expect(html).toContain("billed by DeepSeek");
+    expect(html).toContain("Squadbots policy and approval layer remains in control");
   });
 
   it("offers the base URL as a setting next to the key", () => {

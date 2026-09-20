@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "sources": [
+    {
+      "name": "typesafe-ai",
+      "upstream": "https://github.com/typesafe-ai/skills",
+      "commit": "65a39f393687675ce170e6094757de20370365b9",
+      "license": "MIT",
+      "reviewedAt": "2026-09-20",
+      "files": [
+        "skills/typesafe-ai/SKILL.md",
+        "skills/typesafe-ai/LICENSE"
+      ],
+      "destination": "skills/vendor/typesafe-ai",
+      "runtimeEnabled": false
+    }
+  ]
+}

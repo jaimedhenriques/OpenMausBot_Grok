@@ -41,14 +41,14 @@ export async function browserProxyRequest(
   if (!Object.hasOwn(message, "id")) return undefined;
   if (message.method === "initialize") return {
     jsonrpc: "2.0", id,
-    result: { protocolVersion: "2024-11-05", capabilities: { tools: {} }, serverInfo: { name: "openmausbot-browser", version: "1" } },
+    result: { protocolVersion: "2024-11-05", capabilities: { tools: {} }, serverInfo: { name: "squadbots-browser", version: "1" } },
   };
   if (message.method === "ping") return { jsonrpc: "2.0", id, result: {} };
   if (message.method !== "tools/list" && message.method !== "tools/call") return failure(id, message.method, "Method not found.", -32601);
   try {
     const url = new URL(connection.url);
     if (!connection.token || url.protocol !== "http:" || !["127.0.0.1", "localhost", "[::1]"].includes(url.hostname) || url.username || url.password || url.pathname !== "/" || url.search || url.hash) {
-      throw new Error("Browser connection is not configured. Start a new bot turn from OpenMausBot.");
+      throw new Error("Browser connection is not configured. Start a new bot turn from Squadbots.");
     }
     const body = JSON.stringify({ method: message.method, params: message.params ?? {} });
     if (Buffer.byteLength(body) > MAX_INPUT_BYTES) throw new Error("Browser request exceeded the size limit.");

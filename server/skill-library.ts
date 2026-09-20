@@ -135,6 +135,6 @@ export function renderSkillInstructions(
 ): string {
   if (!selected.length) return "";
   return selected.map(({ manifest, instructions, directory }) =>
-    `\n\n<openmaus-skill id=${JSON.stringify(manifest.id)} version=${JSON.stringify(manifest.version)}${includeRoot ? ` root=${JSON.stringify(directory)}` : ""}>\n${instructions}\n</openmaus-skill>`,
+    `\n\n<squadbots-skill id=${JSON.stringify(manifest.id)} version=${JSON.stringify(manifest.version)}${includeRoot ? ` root=${JSON.stringify(directory)}` : ""}>\n${instructions}\n</squadbots-skill>`,
   ).join("");
 }
