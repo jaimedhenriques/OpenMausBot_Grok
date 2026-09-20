@@ -1,11 +1,11 @@
-> ⚠️ **No affiliation with any cryptocurrency.** Softbots has no token. Any coin using the Softbots, Maus, or SupaMaus name is not created, endorsed, or affiliated with this project or its maintainer. I have received no tokens, payment, or allocation from anyone, and I will not be endorsing any token.
+> ⚠️ **No affiliation with any cryptocurrency.** Squadbots has no token. Any coin using the Softbots, Maus, or SupaMaus name is not created, endorsed, or affiliated with this project or its maintainer. I have received no tokens, payment, or allocation from anyone, and I will not be endorsing any token.
 
 <div align="center">
 
-# Softbots
+# Squadbots
 
 
-> **Softbots** is Soft’s Softbots desktop (Helix Soft / [squadbots.ai](https://squadbots.ai)) — fork of [OpenMausBot](https://github.com/milind-soni/OpenMausBot) (Apache 2.0). Soft GTM SEND = **HOLD** until stranger E2E + publish readiness.
+> **Squadbots** is Soft.s Squadbots desktop (Helix Soft / [squadbots.ai](https://squadbots.ai)) — fork of [OpenMausBot](https://github.com/milind-soni/OpenMausBot) (Apache 2.0). Soft GTM SEND = **HOLD** until stranger E2E + publish readiness.
 
 
 **Your own team of AI bots, in a chat app.**
@@ -46,13 +46,13 @@ Talk to them like contacts. Watch them work. Approve what matters.
 <br>
 
 <a href="https://buy.polar.sh/polar_cl_bbnfWFUrWONIF4HnUpZf1p0if0eUYg3HeXct73b48Yg">
-  <img src="https://img.shields.io/badge/%E2%9D%A4%EF%B8%8F%20%20Support%20Softbots-any%20amount%20%C2%B7%20or%20monthly-38d591?style=for-the-badge&labelColor=070707" alt="Support Softbots — one-time any amount or monthly, via Polar" height="40">
+  <img src="https://img.shields.io/badge/%E2%9D%A4%EF%B8%8F%20%20Support%20Squadbots-any%20amount%20%C2%B7%20or%20monthly-38d591?style=for-the-badge&labelColor=070707" alt="Support Squadbots — one-time any amount or monthly, via Polar" height="40">
 </a>
 
 <br>
 <br>
 
-<img src="docs/screenshots/hero.png" alt="Softbots — a Telegram-style chat app where every chat is a real AI agent" width="900">
+<img src="docs/screenshots/hero.png" alt="Squadbots — a Telegram-style chat app where every chat is a real AI agent" width="900">
 
 </div>
 
@@ -60,7 +60,7 @@ Talk to them like contacts. Watch them work. Approve what matters.
 
 ## Why
 
-One assistant in one box is the wrong shape for agents. Softbots is an independent, open-source project inspired by **Grok Bot** —
+One assistant in one box is the wrong shape for agents. Squadbots is an independent, open-source project inspired by **Grok Bot** —
 it keeps the idea (AI as a *messaging app*: a roster of bots you chat with, each with its own personality,
 memory of its thread, model, computer, and apps) and rebuilds it open, local-first, and on the agents you
 already have:
@@ -154,12 +154,12 @@ channel and its bots under a named context, then rename it or change its members
 
 ### 📦 Install a complete team from one Markdown file
 
-Browse outcome-driven teams on [BotMRR](https://botmrr.io), then choose **Add to Softbots**. The app
+Browse outcome-driven teams on [BotMRR](https://botmrr.io), then choose **Add to Squadbots**. The app
 opens a review screen before creating the bots, Chief of Staff, channels, playbooks, connector checklist,
 and suggested routines. You can also import the same `.md` file from disk or paste its public GitHub URL
 in **Teams → Import**.
 
-The format stays portable: Softbots reads the structured YAML frontmatter for a reliable one-click
+The format stays portable: Squadbots reads the structured YAML frontmatter for a reliable one-click
 install, while Grok, Claude, ChatGPT, and people can follow the ordinary Markdown playbook. Connections
 remain off until you approve them, routines arrive paused, and packages never carry credentials,
 conversations, permissions, memory, or computer access. Browse the
@@ -247,9 +247,9 @@ flowchart LR
 | App | `src/` | The chat shell. Server-backed store, one reducer, zero client-side transports. |
 | Desktop | `electron/` | macOS, Windows, and Ubuntu shells with an embedded harness and platform capabilities; Apple speech stays macOS-only, Ubuntu Xorg has opt-in local control, and Wayland remains fail-closed. |
 
-### Orchestrate Softbots over MCP
+### Orchestrate Squadbots over MCP
 
-Softbots ships a stdio MCP server for external clients such as Claude Desktop and Cursor. It exposes a
+Squadbots ships a stdio MCP server for external clients such as Claude Desktop and Cursor. It exposes a
 deliberately bounded team control plane: inspect bots and channels, read/search compact transcript pages,
 create and configure bots/channels/tasks, send work, wait for completion, switch models, and interrupt turns.
 It does **not** expose approval grants, deletion, arbitrary settings, credentials, or computer lifecycle.
@@ -323,7 +323,7 @@ in the sidebar footer) when you want to enable its integration:
 
 | Credential | What it enables | Where to get it |
 |---|---|---|
-| Composio project key (`ak_…`) | Connect Gmail, GitHub, Slack, Notion, and other apps to your bots | [Softbots Composio setup](docs/composio.md) |
+| Composio project key (`ak_…`) | Connect Gmail, GitHub, Slack, Notion, and other apps to your bots | [Squadbots Composio setup](docs/composio.md) |
 | Box API key | Give bots an isolated remote Linux computer with a desktop and terminal | [Box API key guide](https://docs.ascii.dev/box/api-keys) |
 | ElevenLabs key | Read replies aloud, and call your bots | [ElevenLabs API keys](https://elevenlabs.io/app/settings/api-keys) |
 | Fish Audio key | Read replies aloud with Fish Audio voices, and call your bots | [Fish Audio API keys](https://fish.audio/app/api-keys/) |
@@ -350,12 +350,12 @@ The existing duration field remains calendar/display metadata. Webhook triggers 
 but reuse the same queued task executor and calendar
 receipts.
 
-Softbots starts a webhook-only receiver on `127.0.0.1:8800` by default (or one port above `OMB_PORT`).
+Squadbots starts a webhook-only receiver on `127.0.0.1:8800` by default (or one port above `OMB_PORT`).
 Set `OMB_WEBHOOK_PORT` to choose another port. A webhook secret is shown once when the trigger is created
 or rotated. Bearer authentication is recommended so the secret stays out of request URLs and most access
 logs; a single capability URL remains available for senders that cannot configure headers. The receiver
 exposes only `/health` and secret `/hooks/...` endpoints; it never exposes the app's broader API.
-Softbots must remain running to accept a delivery. For public internet delivery, proxy only this
+Squadbots must remain running to accept a delivery. For public internet delivery, proxy only this
 dedicated receiver through a hosted relay or a tool such as Tailscale Funnel.
 
 ## Status
@@ -375,7 +375,7 @@ Users can add their own MCP tool servers with zero code via [`docs/custom-mcp-se
 
 ## Support the project
 
-Softbots is free and open source. If it does real work for you, you can
+Squadbots is free and open source. If it does real work for you, you can
 [buy the project a coffee or become a monthly supporter](https://buy.polar.sh/polar_cl_bbnfWFUrWONIF4HnUpZf1p0if0eUYg3HeXct73b48Yg) —
 one-time any amount, or monthly. Payments are handled by [Polar](https://polar.sh/supamaus),
 which takes care of receipts and taxes; nothing about the app ever sits behind a paywall.
@@ -421,7 +421,7 @@ AI-provider sign-in. Devices pair once with a short code. The deployment guide i
 
 ## License
 
-[Apache License 2.0](LICENSE) © 2026 Milind Soni and Softbots contributors,
+[Apache License 2.0](LICENSE) © 2026 Milind Soni and Squadbots contributors,
 except `enterprise/`, which is source-available under its
 [own license](enterprise/LICENSE); delete that folder and what remains is the
 open-source edition. Details, including how contributions are signed off, are
@@ -431,6 +431,6 @@ Packaged Cua Driver components retain their upstream MIT, SIL OFL 1.1, MPL-2.0, 
 the corresponding notices, license texts, source locations, and SBOM are in
 [`third_party/cua-driver/`](third_party/cua-driver/) and ship beside the native runtime.
 
-Softbots is an independent, open-source project inspired by Grok Bot. It is
+Squadbots is an independent, open-source project inspired by Grok Bot. It is
 not affiliated with, endorsed by, or associated with xAI; "Grok" is a trademark
 of its respective owner.
