@@ -20,9 +20,9 @@ Use the same command next time. The first launch guides you through setup; later
 
 The setup wizard uses Clack. Use ↑/↓ and Enter to select an option. Plain terminals show numbered choices instead.
 
-1. Choose ChatGPT/Codex, Claude Code, or an API service. Existing supported connections are also listed.
+1. Choose ChatGPT/Codex, Claude Code, or bring your own API provider connection. Squadbots does not include a shared paid model endpoint or credits. Existing supported connections are also listed.
 2. Sign in with the provider, or paste an API key into the hidden prompt. Setup asks before installing a missing Codex or Claude CLI. Codex also offers device-code sign-in for a remote terminal. API choices include OpenAI, OpenRouter, Groq, and other OpenAI-compatible endpoints.
-3. Choose a model and save. An API connection asks permission to send a short test message, which the provider may charge for. Native CLI setup confirms sign-in; it does not test the chosen model with a message. Model access is checked when you send one.
+3. Review the provider/endpoint, choose a model, and save. An API connection asks permission to send a short test message, which the provider may charge for. Native CLI setup confirms sign-in; it does not test the chosen model with a message. Model access is checked when you send one.
 4. Optionally connect a phone, or choose **Skip for now**. Your AI setup is already saved before this step.
 
 The workspace then starts and opens its local address in a browser on this computer. On SSH or a computer without a graphical desktop, open the printed address using an appropriate connection instead. Automatic browser opening only uses the local address; `--no-open` disables it.

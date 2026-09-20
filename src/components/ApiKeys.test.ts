@@ -4,6 +4,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { StoreProvider } from "@/state/store";
 import * as store from "@/state/store";
 import { ApiKeyRow, OpenAiCompatUrl } from "./ApiKeys";
+import en from "@/locales/en.json";
 
 afterEach(() => { vi.unstubAllGlobals(); vi.restoreAllMocks(); });
 
@@ -13,6 +14,11 @@ const render = (element: React.ReactElement) => {
 };
 
 describe("provider key rows", () => {
+  it("states the bring-your-own provider and shared-inference boundary", () => {
+    expect(en["keys.providers.subtitle"]).toContain("Bring your own provider connection");
+    expect(en["keys.providers.subtitle"]).toContain("provider usage may cost money");
+    expect(en["keys.providers.subtitle"]).toContain("No shared Squadbots inference or credits are included");
+  });
   it("describes a stored key as configured without claiming an authenticated connection", () => {
     vi.spyOn(store, "useStore").mockReturnValue({
       state: { ...store.initialState, config: {

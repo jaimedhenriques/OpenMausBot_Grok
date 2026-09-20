@@ -290,11 +290,11 @@ the copy OMB installed is the one bots run. The package name comes from the
 engine's own install descriptor, never from the browser. Engines installed
 by a `curl | bash` script still need the command on the server.
 
-## Provider keys, billed per token
+## Bring your own model provider
 
-**Settings → Connections → Model providers** takes the keys a whole workspace
-runs on, for people who would rather pay per token than have every user sign
-in. Keys are write-only: the page shows connected-or-not and a **Test** button
+Because model inference can cost money, Squadbots does not silently place a workspace on a shared paid endpoint. **Settings → Connections → Model providers** lets an owner supply the provider key and, where supported, the compatible endpoint that the workspace runs on. Managed credits or shared inference would be a separate product and billing decision.
+
+Keys are write-only: the page shows connected-or-not and a **Test** button
 that makes one read-only request to the provider from the server.
 
 - **Anthropic API key**: while one is saved, every Claude bot runs on it and
@@ -304,9 +304,10 @@ that makes one read-only request to the provider from the server.
   `ANTHROPIC_API_KEY` environment variable is deliberately ignored; use the
   page, `config.json`, or `OMB_ANTHROPIC_API_KEY`.
 - **OpenAI-compatible API key and base URL**: OpenRouter by default, or Groq,
-  Together, a gateway, or `https://api.openai.com/v1` for OpenAI itself. This
-  powers the OpenAI-compatible engine. Codex has no key path by design and
-  always uses a personal ChatGPT login.
+  Together, a compatible hosted/self-hosted gateway, or `https://api.openai.com/v1`
+  for OpenAI itself. Keyless local endpoints can leave the key empty when the
+  provider permits it. This powers the OpenAI-compatible engine. Codex has no key
+  path by design and always uses a personal ChatGPT login.
 - **xAI API key**: the Grok API engine and xAI image generation.
 
 ## Many client workspaces on one server
