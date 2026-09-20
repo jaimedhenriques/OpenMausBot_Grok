@@ -106,7 +106,7 @@ function stateError(detail: string, cause?: unknown): Error & { status: number }
   return Object.assign(
     new Error(
       `Cloud computer deletion is paused because its recovery state is ${detail}. `
-      + "Check the Box provider before repairing Softbots's local state.",
+      + "Check the Box provider before repairing Squadbots's local state.",
     ),
     { status: 503, cause },
   );
