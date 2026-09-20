@@ -153,5 +153,5 @@ export function describeEdition(status: EditionStatus): string {
     const until = status.expiresAt ? ` until ${status.expiresAt}` : "";
     return `squadbots enterprise edition for ${status.customer}${until}: ${status.features.join(", ") || "no features"}`;
   }
-  return `squadbots open-source edition${status.notice ? ` (${status.notice})` : ""}`;
+  return `softbots open-source edition${status.notice ? ` (${status.notice})` : ""}`;
 }
