@@ -2,7 +2,7 @@ import type { Components } from 'react-markdown';
 import ReactMarkdown from 'react-markdown';
 
 const RELEASE_REPOSITORIES = [
-  'milind-soni/OpenMausBot',
+  'jaimedhenriques/OpenMausBot_Grok',
   'milind-soni/squadbots-releases',
 ] as const;
 const RELEASES_PER_PAGE = 100;
@@ -64,7 +64,7 @@ function releaseNotes(release: GitHubRelease) {
   if (!legacyDraft) return body;
 
   const commit = legacyDraft[1];
-  return `This build predates curated release notes. [View its source commit (${commit.slice(0, 7)})](https://github.com/milind-soni/OpenMausBot/commit/${commit}).`;
+  return `This build predates curated release notes. [View its source commit (${commit.slice(0, 7)})](https://github.com/jaimedhenriques/OpenMausBot_Grok/commit/${commit}).`;
 }
 
 async function fetchPublishedReleases(repository: string): Promise<GitHubRelease[]> {
@@ -129,7 +129,7 @@ export async function ReleaseChangelog() {
     return (
       <p>
         The live release history is temporarily unavailable.{' '}
-        <a href="https://github.com/milind-soni/OpenMausBot/releases">Browse releases on GitHub</a>.
+        <a href="https://github.com/jaimedhenriques/OpenMausBot_Grok/releases">Browse releases on GitHub</a>.
       </p>
     );
   }

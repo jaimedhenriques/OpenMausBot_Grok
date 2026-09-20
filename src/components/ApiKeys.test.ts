@@ -60,7 +60,7 @@ describe("provider key rows", () => {
     expect(html).toContain("DeepSeek API");
     expect(html).toContain("your own DeepSeek key");
     expect(html).toContain("billed by DeepSeek");
-    expect(html).toContain("OpenMaus policy and approval layer remains in control");
+    expect(html).toContain("Squadbots policy and approval layer remains in control");
   });
 
   it("offers the base URL as a setting next to the key", () => {

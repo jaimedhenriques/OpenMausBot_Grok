@@ -204,7 +204,7 @@ Requirements: Docker with Compose, a DNS name pointing at the machine, and
 ports 80/443 open.
 
 ```sh
-git clone https://github.com/milind-soni/OpenMausBot && cd Squadbots/deploy
+git clone https://github.com/jaimedhenriques/OpenMausBot_Grok Squadbots && cd Squadbots/deploy
 cp .env.example .env            # set DOMAIN
 docker compose pull omb && docker compose up -d
 ```
@@ -252,7 +252,7 @@ Requirements: Node 24+, pnpm, and at least one agent CLI installed and
 signed in on the server.
 
 ```sh
-git clone https://github.com/milind-soni/OpenMausBot && cd Squadbots
+git clone https://github.com/jaimedhenriques/OpenMausBot_Grok Squadbots && cd Squadbots
 pnpm install
 
 # choose where data lives and start the server

@@ -274,7 +274,7 @@ Any desktop build can also pair as a client to another Windows, macOS, or Ubuntu
 **From source:**
 
 ```sh
-git clone https://github.com/jaimedhenriques/OpenMausBot_Grok && cd Squadbots
+git clone https://github.com/jaimedhenriques/OpenMausBot_Grok Squadbots && cd Squadbots
 pnpm install
 
 pnpm dev:server    # harness server → 127.0.0.1:8799
