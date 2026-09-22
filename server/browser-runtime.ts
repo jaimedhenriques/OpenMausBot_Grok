@@ -120,7 +120,7 @@ class BrowserClient {
     if (Buffer.byteLength(JSON.stringify(message)) > MAX_REQUEST_BYTES) return Promise.reject(new Error("Browser request exceeded the size limit."));
     if (this.idleTimer) clearTimeout(this.idleTimer);
     return new Promise((resolve, reject) => {
-      const timer = setTimeout(() => { void this.stop(new TransportError("Browser request timed out; restart the browser before taking control.")); }, this.requestTimeoutMs);
+      const timer = setTimeout(() => { void this.stop(new TransportError("Browser request timed out; Restart the browser before taking control.")); }, this.requestTimeoutMs);
       timer.unref();
       this.pending.set(id, { resolve, reject, timer });
       try { this.write(message); }
