@@ -287,7 +287,8 @@ describe("server-owned browser MCP runtime", () => {
     // This inert descendant models that ownership boundary on every platform.
     const fake = `
       const browser = require('node:child_process').spawn(process.execPath,
-        ['-e', 'setInterval(() => {}, 1000)'], { stdio: 'ignore' });
+        ['-e', 'setInterval(() => {}, 1000)'],
+        { stdio: 'ignore', detached: true, windowsHide: true });
       browser.unref();
       ${ignoresEof ? "setInterval(() => {}, 1000);" : ""}
       require('node:readline').createInterface({ input: process.stdin }).on('line', line => {
@@ -306,11 +307,7 @@ describe("server-owned browser MCP runtime", () => {
         timeout: process.platform === "win32" ? 5_000 : 2_000,
         interval: 50,
       });
-      try {
-        process.kill(first.browserPid, 0);
-      } catch (err) {
-        expect((err as NodeJS.ErrnoException).code).toBe("ESRCH");
-      }
+      expect(pidAlive(first.browserPid)).toBe(true);
     } finally {
       try { process.kill(first.browserPid, "SIGKILL"); } catch { /* fixture exited */ }
     }

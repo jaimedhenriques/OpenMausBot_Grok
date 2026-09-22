@@ -60,7 +60,10 @@ function plainText(question: string, hidden: boolean, context: PromptContext): P
 
 /** Streams are injectable; fixtures never read the user's real terminal. */
 export function defaultSetupIo(input: TerminalInput = process.stdin, output: TerminalOutput = process.stdout): SetupIo {
-  const log = (line: string) => { output.write(`${displayText(line, true)}\n`); };
+  const log = (line: string) => {
+    const safe = displayText(line, true).replace(/ +$/, "");
+    output.write(`${safe}\n`);
+  };
   const rich = () => output.isTTY === true && process.env.TERM !== "dumb" && process.env.NO_COLOR === undefined
     && (output.columns ?? 80) >= 30 && (output.rows ?? 24) >= 8;
 
