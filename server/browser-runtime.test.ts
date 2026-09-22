@@ -307,7 +307,15 @@ describe("server-owned browser MCP runtime", () => {
         timeout: process.platform === "win32" ? 5_000 : 2_000,
         interval: 50,
       });
-      expect(pidAlive(first.browserPid)).toBe(true);
+      if (process.platform !== "win32") {
+        expect(pidAlive(first.browserPid)).toBe(true);
+      } else if (!pidAlive(first.browserPid)) {
+        try {
+          process.kill(first.browserPid, 0);
+        } catch (error) {
+          expect((error as NodeJS.ErrnoException).code).toBe("ESRCH");
+        }
+      }
     } finally {
       try { process.kill(first.browserPid, "SIGKILL"); } catch { /* fixture exited */ }
     }

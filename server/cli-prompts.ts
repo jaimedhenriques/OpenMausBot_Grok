@@ -30,7 +30,8 @@ function displayText(value: string, multiline = false): string {
   const plain = stripVTControlCharacters(value);
   // Provider-supplied labels must not issue terminal control commands.
   // eslint-disable-next-line no-control-regex
-  return plain.replace(/[\u0000-\u001f\u007f-\u009f]/g, (character) => character === "\n" && multiline ? "\n" : " ");
+  const sanitized = plain.replace(/[\u0000-\u001f\u007f-\u009f]/g, (character) => character === "\n" && multiline ? "\n" : " ");
+  return sanitized.replace(/[ \t]+$/gm, "");
 }
 
 /** A line-based fallback with no cursor/color output. Readline has no output
@@ -60,10 +61,7 @@ function plainText(question: string, hidden: boolean, context: PromptContext): P
 
 /** Streams are injectable; fixtures never read the user's real terminal. */
 export function defaultSetupIo(input: TerminalInput = process.stdin, output: TerminalOutput = process.stdout): SetupIo {
-  const log = (line: string) => {
-    const safe = displayText(line, true).replace(/ +$/, "");
-    output.write(`${safe}\n`);
-  };
+  const log = (line: string) => { output.write(`${displayText(line, true)}\n`); };
   const rich = () => output.isTTY === true && process.env.TERM !== "dumb" && process.env.NO_COLOR === undefined
     && (output.columns ?? 80) >= 30 && (output.rows ?? 24) >= 8;
 
