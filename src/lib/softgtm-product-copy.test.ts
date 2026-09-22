@@ -56,4 +56,11 @@ describe("Soft GTM marketing hero — antislop rejects", () => {
     expect(hero).not.toMatch(/eyebrow|squadmates-cast|cast__mate|data-squadmates/i);
     expect(hero).not.toMatch(/SPECIALIST|APPROVAL-FIRST/i);
   });
+
+  it("does not render internal Soft GTM stamp copy", () => {
+    expect(hero).not.toMatch(/SOFT_GTM_SEND_HOLD|SOFT_GTM_REVENUE_HONESTY/);
+    expect(hero).not.toMatch(/Soft GTM draft|Revenue unknown|£0 reported/i);
+    expect(hero).toContain("SOFT_GTM_502_JOIN");
+    expect(hero).toContain("softGtmPricingFootnote");
+  });
 });

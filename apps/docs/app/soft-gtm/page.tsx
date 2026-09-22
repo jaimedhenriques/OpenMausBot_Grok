@@ -4,15 +4,13 @@ import {
   SOFT_GTM_CREAM,
   SOFT_GTM_HERO_LEDE,
   SOFT_GTM_HERO_TITLE,
-  SOFT_GTM_HOLD,
   SOFT_GTM_PRICING,
-  SOFT_GTM_REVENUE,
 } from "../../lib/softgtm-copy";
 import styles from "./soft-gtm.module.css";
 
 export const metadata = {
-  title: "Soft GTM preview",
-  description: "Customer-facing Soft GTM draft for OpenMausBot. No send.",
+  title: "OpenMausBot",
+  description: "Run a team of agents on your machine. Bring your own model keys.",
   robots: { index: false, follow: false },
 };
 
@@ -23,7 +21,6 @@ export default function SoftGtmPage() {
         <Link href="/docs" className={styles.back}>
           Documentation
         </Link>
-        <p className={styles.hold}>{SOFT_GTM_HOLD}</p>
       </header>
       <main className={styles.main}>
         <section aria-labelledby="softgtm-title">
@@ -38,7 +35,6 @@ export default function SoftGtmPage() {
             </a>
           </div>
           <p className={styles.meta}>{SOFT_GTM_PRICING}</p>
-          <p className={styles.meta}>{SOFT_GTM_REVENUE}</p>
           <p className={styles.meta}>{SOFT_GTM_502}</p>
         </section>
         <aside className={styles.stage} aria-label="Quiet onboarding preview">
@@ -47,7 +43,7 @@ export default function SoftGtmPage() {
             <span className={styles.dot} aria-hidden="true" />
             Working
           </p>
-          <p className={styles.panel}>Checking the failing test before proposing a fix.</p>
+          <p className={styles.panel}>Checking the failing test before I propose a fix.</p>
         </aside>
       </main>
     </div>

@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 import { SoftGtmMarketingHero } from "@/components/softgtm/SoftGtmMarketingHero";
 import { bootstrapBrand } from "@/lib/brand";
 import { applySkin, readSkin } from "@/lib/skins";
-import "../styles.css";
+import "./styles.css";
 
 /** Dev-only Soft GTM marketing fold — `/softgtm-marketing-preview.html`. */
 function Preview() {

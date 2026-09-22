@@ -7,9 +7,7 @@ import {
   SOFT_GTM_HERO_TITLE,
   SOFT_GTM_HOSTED_JOIN_URL,
   SOFT_GTM_PRIMARY_CTA,
-  SOFT_GTM_REVENUE_HONESTY,
   SOFT_GTM_SECONDARY_CTA,
-  SOFT_GTM_SEND_HOLD,
   SOFT_GTM_AVATAR_NAME,
   SOFT_GTM_AVATAR_ROLE,
   SOFT_GTM_DEMO_LINE,
@@ -34,7 +32,6 @@ export function SoftGtmMarketingHero({
     <div className="softgtm-marketing" data-softgtm-surface>
       <header className="softgtm-marketing__header">
         <span className="softgtm-marketing__wordmark">{product}</span>
-        <p className="softgtm-marketing__draft-note">{SOFT_GTM_SEND_HOLD}</p>
       </header>
 
       <main className="softgtm-marketing__main">
@@ -55,7 +52,6 @@ export function SoftGtmMarketingHero({
               </a>
             </div>
             <p className="softgtm-marketing__offer">{softGtmPricingFootnote()}</p>
-            <p className="softgtm-marketing__honest">{SOFT_GTM_REVENUE_HONESTY}</p>
             <p className="softgtm-marketing__502">{SOFT_GTM_502_JOIN}</p>
           </div>
 
@@ -70,8 +66,8 @@ export function SoftGtmMarketingHero({
               <p className="softgtm-marketing__byo">Model · your key</p>
             </div>
             <div className="softgtm-marketing__avatar-card">
-              <span className="softgtm-marketing__face">
-                <MausAvatar color="green" state="working" size={48} animated={false} trackPointer={false} />
+              <span className="softgtm-marketing__face-wrap">
+                <MausAvatar color="green" state="working" size={88} animated trackPointer={false} />
               </span>
               <div>
                 <p className="softgtm-marketing__avatar-name">{SOFT_GTM_AVATAR_NAME}</p>
