@@ -6,7 +6,7 @@ export const SOFT_GTM_HERO_LEDE =
   "Each bot gets its own engine, folder, and computer when you need one. You approve risky steps. Bring your own model keys so work keeps going after a chat would stop.";
 
 export const SOFT_GTM_PRIMARY_CTA = "Install OpenMausBot";
-export const SOFT_GTM_SECONDARY_CTA = "Hosted signup path";
+export const SOFT_GTM_SECONDARY_CTA = "Start hosted trial";
 
 export function softGtmPricingFootnote(): string {
   return `${TRIAL_DAYS}-day Solo trial on the hosted app, then $${MONTHLY_USD}/mo BYO. Card required to start.`;

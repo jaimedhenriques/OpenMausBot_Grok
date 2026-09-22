@@ -31,7 +31,7 @@ export default function SoftGtmPage() {
               Install OpenMausBot
             </Link>
             <a className={styles.secondary} href="https://app.squadbots.ai/join" rel="noopener noreferrer">
-              Hosted signup path
+              Start hosted trial
             </a>
           </div>
           <p className={styles.meta}>{SOFT_GTM_PRICING}</p>

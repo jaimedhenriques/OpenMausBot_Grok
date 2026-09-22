@@ -67,7 +67,16 @@ export function SoftGtmMarketingHero({
             </div>
             <div className="softgtm-marketing__avatar-card">
               <span className="softgtm-marketing__face-wrap">
-                <MausAvatar color="green" state="working" size={88} animated trackPointer={false} />
+                <MausAvatar
+                  color="green"
+                  state="working"
+                  bodyId="blob"
+                  size={112}
+                  animated
+                  lookAround={1}
+                  spring={0.42}
+                  trackPointer={false}
+                />
               </span>
               <div>
                 <p className="softgtm-marketing__avatar-name">{SOFT_GTM_AVATAR_NAME}</p>

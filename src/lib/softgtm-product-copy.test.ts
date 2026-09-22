@@ -62,5 +62,7 @@ describe("Soft GTM marketing hero — antislop rejects", () => {
     expect(hero).not.toMatch(/Soft GTM draft|Revenue unknown|£0 reported/i);
     expect(hero).toContain("SOFT_GTM_502_JOIN");
     expect(hero).toContain("softGtmPricingFootnote");
+    expect(hero).toContain('bodyId="blob"');
+    expect(hero).toMatch(/size=\{11[2-9]\}|size=\{1[2-9]\d\}/);
   });
 });
