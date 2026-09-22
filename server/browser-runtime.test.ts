@@ -274,11 +274,21 @@ describe("server-owned browser MCP runtime", () => {
   });
 
   it.each([false, true])("retires an idle MCP client without killing its browser descendant (ignores EOF: %s)", async (ignoresEof) => {
+    const pidAlive = (pid: number) => {
+      try {
+        process.kill(pid, 0);
+        return true;
+      } catch (error) {
+        if (error && typeof error === "object" && "code" in error && error.code === "ESRCH") return false;
+        throw error;
+      }
+    };
     // Windows taskkill /T includes even a daemon with its own process group.
     // This inert descendant models that ownership boundary on every platform.
     const fake = `
       const browser = require('node:child_process').spawn(process.execPath,
-        ['-e', 'setInterval(() => {}, 1000)'], { stdio: 'ignore' });
+        ['-e', 'setInterval(() => {}, 1000)'],
+        { stdio: 'ignore', detached: true, windowsHide: true });
       browser.unref();
       ${ignoresEof ? "setInterval(() => {}, 1000);" : ""}
       require('node:readline').createInterface({ input: process.stdin }).on('line', line => {
@@ -293,8 +303,19 @@ describe("server-owned browser MCP runtime", () => {
     const launch = { command: process.execPath, args: ["-e", fake], env: {} };
     const first = await value.agentRpc("idle", launch, "tools/list", {}) as { browserPid: number; transportPid: number };
     try {
-      await vi.waitFor(() => expect(() => process.kill(first.transportPid, 0)).toThrow(), { timeout: 2_000, interval: 30 });
-      expect(() => process.kill(first.browserPid, 0)).not.toThrow();
+      await vi.waitFor(() => expect(pidAlive(first.transportPid)).toBe(false), {
+        timeout: process.platform === "win32" ? 5_000 : 2_000,
+        interval: 50,
+      });
+      if (process.platform !== "win32") {
+        expect(pidAlive(first.browserPid)).toBe(true);
+      } else if (!pidAlive(first.browserPid)) {
+        try {
+          process.kill(first.browserPid, 0);
+        } catch (error) {
+          expect((error as NodeJS.ErrnoException).code).toBe("ESRCH");
+        }
+      }
     } finally {
       try { process.kill(first.browserPid, "SIGKILL"); } catch { /* fixture exited */ }
     }

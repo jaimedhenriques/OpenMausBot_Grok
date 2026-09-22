@@ -30,7 +30,8 @@ function displayText(value: string, multiline = false): string {
   const plain = stripVTControlCharacters(value);
   // Provider-supplied labels must not issue terminal control commands.
   // eslint-disable-next-line no-control-regex
-  return plain.replace(/[\u0000-\u001f\u007f-\u009f]/g, (character) => character === "\n" && multiline ? "\n" : " ");
+  const sanitized = plain.replace(/[\u0000-\u001f\u007f-\u009f]/g, (character) => character === "\n" && multiline ? "\n" : " ");
+  return sanitized.replace(/[ \t]+$/gm, "");
 }
 
 /** A line-based fallback with no cursor/color output. Readline has no output

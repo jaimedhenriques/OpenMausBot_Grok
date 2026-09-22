@@ -11,6 +11,7 @@ export const SKIN_IDS = [
   "lagoon",
   "graphite",
   "linen",
+  "softgtm",
   "dusk",
   "daylight",
 ] as const;
@@ -30,6 +31,7 @@ export const SKINS: readonly Skin[] = [
   { id: "lagoon", name: "Lagoon", tagline: "Cool daylight. Porcelain and deep teal." },
   { id: "graphite", name: "Graphite", tagline: "Quiet charcoal and softened steel blue." },
   { id: "linen", name: "Linen", tagline: "Clean daylight with a restrained navy accent." },
+  { id: "softgtm", name: "Soft GTM", tagline: "Quiet cream chrome for customer onboarding previews." },
   { id: "dusk", name: "Dusk", tagline: "Muted plum after dark, calm and low-key." },
   { id: "daylight", name: "Daylight", tagline: "Midnight in reverse. Near-white, ink-black bubbles." },
 ];

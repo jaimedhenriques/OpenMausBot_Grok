@@ -34,7 +34,7 @@ function fromUrl() {
   const skin = params.get("skin") as SkinId | null;
   return {
     beat: beat && BEATS.includes(beat) ? beat : ("hello" as BeatId),
-    skin: skin && SKINS.some((s) => s.id === skin) ? skin : ("midnight" as SkinId),
+    skin: skin && SKINS.some((s) => s.id === skin) ? skin : ("softgtm" as SkinId),
     reduced: params.get("reduced") === "1",
     all: params.get("all") === "1",
     entrance: (params.get("entrance") ?? "arrive") as Exclude<MausMotion, "none">,

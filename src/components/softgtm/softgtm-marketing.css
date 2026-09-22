@@ -1,0 +1,265 @@
+/* Soft GTM customer chrome: cream field #EFECE4, no marketing pill rail. */
+.softgtm-marketing {
+  min-height: 100dvh;
+  background: #efece4;
+  color: #1c1914;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  letter-spacing: -0.012em;
+}
+
+.softgtm-marketing__header {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 1.25rem 1.5rem 0;
+}
+
+.softgtm-marketing__wordmark {
+  font-size: 0.9375rem;
+  font-weight: 650;
+}
+
+.softgtm-marketing__main {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 1.5rem 1.5rem 3rem;
+}
+
+.softgtm-marketing__hero {
+  display: grid;
+  gap: 2.5rem;
+  align-items: start;
+}
+
+@media (max-width: 959px) {
+  .softgtm-marketing__hero {
+    grid-template-columns: 1fr;
+  }
+
+  .softgtm-marketing__stage {
+    order: -1;
+  }
+
+  .softgtm-marketing__copy h1 {
+    font-size: 1.65rem;
+  }
+
+  .softgtm-marketing__lede {
+    font-size: 0.9375rem;
+  }
+
+  .softgtm-marketing__502 {
+    font-size: 0.8125rem;
+  }
+}
+
+@media (min-width: 960px) {
+  .softgtm-marketing__hero {
+    grid-template-columns: minmax(0, 1fr) minmax(18rem, 22rem);
+    gap: 3rem;
+  }
+}
+
+.softgtm-marketing__copy h1 {
+  margin: 0;
+  font-size: clamp(1.75rem, 4vw, 2.35rem);
+  font-weight: 620;
+  line-height: 1.12;
+  letter-spacing: -0.03em;
+}
+
+.softgtm-marketing__lede {
+  margin: 1rem 0 0;
+  max-width: 36rem;
+  font-size: 1rem;
+  line-height: 1.55;
+  color: #3a352c;
+}
+
+.softgtm-marketing__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.softgtm-marketing__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.75rem;
+  padding: 0 1.25rem;
+  border-radius: 0.5rem;
+  font-size: 0.9375rem;
+  font-weight: 560;
+  text-decoration: none;
+  border: 1px solid transparent;
+}
+
+.softgtm-marketing__btn--primary {
+  background: #1c1914;
+  color: #efece4;
+}
+
+.softgtm-marketing__btn--secondary {
+  background: #f7f4ec;
+  color: #1c1914;
+  border-color: rgba(28, 25, 20, 0.12);
+}
+
+.softgtm-marketing__offer,
+.softgtm-marketing__502 {
+  margin: 0.85rem 0 0;
+  max-width: 36rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: #6b6458;
+}
+
+.softgtm-marketing__stage {
+  border: 1px solid rgba(28, 25, 20, 0.1);
+  border-radius: 0.75rem;
+  background: #f7f4ec;
+  padding: 1rem 1rem 1.1rem;
+  box-shadow:
+    0 1px 0 rgba(28, 25, 20, 0.04),
+    0 12px 28px rgba(28, 25, 20, 0.06);
+}
+
+.softgtm-marketing__computer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.55rem 0.65rem;
+  border-radius: 0.5rem;
+  background: #e8e4dc;
+  color: #3a352c;
+  font-size: 0.75rem;
+}
+
+.softgtm-marketing__sim-label {
+  margin: 0;
+  font-weight: 560;
+}
+
+.softgtm-marketing__byo {
+  margin: 0;
+  opacity: 0.9;
+}
+
+.softgtm-marketing__avatar-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.softgtm-marketing__face-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 7.25rem;
+  height: 7.25rem;
+  flex-shrink: 0;
+  border-radius: 1.35rem;
+  background:
+    radial-gradient(circle at 35% 28%, rgba(255, 255, 255, 0.95) 0%, transparent 52%),
+    linear-gradient(165deg, #ffffff 0%, #e8e2d8 55%, #ddd5c8 100%);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.85) inset,
+    0 0 0 1px rgba(28, 25, 20, 0.06),
+    0 16px 36px rgba(28, 25, 20, 0.14),
+    0 0 48px rgba(63, 174, 110, 0.12);
+  animation: softgtm-face-breathe 4.8s ease-in-out infinite;
+}
+
+.softgtm-marketing__face-wrap::after {
+  content: "";
+  position: absolute;
+  inset: 12%;
+  border-radius: 1rem;
+  pointer-events: none;
+  box-shadow: 0 0 28px rgba(63, 174, 110, 0.18);
+  opacity: 0.65;
+}
+
+.softgtm-marketing__face {
+  width: 3rem;
+  height: 3rem;
+  flex-shrink: 0;
+}
+
+.softgtm-marketing__avatar-name {
+  margin: 0;
+  font-size: 0.9375rem;
+  font-weight: 600;
+}
+
+.softgtm-marketing__avatar-role {
+  margin: 0.15rem 0 0;
+  font-size: 0.8125rem;
+  color: #6b6458;
+}
+
+.softgtm-marketing__status-row {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-top: 0.85rem;
+  font-size: 0.8125rem;
+  color: #3a352c;
+}
+
+.softgtm-marketing__status-dot {
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 999px;
+  background: #2f704f;
+  animation: softgtm-status-pulse 2.4s ease-in-out infinite;
+}
+
+.softgtm-marketing__panel-line {
+  margin: 0.75rem 0 0;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(28, 25, 20, 0.08);
+  font-size: 0.8125rem;
+  line-height: 1.45;
+  color: #3a352c;
+  word-wrap: break-word;
+}
+
+@keyframes softgtm-face-breathe {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.03);
+  }
+}
+
+@keyframes softgtm-status-pulse {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .softgtm-marketing__status-dot,
+  .softgtm-marketing__face-wrap {
+    animation: none;
+  }
+}
+
+html[data-reduced-motion="true"] .softgtm-marketing__status-dot,
+html[data-reduced-motion="true"] .softgtm-marketing__face-wrap {
+  animation: none;
+}

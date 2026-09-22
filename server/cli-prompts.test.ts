@@ -117,7 +117,7 @@ describe("Clack setup adapter", () => {
     expect(fixture.text()).not.toContain("sk-private");
     expect(fixture.text()).not.toContain("pasted-key");
     if (rich) expect(fixture.text()).toContain("*");
-    else expect(fixture.text()).toBe("API key: \n");
+    else expect(fixture.text()).toBe("API key:\n");
     expectClean(fixture);
   });
 

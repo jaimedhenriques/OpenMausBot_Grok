@@ -14,6 +14,7 @@ const SKIN_CHROME = Object.freeze({
   lagoon: Object.freeze({ color: "#dfeceb", symbolColor: "#4d5c5b" }),
   graphite: Object.freeze({ color: "#111214", symbolColor: "#b3b8c2" }),
   linen: Object.freeze({ color: "#eceff3", symbolColor: "#59616c" }),
+  softgtm: Object.freeze({ color: "#efece4", symbolColor: "#3a352c" }),
   dusk: Object.freeze({ color: "#121014", symbolColor: "#b9afbd" }),
   daylight: Object.freeze({ color: "#fcfcfc", symbolColor: "#575757" }),
 });
