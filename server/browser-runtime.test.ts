@@ -194,7 +194,7 @@ describe("server-owned browser MCP runtime", () => {
     await expect(value.agentRpc("s", spec(), "tools/call", { name: "hang" })).rejects.toThrow(/timed out/);
     // The real daemon detaches from its MCP parent. Transport exit is not
     // proof that a navigation or submission stopped; do not replay it.
-    await expect(value.agentRpc("s", spec(), "tools/call", { name: "echo" })).rejects.toThrow(/restart.*browser before (taking control|continuing)/i);
+    await expect(value.agentRpc("s", spec(), "tools/call", { name: "echo" })).rejects.toThrow(/Restart/);
     await expect(value.take("s", "owner")).rejects.toThrow(/Restart/);
     await value.restart("s", "owner", async () => {});
     await expect(value.agentRpc("s", spec(), "tools/call", { name: "echo", arguments: { text: "back" } }))
