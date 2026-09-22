@@ -26,18 +26,32 @@ async function displayUsable(display) {
 }
 
 /** CI runners may export a stale DISPLAY (for example :99) while xvfb-run -a binds another socket. */
+async function listUsableDisplays() {
+  const socketsDir = "/tmp/.X11-unix";
+  if (!existsSync(socketsDir)) return [];
+  const candidates = readdirSync(socketsDir)
+    .filter((name) => /^X\d+$/.test(name))
+    .map((name) => `:${name.slice(1)}`);
+  const usable = [];
+  for (const candidate of candidates) {
+    if (await displayUsable(candidate)) usable.push(candidate);
+  }
+  // Prefer the highest display number — xvfb-run -a usually binds above a stale :99.
+  return usable.sort((left, right) => Number(right.slice(1)) - Number(left.slice(1)));
+}
+
 async function resolveWorkingDisplay() {
   const configured = process.env.DISPLAY?.trim();
-  if (configured && (await displayUsable(configured))) return configured;
-  const socketsDir = "/tmp/.X11-unix";
-  if (existsSync(socketsDir)) {
-    const candidates = readdirSync(socketsDir)
-      .filter((name) => /^X\d+$/.test(name))
-      .map((name) => `:${name.slice(1)}`)
-      .sort((left, right) => Number(left.slice(1)) - Number(right.slice(1)));
-    for (const candidate of candidates) {
-      if (await displayUsable(candidate)) return candidate;
+  // xvfb-run can lag a beat before the socket answers xdpyinfo.
+  for (let attempt = 0; attempt < 40; attempt += 1) {
+    const usable = await listUsableDisplays();
+    if (configured && !usable.includes(configured) && (await displayUsable(configured))) {
+      usable.push(configured);
+      usable.sort((left, right) => Number(right.slice(1)) - Number(left.slice(1)));
     }
+    // Prefer the highest usable display so a live xvfb-run socket wins over a stale :99.
+    if (usable.length > 0) return usable[0];
+    await delay(50);
   }
   throw new Error(
     configured
