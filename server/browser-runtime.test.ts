@@ -274,6 +274,15 @@ describe("server-owned browser MCP runtime", () => {
   });
 
   it.each([false, true])("retires an idle MCP client without killing its browser descendant (ignores EOF: %s)", async (ignoresEof) => {
+    const pidAlive = (pid: number) => {
+      try {
+        process.kill(pid, 0);
+        return true;
+      } catch (error) {
+        if (error && typeof error === "object" && "code" in error && error.code === "ESRCH") return false;
+        throw error;
+      }
+    };
     // Windows taskkill /T includes even a daemon with its own process group.
     // This inert descendant models that ownership boundary on every platform.
     const fake = `
@@ -293,8 +302,11 @@ describe("server-owned browser MCP runtime", () => {
     const launch = { command: process.execPath, args: ["-e", fake], env: {} };
     const first = await value.agentRpc("idle", launch, "tools/list", {}) as { browserPid: number; transportPid: number };
     try {
-      await vi.waitFor(() => expect(() => process.kill(first.transportPid, 0)).toThrow(), { timeout: 2_000, interval: 30 });
-      expect(() => process.kill(first.browserPid, 0)).not.toThrow();
+      await vi.waitFor(() => expect(pidAlive(first.transportPid)).toBe(false), {
+        timeout: process.platform === "win32" ? 5_000 : 2_000,
+        interval: 50,
+      });
+      expect(pidAlive(first.browserPid)).toBe(true);
     } finally {
       try { process.kill(first.browserPid, "SIGKILL"); } catch { /* fixture exited */ }
     }
