@@ -1,5 +1,5 @@
 import { execFile, spawn } from "node:child_process";
-import { chmodSync, existsSync, mkdtempSync, mkdirSync, rmSync } from "node:fs";
+import { chmodSync, existsSync, mkdtempSync, mkdirSync, readdirSync, rmSync } from "node:fs";
 import net from "node:net";
 import { tmpdir } from "node:os";
 import path from "node:path";
@@ -10,8 +10,45 @@ const execFileAsync = promisify(execFile);
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const driver = path.join(root, "dist-native", "cua-linux-x64", "cua-driver");
 if (process.platform !== "linux") throw new Error("the X11 input smoke is Linux-only");
-if (!process.env.DISPLAY) throw new Error("the X11 input smoke needs an active DISPLAY");
 if (!existsSync(driver)) throw new Error(`missing staged Cua Driver: ${driver}`);
+
+const delay = (milliseconds) => new Promise((resolve) => setTimeout(resolve, milliseconds));
+
+async function displayUsable(display) {
+  try {
+    await execFileAsync("xdpyinfo", ["-display", display], {
+      env: { ...process.env, DISPLAY: display },
+    });
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+/** CI runners may export a stale DISPLAY (for example :99) while xvfb-run -a binds another socket. */
+async function resolveWorkingDisplay() {
+  const configured = process.env.DISPLAY?.trim();
+  if (configured && (await displayUsable(configured))) return configured;
+  const socketsDir = "/tmp/.X11-unix";
+  if (existsSync(socketsDir)) {
+    const candidates = readdirSync(socketsDir)
+      .filter((name) => /^X\d+$/.test(name))
+      .map((name) => `:${name.slice(1)}`)
+      .sort((left, right) => Number(left.slice(1)) - Number(right.slice(1)));
+    for (const candidate of candidates) {
+      if (await displayUsable(candidate)) return candidate;
+    }
+  }
+  throw new Error(
+    configured
+      ? `DISPLAY=${configured} is not reachable; need the live Xvfb display from xvfb-run`
+      : "the X11 input smoke needs an active DISPLAY",
+  );
+}
+
+const display = await resolveWorkingDisplay();
+process.env.DISPLAY = display;
+const x11Env = () => ({ ...process.env, DISPLAY: display });
 
 const prefix = "omb-cua-x11-input-";
 const sandbox = mkdtempSync(path.join(tmpdir(), prefix));
@@ -31,7 +68,7 @@ const title = `OpenMausBot CUA input safety ${process.pid}`;
 const xev = spawn(
   "xev",
   ["-name", title, "-geometry", "320x180+40+40"],
-  { env: process.env, stdio: ["ignore", "pipe", "pipe"] },
+  { env: x11Env(), stdio: ["ignore", "pipe", "pipe"] },
 );
 let xevOutput = "";
 for (const stream of [xev.stdout, xev.stderr]) {
@@ -56,7 +93,7 @@ const driverProcess = spawn(
   ],
   {
     env: {
-      ...process.env,
+      ...x11Env(),
       HOME: home,
       XDG_RUNTIME_DIR: runtime,
       XDG_SESSION_TYPE: "x11",
@@ -76,7 +113,6 @@ driverProcess.stderr.on("data", (chunk) => {
 let proxy;
 let proxyError = "";
 
-const delay = (milliseconds) => new Promise((resolve) => setTimeout(resolve, milliseconds));
 async function until(probe, description, timeout = 10_000) {
   const deadline = Date.now() + timeout;
   while (Date.now() < deadline) {
@@ -116,7 +152,7 @@ function driverRequest(method) {
 function createMcpClient() {
   proxy = spawn(driver, ["mcp", "--socket", socketPath], {
     env: {
-      ...process.env,
+      ...x11Env(),
       HOME: home,
       XDG_RUNTIME_DIR: runtime,
       XDG_SESSION_TYPE: "x11",
@@ -190,7 +226,7 @@ try {
       "--onlyvisible",
       "--name",
       `^${title}$`,
-    ]);
+    ], { env: x11Env() });
     return stdout.trim().split(/\s+/)[0] || null;
   }, "the unrelated X11 test window");
   if (!windowId) throw new Error("xev test window did not appear");
@@ -207,7 +243,7 @@ try {
     throw new Error(`unexpected driver metadata: ${JSON.stringify(metadata)}`);
   }
 
-  const { stdout: tree } = await execFileAsync("xwininfo", ["-root", "-tree"]);
+  const { stdout: tree } = await execFileAsync("xwininfo", ["-root", "-tree"], { env: x11Env() });
   if (tree.includes("Cua.AgentCursorOverlay")) {
     throw new Error("Cua created its full-screen cursor overlay despite --no-overlay");
   }
