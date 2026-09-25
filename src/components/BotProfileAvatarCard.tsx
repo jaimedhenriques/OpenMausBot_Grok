@@ -26,6 +26,7 @@ type AvatarPatch = Partial<
 >;
 
 const CROP_LABEL = {
+  blobatar: "Blobatar",
   mascot: "Mascot",
   circle: "Circle",
   rounded: "Rounded",

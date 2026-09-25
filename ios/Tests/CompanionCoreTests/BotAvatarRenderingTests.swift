@@ -28,23 +28,29 @@ final class BotAvatarRenderingTests: XCTestCase {
         }
     }
 
-    /// The whole point of the fallback: every crop with no usable picture
-    /// lands on the gradient mascot, whether the attachment is absent, still
-    /// in flight, or came back undecodable.
-    func testEveryCropFallsBackToTheGradientMascotWithoutAPicture() {
-        for crop in AvatarCrop.allCases {
-            XCTAssertEqual(outcome(crop, hasUrl: false), .gradientMascot, "\(crop) with no url")
-            XCTAssertEqual(outcome(crop, decoded: false), .gradientMascot, "\(crop) still loading")
-            XCTAssertEqual(
-                outcome(crop, decoded: false, failed: true), .gradientMascot, "\(crop) failed")
-        }
+    func testBlobatarCropAlwaysResolvesToBlobatar() {
+        XCTAssertEqual(outcome(.blobatar), .blobatar)
+        XCTAssertEqual(outcome(.blobatar, hasUrl: false), .blobatar)
     }
 
-    /// A decode that succeeded and then a failure flag: still the mascot.
-    /// `failed` is the explicit signal and must win on its own.
+    /// Soft Taste: missing / in-flight / failed flat crops fall back to
+    /// blobatar (desktop draws Blobatar; iOS view maps that to the mascot
+    /// stand-in until a native renderer ships). The explicit mascot crop
+    /// still keeps the gradient body.
+    func testFlatCropsFallBackToBlobatarWithoutAPicture() {
+        for crop in [AvatarCrop.circle, .rounded, .square] {
+            XCTAssertEqual(outcome(crop, hasUrl: false), .blobatar, "\(crop) with no url")
+            XCTAssertEqual(outcome(crop, decoded: false), .blobatar, "\(crop) still loading")
+            XCTAssertEqual(
+                outcome(crop, decoded: false, failed: true), .blobatar, "\(crop) failed")
+        }
+        XCTAssertEqual(outcome(.mascot, hasUrl: false), .gradientMascot)
+    }
+
+    /// A decode that succeeded and then a failure flag: Soft Taste blobatar.
     func testAFailedFetchNeverDrawsTheImage() {
-        XCTAssertEqual(outcome(.rounded, failed: true), .gradientMascot)
-        XCTAssertEqual(outcome(.circle, failed: true), .gradientMascot)
+        XCTAssertEqual(outcome(.rounded, failed: true), .blobatar)
+        XCTAssertEqual(outcome(.circle, failed: true), .blobatar)
     }
 
     // MARK: - The crop a generated picture lands on

@@ -67,10 +67,20 @@ describe("BotAvatar's two avatar outcomes", () => {
     expect(markup).toContain("<svg");
   });
 
-  it("falls back to the gradient mascot when a flat crop has no valid image", () => {
-    const markup = renderBot({ avatarUrl: undefined, avatarCrop: "circle" });
+  it("falls back to blobatar when a flat crop has no valid image", () => {
+    const markup = renderBot({
+      name: "Scout",
+      avatarUrl: undefined,
+      avatarCrop: "circle",
+    });
     expect(markup).not.toContain("<img");
-    expect(markup).toContain("<svg");
+    // blobatar static mode is an <img data-uri>; animated would be inline svg
+    expect(markup).toMatch(/blobatar|data:image\/svg\+xml|<svg/i);
+  });
+
+  it("renders blobatar for the blobatar crop", () => {
+    const markup = renderBot({ name: "Scout", avatarCrop: "blobatar" });
+    expect(markup).toMatch(/blobatar|data:image\/svg\+xml|<svg/i);
   });
 });
 
@@ -79,10 +89,10 @@ describe("resolveBotAvatarOutcome", () => {
   // renderToStaticMarkup never fires — there are no events in a static
   // render. The decision is a pure function precisely so this branch is
   // still testable synchronously.
-  it("falls back to the gradient mascot for an image that failed to load", () => {
+  it("falls back to blobatar for an image that failed to load", () => {
     expect(
       resolveBotAvatarOutcome({ avatarCrop: "circle", hasUrl: true, imageFailed: true }),
-    ).toBe("gradientMascot");
+    ).toBe("blobatar");
   });
 
   it("renders a good flat image flat", () => {
@@ -97,9 +107,15 @@ describe("resolveBotAvatarOutcome", () => {
     ).toBe("gradientMascot");
   });
 
-  it("falls back to the gradient mascot when there is no image at all", () => {
+  it("falls back to blobatar when there is no image at all (non-mascot crop)", () => {
     expect(
       resolveBotAvatarOutcome({ avatarCrop: "square", hasUrl: false, imageFailed: false }),
-    ).toBe("gradientMascot");
+    ).toBe("blobatar");
+  });
+
+  it("uses blobatar when the crop is blobatar", () => {
+    expect(
+      resolveBotAvatarOutcome({ avatarCrop: "blobatar", hasUrl: false, imageFailed: false }),
+    ).toBe("blobatar");
   });
 });
