@@ -1,11 +1,11 @@
 import { z } from "zod";
 
 /**
- * `mascot` draws the animated mascot body, filled with the bot's colour
- * gradient. `circle`, `rounded`, and `square` crop the bot's own image
- * instead, shown as it is, with no mascot at all.
+ * `blobatar` draws a deterministic geometric face from the bot's name (Soft Taste
+ * default). `mascot` draws the animated Cursor mascot body. `circle`, `rounded`,
+ * and `square` crop the bot's own image with no mascot/blobatar.
  */
-export const BOT_AVATAR_CROPS = ["mascot", "circle", "rounded", "square"] as const;
+export const BOT_AVATAR_CROPS = ["blobatar", "mascot", "circle", "rounded", "square"] as const;
 export const botAvatarCropSchema = z.enum(BOT_AVATAR_CROPS);
 export type BotAvatarCrop = z.infer<typeof botAvatarCropSchema>;
 
@@ -42,7 +42,7 @@ export interface BotAvatarProfile {
 
 export function botAvatarProfile(value: BotAvatarProfileInput): BotAvatarProfile {
   const profile: BotAvatarProfile = {
-    avatarCrop: botAvatarCropSchema.safeParse(value.avatarCrop).data ?? "mascot",
+    avatarCrop: botAvatarCropSchema.safeParse(value.avatarCrop).data ?? "blobatar",
   };
   const url = botAvatarUrlSchema.safeParse(value.avatarUrl);
   if (url.success) profile.avatarUrl = url.data;

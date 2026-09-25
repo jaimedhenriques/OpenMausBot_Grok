@@ -459,7 +459,7 @@ public struct Bot: Codable, Hashable, Identifiable, Sendable {
 }
 
 public enum AvatarCrop: String, Codable, CaseIterable, Hashable, Sendable {
-    case mascot, circle, rounded, square
+    case blobatar, mascot, circle, rounded, square
 
     /// The desktop may gain crop modes before this app updates. Falling back
     /// keeps the complete bot/fleet payload decodable and guarantees a safe,

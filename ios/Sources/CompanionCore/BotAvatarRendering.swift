@@ -18,6 +18,9 @@ public enum BotAvatarOutcome: String, CaseIterable, Hashable, Sendable {
     /// The mascot in the bot's own colour gradient. Also the fallback for
     /// everything that cannot be drawn.
     case gradientMascot
+    /// Deterministic geometric blobatar (desktop Soft Taste default). Until a
+    /// native Blobatar renderer ships, views should draw `.gradientMascot`.
+    case blobatar
 }
 
 /// Pick how to draw a bot's avatar from the profile plus what has actually
@@ -40,10 +43,15 @@ public func resolveBotAvatarOutcome(
     imageDecoded: Bool,
     failed: Bool
 ) -> BotAvatarOutcome {
-    // No attachment at all, or the bot asked for the plain mascot.
-    guard hasUrl, crop != .mascot else { return .gradientMascot }
+    // Soft Taste: blobatar crop always wins (desktop draws Blobatar; iOS falls
+    // back to the gradient mascot in the view layer until native lands).
+    if crop == .blobatar { return .blobatar }
+    // Explicit animated mascot.
+    if crop == .mascot { return .gradientMascot }
+    // No attachment — Soft Taste fallback is blobatar, not the old mascot.
+    guard hasUrl else { return .blobatar }
     // Nothing to draw with yet — in flight, or gone.
-    guard imageDecoded, !failed else { return .gradientMascot }
+    guard imageDecoded, !failed else { return .blobatar }
     return .flatImage
 }
 

@@ -17,7 +17,7 @@ struct BotAvatarView: View {
     @State private var image: UIImage?
     @State private var failed = false
 
-    private var crop: AvatarCrop { bot.avatarCrop ?? .mascot }
+    private var crop: AvatarCrop { bot.avatarCrop ?? .blobatar }
     /// Which of the two renderings this bot gets. The decision itself is a
     /// pure function in `CompanionCore` so it can be tested without a
     /// rendered `Canvas`; see `resolveBotAvatarOutcome`.
@@ -31,10 +31,11 @@ struct BotAvatarView: View {
             switch outcome {
             // The picture instead of the mascot, masked to the chosen shape.
             case .flatImage: flatImage
-            // The mascot in the bot's own colours, which is also the fallback
-            // whenever there is no usable picture so identity is never an
-            // empty placeholder.
+            // The mascot in the bot's own colours.
             case .gradientMascot: mascot
+            // Soft Taste blobatar — native renderer TBD; mascot stands in so
+            // identity is never an empty placeholder.
+            case .blobatar: mascot
             }
         }
         .frame(width: size, height: size)
@@ -44,7 +45,7 @@ struct BotAvatarView: View {
             image = nil
             failed = false
             // Only the flat crops paint the bytes; the mascot never needs them.
-            guard crop != .mascot, bot.avatarUrl != nil else { return }
+            guard crop != .mascot, crop != .blobatar, bot.avatarUrl != nil else { return }
             let data = await session.avatarData(for: bot)
             guard !Task.isCancelled else { return }
             guard let data, let decoded = Self.decode(data) else {

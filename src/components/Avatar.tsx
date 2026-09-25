@@ -14,6 +14,8 @@ import {
   type PointerEvent as ReactPointerEvent,
 } from "react";
 import { MAUS_COLORS, type MausColor, type MausMotion, type MausState } from "@/lib/mascot";
+import { Blobatar } from "@blobatar/react";
+import "blobatar/motion.css";
 import { CursorAvatar, type CursorAvatarHandle } from "./CursorAvatar";
 import { botAvatarProfile, type BotAvatarCrop } from "../../shared/bot-avatar";
 import { MASCOT_BODIES, botMascotBody, type MascotBodyId } from "../../shared/mascot-bodies";
@@ -209,7 +211,7 @@ export type BotAvatarProps = Omit<MausAvatarProps, "color"> & {
   };
 };
 
-export type BotAvatarOutcome = "flatImage" | "gradientMascot";
+export type BotAvatarOutcome = "flatImage" | "gradientMascot" | "blobatar";
 
 /**
  * Pick which of the two ways to render a bot's avatar, given the parsed
@@ -229,9 +231,11 @@ export function resolveBotAvatarOutcome(params: {
   imageFailed: boolean;
 }): BotAvatarOutcome {
   const { avatarCrop, hasUrl, imageFailed } = params;
-  if (!hasUrl) return "gradientMascot";
+  // Soft Taste default: geometric blobatar from the bot name.
+  if (avatarCrop === "blobatar") return "blobatar";
+  if (!hasUrl) return avatarCrop === "mascot" ? "gradientMascot" : "blobatar";
   if (avatarCrop === "mascot") return "gradientMascot";
-  if (imageFailed) return "gradientMascot";
+  if (imageFailed) return "blobatar";
   return "flatImage";
 }
 
@@ -252,7 +256,26 @@ export function BotAvatar({ bot, size = 44, label, ...mascotProps }: BotAvatarPr
     imageFailed,
   });
 
-  if (outcome !== "flatImage") {
+  if (outcome === "blobatar") {
+    const seed = bot.name?.trim() || label?.trim() || "squadbots-bot";
+    return (
+      <span
+        className="inline-flex shrink-0 overflow-hidden rounded-full"
+        style={{ width: size, height: size }}
+        title={label ?? bot.name}
+        aria-label={label ?? bot.name ?? "Bot avatar"}
+      >
+        <Blobatar
+          name={seed}
+          size={size}
+          {...(size >= 56 ? { animate: "hover" as const } : {})}
+          title={label ?? bot.name ?? seed}
+        />
+      </span>
+    );
+  }
+
+  if (outcome === "gradientMascot") {
     return (
       <MausAvatar
         bodyId={bot.mascotBody ?? undefined}
@@ -291,12 +314,14 @@ export function InitialsAvatar({
   initials: string;
   size?: number;
 }) {
+  const seed = initials.trim() || "?";
   return (
-    <div
-      className="flex shrink-0 items-center justify-center rounded-full bg-raised text-ink-secondary font-medium"
-      style={{ width: size, height: size, fontSize: size * 0.38 }}
+    <span
+      className="inline-flex shrink-0 overflow-hidden rounded-full"
+      style={{ width: size, height: size }}
+      aria-label={seed}
     >
-      {initials}
-    </div>
+      <Blobatar name={seed} size={size} title={seed} />
+    </span>
   );
 }
