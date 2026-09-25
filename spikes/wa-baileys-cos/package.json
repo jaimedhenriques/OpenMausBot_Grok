@@ -1,0 +1,20 @@
+{
+  "name": "@openmausbot/spike-wa-baileys-cos",
+  "version": "0.0.0",
+  "private": true,
+  "description": "DRAFT spike: personal WhatsApp Web (Baileys-class) → webhook → CoS. Not production.",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "sink": "node mock-cos-sink.mjs",
+    "adapter:mock": "node adapter.mjs --mock",
+    "prove": "node prove-path.mjs",
+    "baileys": "node adapter.mjs --baileys"
+  },
+  "optionalDependencies": {
+    "@whiskeysockets/baileys": "^6.7.18",
+    "qrcode-terminal": "^0.12.0"
+  }
+}
