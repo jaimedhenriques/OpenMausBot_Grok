@@ -1,0 +1,287 @@
+/* Squadbots setup flow. Values from the Figma "Setup flow" file, bound to the
+   softgtm skin tokens in src/styles.css. Muted text is --color-maus-line
+   (#6B6458, SOFT_GTM_MUTED); it never sits on --color-control. */
+
+.sf {
+  --sf-muted: var(--color-maus-line, #6b6458);
+  /* one elevation, preview card only (Q5 open: no shadow token in the repo yet) */
+  --sf-elevation: 0 12px 32px -8px rgba(28, 25, 20, 0.08);
+  --sf-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  /* Q1 open: no danger-wash token yet; 8% danger over raised matches #F6E9EA */
+  --sf-danger-wash: color-mix(in srgb, var(--color-danger) 8%, var(--color-raised));
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-app);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+.sf *,
+.sf *::before,
+.sf *::after { box-sizing: border-box; }
+/* browser surfaces themed from the palette */
+.sf ::selection { background: var(--color-control); color: var(--color-ink); }
+.sf input, .sf textarea { caret-color: var(--color-ink); }
+/* zero-specificity reset so component classes (e.g. .sf-plan padding) win */
+:where(.sf) :where(p, h1, dl, dd, ol, ul) { margin: 0; padding: 0; }
+:where(.sf) :where(ol, ul) { list-style: none; }
+
+/* Focus: 2px --color-focus ring with 2px offset on every interactive element
+   (S-05 §7: 2px, 3:1 against card and page, never removed). */
+.sf :is(button, a, input, textarea, [tabindex]):focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+.sf :is(input, textarea):focus { outline: none; }
+.sf :is(input, textarea):focus-visible,
+.sf :is(input, textarea):focus { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+
+/* ── type ── */
+.sf-title { font-size: 40px; line-height: 44px; font-weight: 600; letter-spacing: -0.02em; text-wrap: balance; }
+.sf-subtitle { font-size: 17px; line-height: 26px; letter-spacing: -0.006em; color: var(--color-ink-secondary); }
+.sf-strong { font-size: 15px; line-height: 22px; font-weight: 500; letter-spacing: -0.004em; color: var(--color-ink); }
+.sf-callout { font-size: 13px; line-height: 18px; letter-spacing: -0.002em; }
+.sf-callout.sf-strong { font-size: 13px; line-height: 18px; }
+.sf-caption { font-size: 12px; line-height: 16px; font-weight: 500; color: var(--sf-muted); }
+.sf-ink2 { color: var(--color-ink-secondary); }
+.sf-danger { color: var(--color-danger); }
+.sf-tabular { font-variant-numeric: tabular-nums; }
+.sf-ic-success { color: var(--color-success); flex: none; }
+.sf-ic-danger { color: var(--color-danger); flex: none; }
+.sf-ic-muted { color: var(--sf-muted); flex: none; }
+
+/* ── top bar ── */
+.sf-top {
+  height: 64px; padding: 0 32px; display: flex; align-items: center; justify-content: space-between; flex: none;
+}
+.sf-brand { width: 320px; font-size: 16px; line-height: 20px; font-weight: 600; letter-spacing: -0.01em; }
+.sf-progress { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.sf-progress-label { font-size: 12px; line-height: 16px; font-weight: 500; color: var(--color-ink-secondary); }
+.sf-segs { display: flex; gap: 4px; }
+.sf-seg { width: 48px; height: 4px; border-radius: 999px; background: var(--color-hairline); transition: background-color 0.24s var(--sf-ease); }
+.sf-seg.is-on { background: var(--color-ink); }
+.sf-top-cue { width: 320px; display: flex; justify-content: flex-end; }
+.sf-cue { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; line-height: 18px; color: var(--color-ink-secondary); font-variant-numeric: tabular-nums; }
+.sf-cue.is-done { color: var(--color-success); }
+.sf-mprogress { display: none; }
+
+/* ── body ── */
+.sf-body {
+  flex: 1; display: flex; justify-content: center; align-items: flex-start; gap: 64px; padding: 64px 32px 48px;
+}
+.sf-main { width: 520px; flex: none; display: flex; flex-direction: column; gap: 32px; animation: sf-in 0.18s var(--sf-ease) both; }
+.sf-head { display: flex; flex-direction: column; gap: 12px; }
+.sf-content { display: flex; flex-direction: column; gap: 16px; }
+.sf-actions { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.sf-aside { width: 440px; flex: none; display: flex; flex-direction: column; gap: 16px; }
+.sf-bar { display: none; }
+
+@keyframes sf-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+@keyframes sf-fade { from { opacity: 0; } to { opacity: 1; } }
+
+/* ── buttons (adapted shadcn Button, softgtm tokens) ── */
+.sf-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: 0; background: none; cursor: pointer;
+  font: inherit; font-size: 15px; line-height: 22px; font-weight: 500; letter-spacing: -0.004em; border-radius: 8px;
+  text-decoration: none; white-space: nowrap;
+  transition: transform 0.12s var(--sf-ease), background-color 0.18s var(--sf-ease), color 0.18s var(--sf-ease);
+}
+.sf-btn:active { transform: scale(0.98); }
+.sf-btn--primary { height: 44px; padding: 0 20px; background: var(--color-accent); color: var(--color-accent-ink); }
+.sf-btn--primary:hover { background: var(--color-ink-secondary); }
+.sf-btn--link { min-height: 44px; padding: 0 8px; color: var(--color-ink); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+.sf-btn--link:hover { text-decoration-thickness: 2px; }
+.sf-btn--back { min-height: 44px; padding: 0 8px; color: var(--color-ink-secondary); }
+.sf-btn--back:hover { color: var(--color-ink); }
+.sf-btn--sm { font-size: 13px; line-height: 18px; }
+.sf-btn--sm.sf-btn--primary { height: 36px; padding: 0 16px; }
+.sf-btn--sm.sf-btn--link { min-height: 36px; }
+
+/* ── lists, options, cards ── */
+.sf-list { display: flex; flex-direction: column; gap: 12px; }
+.sf-option, .sf-job {
+  width: 100%; min-height: 80px; display: flex; align-items: center; gap: 16px; padding: 16px; text-align: left; cursor: pointer;
+  background: var(--color-raised); border: 1px solid var(--color-hairline); border-radius: 10px; font: inherit; color: inherit;
+  transition: border-color 0.2s var(--sf-ease), transform 0.12s var(--sf-ease), box-shadow 0.2s var(--sf-ease);
+}
+.sf-option:active, .sf-job:active { transform: scale(0.98); }
+/* selected: 2px ink, drawn as an inset ring so the row does not shift */
+.sf-option.is-selected { border-color: var(--color-ink); box-shadow: inset 0 0 0 1px var(--color-ink); }
+.sf-option-text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+/* avatar-lab squad faces (ported, see avatar-lab/BotAvatar.tsx): faces only, so the
+   status dot is hidden and no phase label is ever drawn */
+.sf-face { flex: none; display: inline-grid; place-items: center; }
+.sf-face .bot-avatar__status { display: none; }
+.sf-live-who { display: inline-flex; align-items: center; gap: 8px; }
+.sf-radio {
+  width: 22px; height: 22px; flex: none; border-radius: 999px; display: grid; place-items: center;
+  border: 1.5px solid var(--sf-muted); background: var(--color-raised); color: var(--color-accent-ink);
+  transition: background-color 0.2s var(--sf-ease), border-color 0.2s var(--sf-ease);
+}
+.sf-radio.is-on { background: var(--color-ink); border-color: var(--color-ink); }
+
+.sf-card { background: var(--color-raised); border: 1px solid var(--color-hairline); border-radius: 10px; }
+.sf-card--preview { padding: 24px; display: flex; flex-direction: column; gap: 20px; box-shadow: var(--sf-elevation); border-color: transparent; }
+.sf-card-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; font-size: 12px; line-height: 16px; font-weight: 500; color: var(--sf-muted); }
+.sf-identity { display: flex; align-items: center; gap: 16px; }
+.sf-identity-text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.sf-identity-name { font-size: 17px; line-height: 22px; font-weight: 600; letter-spacing: -0.008em; }
+.sf-divider { border: 0; height: 1px; margin: 0; background: var(--color-hairline); }
+.sf-rows { display: flex; flex-direction: column; gap: 14px; }
+.sf-row { display: flex; align-items: center; gap: 12px; }
+.sf-row-label { width: 104px; flex: none; font-size: 13px; line-height: 18px; color: var(--sf-muted); }
+.sf-row-value { flex: 1; min-width: 0; display: flex; align-items: center; gap: 8px; font-size: 13px; line-height: 18px; animation: sf-fade 0.2s var(--sf-ease) both; }
+.sf-row-value.is-done { color: var(--color-ink); }
+.sf-row-value.is-pending { color: var(--sf-muted); }
+.sf-row-value.is-active { color: var(--color-ink); font-weight: 500; }
+.sf-row-value.is-error { color: var(--color-danger); }
+
+/* account rows */
+.sf-account {
+  display: flex; flex-direction: column; gap: 12px; padding: 16px 16px 16px 20px;
+  background: var(--color-raised); border: 1px solid var(--color-hairline); border-radius: 10px;
+  transition: border-color 0.2s var(--sf-ease), box-shadow 0.2s var(--sf-ease);
+}
+.sf-account.is-selected { border-color: var(--color-ink); box-shadow: inset 0 0 0 1px var(--color-ink); }
+/* error: hairline border kept; the wash + alert icon carry the state, message in ink */
+.sf-account.is-error { border-color: var(--color-hairline); box-shadow: none; }
+.sf-account-row { display: flex; align-items: center; gap: 16px; min-height: 44px; }
+.sf-status { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; line-height: 18px; font-weight: 500; color: var(--color-success); white-space: nowrap; }
+.sf-inline-error {
+  display: flex; align-items: flex-start; gap: 8px; padding: 10px 12px; border-radius: 8px;
+  background: var(--sf-danger-wash); color: var(--color-ink); font-size: 13px; line-height: 18px;
+  animation: sf-fade 0.2s var(--sf-ease) both;
+}
+.sf-inline-error svg { flex: none; margin-top: 1px; color: var(--color-danger); }
+.sf-note { display: flex; align-items: flex-start; gap: 8px; font-size: 13px; line-height: 18px; color: var(--color-ink-secondary); }
+.sf-note svg { margin-top: 1px; }
+
+/* jobs */
+.sf-field { display: flex; flex-direction: column; gap: 8px; }
+.sf-input {
+  width: 100%; height: 44px; padding: 0 14px; border: 1px solid var(--sf-muted); border-radius: 8px; background: var(--color-raised);
+  font: inherit; font-size: 15px; line-height: 22px; color: var(--color-ink);
+}
+.sf-input::placeholder { color: var(--sf-muted); }
+.sf-input[aria-invalid="true"] { border-color: var(--color-danger); }
+.sf-textarea { height: auto; padding: 10px 14px; resize: vertical; }
+.sf-jobs { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }
+.sf-jobs .sf-list { gap: 10px; }
+.sf-job { min-height: 72px; }
+.sf-job:hover { border-color: var(--color-ink); }
+.sf-option:not(.is-selected):hover { border-color: var(--sf-muted); }
+.sf :is(button, a) { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+.sf-job:hover .sf-tile { background: var(--color-raised); }
+.sf-tile {
+  width: 40px; height: 40px; flex: none; display: grid; place-items: center; border-radius: 8px; background: var(--color-control); color: var(--color-ink);
+  transition: background-color 0.2s var(--sf-ease);
+}
+.sf-job-arrow { flex: none; color: var(--color-ink); }
+
+/* run */
+.sf-plan { padding: 4px 20px; display: flex; flex-direction: column; }
+.sf-step { display: flex; align-items: center; gap: 12px; padding: 14px 0; font-size: 15px; line-height: 22px; animation: sf-fade 0.2s var(--sf-ease) both; }
+.sf-step + .sf-step { border-top: 1px solid var(--color-hairline); }
+.sf-step-label { flex: 1; min-width: 0; }
+.sf-step-meta { font-size: 13px; line-height: 18px; color: var(--sf-muted); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.sf-step.is-active .sf-step-label { font-weight: 500; }
+.sf-step.is-active .sf-step-meta { color: var(--color-ink); }
+.sf-step.is-pending .sf-step-label, .sf-step.is-stopped .sf-step-meta { color: var(--sf-muted); }
+.sf-meta { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 13px; line-height: 18px; color: var(--color-ink-secondary); }
+.sf-meta-engine { display: inline-flex; align-items: center; gap: 8px; }
+.sf-spin { flex: none; animation: sf-spin 1.2s linear infinite; }
+@keyframes sf-spin { to { transform: rotate(360deg); } }
+
+.sf-live { gap: 16px; }
+.sf-location {
+  height: 36px; display: flex; align-items: center; gap: 8px; padding: 0 12px; border-radius: 8px;
+  background: var(--color-panel); border: 1px solid var(--color-hairline); font-size: 13px; line-height: 18px; color: var(--color-ink-secondary);
+}
+.sf-location span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; animation: sf-fade 0.2s var(--sf-ease) both; }
+.sf-skel { display: flex; flex-direction: column; gap: 10px; }
+.sf-skel span { display: block; height: 8px; border-radius: 999px; background: var(--color-control); }
+.sf-skel-table { display: flex; flex-direction: column; gap: 10px; padding-top: 8px; }
+.sf-skel-table > div { display: flex; gap: 12px; }
+.sf-skel-table span { flex: none; }
+.sf-skel-table .sf-skel-fill { flex: 1; }
+/* shimmer only while the run is live */
+.sf-live.is-running .sf-skel span {
+  background: linear-gradient(90deg, var(--color-control) 0%, var(--color-raised-hover) 50%, var(--color-control) 100%);
+  background-size: 200% 100%;
+  animation: sf-shimmer 1.6s linear infinite;
+}
+@keyframes sf-shimmer { from { background-position: 100% 0; } to { background-position: -100% 0; } }
+
+/* done */
+.sf-result { padding: 24px; display: flex; flex-direction: column; gap: 16px; }
+.sf-result-head { display: flex; align-items: center; gap: 12px; }
+.sf-sections { display: flex; flex-direction: column; gap: 12px; }
+.sf-sections > div { display: flex; flex-direction: column; gap: 2px; }
+.sf-action-note { flex-basis: 100%; margin: 0; font-size: 13px; line-height: 18px; color: var(--sf-muted); }
+
+/* ── under 1100px: preview drops under the main column ── */
+@media (max-width: 1099px) {
+  .sf-body { flex-direction: column; align-items: center; gap: 40px; }
+  .sf-main, .sf-aside { width: 100%; max-width: 520px; }
+  .sf-brand, .sf-top-cue { width: auto; }
+}
+
+/* ── under 640px: the 390 mobile layout ── */
+@media (max-width: 639px) {
+  /* the long "stopped mid-step" note drops under its label instead of squeezing it */
+  .sf-step.is-stopped { flex-wrap: wrap; row-gap: 2px; }
+  .sf-step.is-stopped .sf-step-meta { flex-basis: 100%; padding-left: 30px; white-space: normal; }
+  .sf-top { height: 56px; padding: 0 20px; }
+  .sf-progress .sf-segs, .sf-top-cue { display: none; }
+  .sf-mprogress { display: flex; flex-direction: column; gap: 12px; padding: 0 20px; }
+  .sf-mprogress .sf-segs { width: 100%; }
+  .sf-mprogress .sf-seg { flex: 1; width: auto; }
+  .sf-mprogress .sf-cue { gap: 6px; }
+  .sf-body { flex: 1; padding: 28px 20px 32px; gap: 24px; align-items: stretch; }
+  .sf-main { gap: 24px; max-width: none; }
+  .sf-aside { max-width: none; }
+  .sf-title { font-size: 28px; line-height: 32px; letter-spacing: -0.015em; }
+  .sf-subtitle { font-size: 15px; line-height: 22px; letter-spacing: -0.004em; }
+  .sf-option { min-height: 96px; }
+  .sf-actions { display: none; }
+  .sf-bar {
+    display: flex; flex-direction: column; align-items: stretch; gap: 4px;
+    /* sticky, not fixed: it stays pinned while scrolling but still reserves its own height, so
+       a three-action bar (own task) never covers the last card */
+    position: sticky; bottom: 0; z-index: 10;
+    padding: 16px 20px max(34px, env(safe-area-inset-bottom)); background: var(--color-app); border-top: 1px solid var(--color-hairline);
+  }
+  .sf-bar .sf-btn--primary { height: 50px; width: 100%; }
+  /* keep a focused field or control clear of the sticky bar */
+  .sf :is(input, textarea, button, a, [tabindex]) { scroll-margin-bottom: 200px; }
+  .sf-bar .sf-btn--link, .sf-bar .sf-btn--back { align-self: center; }
+  .sf-aside[data-mobile="hidden"] { display: none; }
+  .sf-card--preview { box-shadow: none; border-color: var(--color-hairline); padding: 20px; }
+  .sf-aside[data-mobile="compact"] .sf-identity,
+  .sf-aside[data-mobile="compact"] .sf-divider,
+  .sf-aside[data-mobile="compact"] .sf-row:nth-child(n + 3) { display: none; }
+  .sf-row-label { width: 96px; }
+  .sf-account-row { flex-wrap: wrap; }
+  .sf-btn--sm.sf-btn--primary { height: 44px; }
+}
+
+/* ── reduced motion: opacity only, no spin, no shimmer ── */
+@media (prefers-reduced-motion: reduce) {
+  .sf *, .sf *::before, .sf *::after { transition-property: opacity, color, background-color, border-color !important; }
+  .sf-main { animation-name: sf-fade; }
+  .sf-spin { animation: none; }
+  .sf-live.is-running .sf-skel span { animation: none; background: var(--color-control); }
+  .sf-btn:active, .sf-option:active, .sf-job:active { transform: none; }
+  .sf-face .bot-avatar__shell { animation: none; }
+}
+:root[data-reduced-motion="true"] .sf *, :root[data-reduced-motion="true"] .sf *::before, :root[data-reduced-motion="true"] .sf *::after {
+  transition-property: opacity, color, background-color, border-color !important;
+}
+:root[data-reduced-motion="true"] .sf-main { animation-name: sf-fade; }
+:root[data-reduced-motion="true"] .sf-spin { animation: none; }
+:root[data-reduced-motion="true"] .sf-live.is-running .sf-skel span { animation: none; background: var(--color-control); }
+:root[data-reduced-motion="true"] .sf-btn:active,
+:root[data-reduced-motion="true"] .sf-option:active,
+:root[data-reduced-motion="true"] .sf-job:active { transform: none; }
+:root[data-reduced-motion="true"] .sf-face .bot-avatar__shell { animation: none; }
