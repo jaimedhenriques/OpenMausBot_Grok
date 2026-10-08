@@ -17,16 +17,19 @@ export const PROVIDER_SIGNUP: Record<Provider, { host: string; href: string }> =
 export interface Squadmate {
   id: SquadmateId;
   name: string;
-  letter: string;
   role: string;
+  /** avatar-lab squad face (squad-N) and its palette colour; faces only, no phase labels */
+  avatar: { index: number; color: string };
 }
 
-// TODO(setup-flow): Q7 open. Confirm these four are the launch squadmates.
+// The four launch squadmates (Q7 answered by the Squadbots CEO); Researcher is the default.
+// Faces: Researcher = squad-3 (magnifier), Chief of Staff = squad-6 (calendar),
+// Content Writer = squad-7 (document folder), Sales Assistant = squad-2 (chart).
 export const SQUADMATES: Squadmate[] = [
-  { id: "researcher", name: "Researcher", letter: "R", role: "Market scans, competitor notes and sourced summaries" },
-  { id: "chief", name: "Chief of Staff", letter: "C", role: "Inbox triage, follow-ups and meeting prep" },
-  { id: "writer", name: "Content Writer", letter: "W", role: "Posts, newsletters and landing copy in your voice" },
-  { id: "sales", name: "Sales Assistant", letter: "S", role: "Lead lists, outreach drafts and CRM updates" },
+  { id: "researcher", name: "Researcher", role: "Market scans, competitor notes and sourced summaries", avatar: { index: 3, color: "#23c773" } },
+  { id: "chief", name: "Chief of Staff", role: "Inbox triage, follow-ups and meeting prep", avatar: { index: 6, color: "#ed429f" } },
+  { id: "writer", name: "Content Writer", role: "Posts, newsletters and landing copy in your voice", avatar: { index: 7, color: "#eebc23" } },
+  { id: "sales", name: "Sales Assistant", role: "Lead lists, outreach drafts and CRM updates", avatar: { index: 2, color: "#3297f5" } },
 ];
 
 export function squadmate(id: SquadmateId): Squadmate {
@@ -38,17 +41,16 @@ export const COPY = {
   wordmark: "squadbots",
   stepOf: (n: number) => `Step ${n} of 4`,
   doneLabel: "Done",
+  // Time is shown as true elapsed time only, never a countdown or estimate.
+  // "Setup time" = since step 1 first loaded; "Run time" = since the task started.
   cue: {
-    pick: "About 2 min to your first result",
-    connect: "About 90 sec to go",
-    jobs: "About 1 min to go",
-    run: "Under 1 min to go",
-    firstResult: (clock: string) => `First result in ${clock}`,
+    setup: (clock: string) => `Setup time ${clock}`,
+    firstResult: (clock: string) => `First result at ${clock} setup time`,
   },
   pick: {
     title: "Pick your first squadmate",
     subtitle: "Each squadmate has its own computer and one clear job. You can add more later.",
-    cta: "Continue",
+    cta: (name: string) => `Continue with ${name}`,
   },
   connect: {
     title: "Connect your AI account",
@@ -58,17 +60,17 @@ export const COPY = {
     found: (p: Provider) => `Found on this computer. Use the ${PROVIDER_NAME[p]} plan you already have.`,
     signedIn: (name: string) => `Signed in. ${name} will use this account.`,
     connect: "Connect",
-    connecting: "Connecting",
+    connecting: "Connecting…",
     connected: "Connected",
     tryAgain: "Try again",
     error: (p: Provider) => {
       const other = PROVIDER_NAME[p === "chatgpt" ? "grok" : "chatgpt"];
-      return `Couldn't connect. The ${PROVIDER_NAME[p]} sign-in window closed before it finished. Try again, or connect ${other} instead.`;
+      return `Couldn’t connect. The ${PROVIDER_NAME[p]} sign-in window closed before it finished. Try again, or connect ${other} instead.`;
     },
     note: "You sign in on their site. Disconnect any time in Settings.",
     noAccount: "No ChatGPT or Grok account yet?",
     back: "Back",
-    cta: "Continue",
+    cta: "Choose a first job",
   },
   empty: {
     title: "Bring a ChatGPT or Grok account",
@@ -91,7 +93,7 @@ export const COPY = {
     own: "Write my own task",
     ownHide: "Hide my own task",
     ownLabel: "Your task",
-    ownPlaceholder: "For example: list the five newest posts on our blog",
+    ownPlaceholder: "For example: list the five newest posts on our blog…",
     ownCta: "Start task",
     back: "Back",
   },
@@ -100,8 +102,8 @@ export const COPY = {
     stoppedTitle: (n: number, m: number) => `Stopped at step ${n} of ${m}`,
     stoppedSubtitle: (name: string) => `${name} kept the finished steps. Nothing was sent anywhere.`,
     runningOn: (p: Provider) => `Running on your ${PROVIDER_NAME[p]} account`,
-    elapsed: (clock: string) => `${clock} elapsed`,
-    stoppedAt: (clock: string) => `Stopped at ${clock}`,
+    runTime: (clock: string) => `Run time ${clock}`,
+    stoppedAt: (clock: string) => `Run time ${clock}, stopped`,
     stop: "Stop task",
     stopLabel: (name: string) => `Stop ${name}`,
     stopHint: "Stop (Esc)",
@@ -109,25 +111,22 @@ export const COPY = {
     notStarted: "Not started",
     resume: "Resume from here",
     pickAnother: "Pick another job",
-    computer: (name: string) => `${name}'s computer`,
+    computer: (name: string) => `${name}’s computer`,
     live: "Live",
     stopped: "Stopped",
-    starting: "Opening the browser",
-    drafting: (noun: string) => `${noun}, drafting`,
+    starting: "Opening the browser…",
+    drafting: (noun: string) => `${noun}, drafting…`,
     announceStep: (n: number, m: number, label: string) => `Step ${n} of ${m}: ${label}`,
     announceStopped: (n: number, m: number) => `Stopped by you at step ${n} of ${m}`,
   },
   done: {
     title: (noun: string) => `Your ${noun.toLowerCase()} is ready`,
     subtitle: (name: string, duration: string) =>
-      `${name} finished in ${duration}. Nothing was sent anywhere. It is yours to review.`,
-    next: "Next, if you want",
-    rerun: "Rerun every Monday",
-    onePager: "Turn into a one-pager",
+      `${name}’s run time was ${duration}. Nothing was sent anywhere. It is yours to review.`,
     open: (noun: string) => `Open ${noun.toLowerCase()}`,
     another: "Run another job",
     announce: (noun: string) => `${noun} ready`,
-    notWired: "Opens in your squadmate's chat once this flow is wired to the app.",
+    notWired: "Opening the brief is not connected in this preview yet.",
   },
   card: {
     title: "Your squad",
@@ -142,9 +141,9 @@ export const COPY = {
     approvalsValue: "Asks before anything is sent",
     computerValue: "Own browser and files, sandboxed",
     engineNext: "Connect in the next step",
-    engineChecking: "Checking this computer",
+    engineChecking: "Checking this computer…",
     engineWaiting: "Waiting for you to connect",
-    engineConnecting: (p: Provider) => `Signing in to ${PROVIDER_NAME[p]}`,
+    engineConnecting: (p: Provider) => `Signing in to ${PROVIDER_NAME[p]}…`,
     engineError: "Not connected yet",
     engineNeeds: "Needs a ChatGPT or Grok account",
     engineDone: (p: Provider) => `${PROVIDER_NAME[p]}, your account`,

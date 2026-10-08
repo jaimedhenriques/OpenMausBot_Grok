@@ -1,0 +1,94 @@
+/* Ported as-is from HelixAgents mybots/packages/ui-web/src/styles.css (.bot-avatar block)
+   at 5992f75c (Soft GTM #459). Only change: --rk-page falls back to the softgtm app colour. */
+.bot-avatar {
+  --bot-size: 38px;
+  position: relative;
+  display: inline-grid;
+  width: var(--bot-size);
+  height: var(--bot-size);
+  flex: none;
+  place-items: center;
+}
+.bot-avatar__shell {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transform-origin: 50% 75%;
+}
+.bot-avatar__status {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 20%;
+  aspect-ratio: 1;
+  border: 2px solid var(--rk-page, var(--color-app, #efece4));
+  border-radius: 50%;
+  background: #258358;
+}
+.bot-avatar[data-state="idle"] .bot-avatar__status {
+  display: none;
+}
+.bot-avatar[data-state="thinking"] .bot-avatar__shell {
+  animation: bot-avatar-think 1.8s ease-in-out infinite;
+}
+.bot-avatar[data-state="working"] .bot-avatar__shell,
+.bot-avatar[data-state="executing"] .bot-avatar__shell {
+  animation: bot-avatar-work 1.2s ease-in-out infinite;
+}
+.bot-avatar[data-state="listening"] .bot-avatar__shell {
+  animation: bot-avatar-listen 1.5s ease-in-out infinite;
+}
+.bot-avatar[data-state="speaking"] .bot-avatar__shell {
+  animation: bot-avatar-speak 700ms ease-in-out infinite;
+}
+.bot-avatar[data-state="success"] .bot-avatar__shell {
+  animation: bot-avatar-delivered 400ms ease-out;
+}
+.bot-avatar[data-state="needs-you"] .bot-avatar__status {
+  background: #b57800;
+  animation: bot-avatar-status 1.8s ease-in-out infinite;
+}
+.bot-avatar[data-state="error"] .bot-avatar__status {
+  background: #cf3046;
+}
+.bot-avatar[data-motion="paused"] *,
+.bot-avatar[data-motion="paused"] {
+  animation-play-state: paused;
+}
+@keyframes bot-avatar-think {
+  50% {
+    transform: rotate(-7deg) translateY(-2%);
+  }
+}
+@keyframes bot-avatar-work {
+  50% {
+    transform: translateY(-5%) rotate(4deg);
+  }
+}
+@keyframes bot-avatar-listen {
+  50% {
+    transform: scale(1.04);
+  }
+}
+@keyframes bot-avatar-speak {
+  50% {
+    transform: scale(1.03, 0.96);
+  }
+}
+@keyframes bot-avatar-delivered {
+  45% {
+    transform: translateY(-8%) rotate(-5deg);
+  }
+}
+@keyframes bot-avatar-status {
+  50% {
+    opacity: 0.55;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bot-avatar[data-state] .bot-avatar__shell,
+  .bot-avatar[data-state] .bot-avatar__status {
+    animation: none;
+    transition: none;
+  }
+}

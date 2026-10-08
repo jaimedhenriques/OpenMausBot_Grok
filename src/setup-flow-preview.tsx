@@ -5,7 +5,8 @@
 //
 // ?state=pick|connect|connected|error|empty|jobs|own|running|stopped|done
 // &detect=auto|none|chatgpt|grok|both  &connect=ok|fail  &site=yourcompany.com
-// &at=<seconds into the run>  &freeze=1  &speed=<n>  &reduced=1
+// &at=<seconds into the run>  &setup=<seconds of setup before the run, deep links only>
+// &freeze=1  &speed=<n>  &reduced=1
 import { StrictMode, useMemo } from "react";
 import { createRoot } from "react-dom/client";
 import { SetupFlow, type SetupFlowProps } from "@/components/softgtm/setup/SetupFlow";
@@ -25,6 +26,9 @@ const SITE = params.get("site") ?? "yourcompany.com";
 const SPEED = Math.max(0.1, Number(params.get("speed")) || 1);
 const AT = Math.max(0, Number(params.get("at")) || 0) * 1000;
 const FREEZE = params.get("freeze") === "1";
+// Deep links into the run skip steps 1 to 3, so the setup timer is seeded with a
+// fixture lead (28 s, the pre-run time of the timed stranger run) unless given.
+const SETUP_LEAD = Math.max(0, Number(params.get("setup") ?? 28)) * 1000;
 
 if (params.get("reduced") === "1") document.documentElement.dataset.reducedMotion = "true";
 
@@ -62,7 +66,6 @@ function initialFromUrl(loadedAt: number): Partial<SetupState> {
     case "running":
     case "stopped":
     case "done": {
-      // Deep links skip setup, so the setup timer starts with the run.
       const spec = runSpecFor("scan", SITE);
       const total = fixtureTimeline(spec, SITE).at(-1)!.offset;
       const elapsed = STATE === "done" ? total : AT || 38_000;
@@ -75,7 +78,7 @@ function initialFromUrl(loadedAt: number): Partial<SetupState> {
         connect: connected,
         spec,
         events,
-        setupStartedAt: startedAt,
+        setupStartedAt: startedAt - SETUP_LEAD,
         firstResultAt: STATE === "done" ? startedAt + total : null,
       };
     }

@@ -18,7 +18,6 @@ import {
   LoaderCircle,
   Lock,
   PanelsTopLeft,
-  Repeat,
   Square,
 } from "lucide-react";
 import { api } from "@/state/store";
@@ -47,7 +46,7 @@ import {
   type SetupState,
 } from "@/lib/softgtm-setup-flow";
 import { RadioCards, SetupButton } from "./primitives";
-import { LiveView, PlanCard, SetupShell, SquadCard, type CardRow } from "./SetupParts";
+import { LiveView, PlanCard, SetupShell, SquadCard, SquadFace, type CardRow } from "./SetupParts";
 import "./setup-flow.css";
 
 /** Drives a run: emits S-04 events from `fromOffset` ms into the plan. Returns cancel. */
@@ -62,8 +61,8 @@ export interface SetupFlowProps {
   /** where the driver resumes for a step (ms after run start) */
   stepOffset?: (spec: RunSpec, site: string, index: number) => number;
   now?: () => number;
+  /** Opens the finished result. Follow-ups (rerun weekly, one-pager) belong to that view. */
   onOpenResult?: () => void;
-  onFollowUp?: (kind: "rerun" | "onePager") => void;
 }
 
 // TODO(setup-flow): real provider sign-in (Q10 open). Until then the app has no adapter.
@@ -94,13 +93,12 @@ export function SetupFlow({
   stepOffset,
   now = Date.now,
   onOpenResult,
-  onFollowUp,
 }: SetupFlowProps) {
   const [state, dispatch] = useReducer(setupReducer, { ...initialSetupState, ...initial });
   const [runKey, setRunKey] = useState(0);
   const [announce, setAnnounce] = useState("");
-  // Visible note for done-screen actions the host app has not wired yet, so no
-  // button is silent for sighted users (antislop R-26).
+  // Quiet visible note when the host app has not wired Open yet (gallery scope),
+  // so the primary is never silent for sighted users (antislop R-26).
   const [doneNote, setDoneNote] = useState("");
   const notWired = () => {
     setDoneNote(COPY.done.notWired);
@@ -109,8 +107,12 @@ export function SetupFlow({
   const siteRef = useRef<HTMLInputElement>(null);
   const ownRef = useRef<HTMLTextAreaElement>(null);
   const mate = squadmate(state.squadmate);
-  const view = deriveRunView(state.spec, state.events, useTick(state.screen === "run", now));
+  // One clock for the setup timer (all steps until the first result) and the run.
+  const tick = useTick(state.screen !== "done", now);
+  const view = deriveRunView(state.spec, state.events, tick);
   const running = view.status === "running";
+  const setupMs = state.setupStartedAt === null ? 0 : Math.max(0, tick - state.setupStartedAt);
+  const setupCue = COPY.cue.setup(formatClock(setupMs));
 
   // Setup timer starts when step 1 is first shown (Q11).
   useEffect(() => {
@@ -245,13 +247,14 @@ export function SetupFlow({
         <SetupShell
           screen="pick"
           step={1}
-          cue={COPY.cue.pick}
+          cue={setupCue}
+          timerMs={setupMs}
           title={COPY.pick.title}
           subtitle={COPY.pick.subtitle}
           asideMobile="hidden"
           actions={
             <SetupButton onClick={() => dispatch({ type: "goto", screen: "connect" })}>
-              {COPY.pick.cta}
+              {COPY.pick.cta(mate.name)}
               <ArrowRight size={16} strokeWidth={2} aria-hidden="true" />
             </SetupButton>
           }
@@ -276,7 +279,7 @@ export function SetupFlow({
               label: `${m.name}. ${m.role}`,
               render: (checked) => (
                 <>
-                  <span className="sf-avatar" aria-hidden="true">{m.letter}</span>
+                  <SquadFace mate={m} size={48} />
                   <span className="sf-option-text">
                     <span className="sf-strong">{m.name}</span>
                     <span className="sf-callout sf-ink2">{m.role}</span>
@@ -308,7 +311,8 @@ export function SetupFlow({
           <SetupShell
             screen="connect-empty"
             step={2}
-            cue={COPY.cue.connect}
+            cue={setupCue}
+            timerMs={setupMs}
             title={COPY.empty.title}
             subtitle={COPY.empty.subtitle}
             asideMobile="hidden"
@@ -371,7 +375,8 @@ export function SetupFlow({
         <SetupShell
           screen={`connect-${variant}`}
           step={2}
-          cue={COPY.cue.connect}
+          cue={setupCue}
+          timerMs={setupMs}
           title={COPY.connect.title}
           subtitle={COPY.connect.subtitle}
           asideMobile={variant === "connected" ? "compact" : "hidden"}
@@ -421,7 +426,7 @@ export function SetupFlow({
                         {COPY.connect.connected}
                       </span>
                     ) : isConnecting ? (
-                      <SetupButton size="sm" aria-busy="true" aria-label={`${COPY.connect.connecting} ${PROVIDER_NAME[p]}`}>
+                      <SetupButton size="sm" aria-busy="true" aria-label={`${PROVIDER_NAME[p]}, ${COPY.connect.connecting}`}>
                         <LoaderCircle size={14} strokeWidth={2} className="sf-spin" aria-hidden="true" />
                         {COPY.connect.connecting}
                       </SetupButton>
@@ -473,7 +478,8 @@ export function SetupFlow({
         <SetupShell
           screen="jobs"
           step={3}
-          cue={COPY.cue.jobs}
+          cue={setupCue}
+          timerMs={setupMs}
           title={COPY.jobs.title}
           subtitle={COPY.jobs.subtitle(mate.name)}
           asideMobile="hidden"
@@ -503,7 +509,9 @@ export function SetupFlow({
             <label htmlFor="sf-site" className="sf-callout sf-strong">{COPY.jobs.siteLabel}</label>
             <input
               id="sf-site"
+              name="website"
               ref={siteRef}
+              spellCheck={false}
               className="sf-input"
               inputMode="url"
               autoComplete="url"
@@ -522,6 +530,7 @@ export function SetupFlow({
               <label htmlFor="sf-own" className="sf-callout sf-strong">{COPY.jobs.ownLabel}</label>
               <textarea
                 id="sf-own"
+                name="task"
                 ref={ownRef}
                 className="sf-input sf-textarea"
                 rows={3}
@@ -572,7 +581,8 @@ export function SetupFlow({
         <SetupShell
           screen={stopped ? "run-stopped" : "run"}
           step={4}
-          cue={stopped ? COPY.run.stopped : COPY.cue.run}
+          cue={setupCue}
+          timerMs={setupMs}
           title={stopped ? COPY.run.stoppedTitle(view.stoppedStep ?? 1, spec.steps.length) : COPY.run.title(mate.name)}
           subtitle={stopped ? COPY.run.stoppedSubtitle(mate.name) : spec.subtitle}
           asideMobile="stack"
@@ -593,7 +603,8 @@ export function SetupFlow({
           }
           aside={
             <LiveView
-              name={mate.name}
+              mate={mate}
+              face={stopped ? "idle" : view.location ? "working" : "thinking"}
               running={!stopped}
               noun={spec.noun}
               location={stopped ? COPY.run.announceStopped(view.stoppedStep ?? 1, spec.steps.length) : view.location ?? activeLabel}
@@ -607,7 +618,7 @@ export function SetupFlow({
               {COPY.run.runningOn(provider)}
             </span>
             <span className="sf-tabular">
-              {stopped ? COPY.run.stoppedAt(formatClock(view.elapsedMs)) : COPY.run.elapsed(formatClock(view.elapsedMs))}
+              {stopped ? COPY.run.stoppedAt(formatClock(view.elapsedMs)) : COPY.run.runTime(formatClock(view.elapsedMs))}
             </span>
           </div>
         </SetupShell>
@@ -623,7 +634,7 @@ export function SetupFlow({
       <SetupShell
         screen="done"
         step={5}
-        cue={COPY.cue.firstResult(formatClock(firstMs ?? view.elapsedMs))}
+        cue={COPY.cue.firstResult(formatClock(firstMs ?? setupMs))}
         cueDone
         timerMs={firstMs}
         title={COPY.done.title(spec.noun)}
@@ -633,7 +644,8 @@ export function SetupFlow({
           <>
             <SetupButton
               onClick={() => {
-                // TODO(setup-flow): wire to chat
+                // TODO(setup-flow): wire to the brief view in chat; the follow-ups
+                // (rerun every Monday, turn into a one-pager) live in that view.
                 if (onOpenResult) onOpenResult();
                 else notWired();
               }}
@@ -644,11 +656,13 @@ export function SetupFlow({
             <SetupButton variant="link" onClick={() => dispatch({ type: "goto", screen: "jobs" })}>
               {COPY.done.another}
             </SetupButton>
+            {doneNote ? <p className="sf-action-note">{doneNote}</p> : null}
           </>
         }
         aside={
           <SquadCard
             mate={mate}
+            face="success"
             note={COPY.card.setUp}
             rows={[
               { label: COPY.card.engine, state: "done", text: COPY.card.engineDone(provider) },
@@ -682,21 +696,6 @@ export function SetupFlow({
               </dl>
             </>
           ) : null}
-        </div>
-        <div className="sf-followups">
-          <span id="sf-next" className="sf-caption">{COPY.done.next}</span>
-          <div className="sf-followup-links" role="group" aria-labelledby="sf-next">
-            {/* TODO(setup-flow): wire follow-ups to routines and chat */}
-            <SetupButton variant="link" size="sm" onClick={() => (onFollowUp ? onFollowUp("rerun") : notWired())}>
-              <Repeat size={14} strokeWidth={2} aria-hidden="true" />
-              {COPY.done.rerun}
-            </SetupButton>
-            <SetupButton variant="link" size="sm" onClick={() => (onFollowUp ? onFollowUp("onePager") : notWired())}>
-              <FileText size={14} strokeWidth={2} aria-hidden="true" />
-              {COPY.done.onePager}
-            </SetupButton>
-          </div>
-          {doneNote ? <p className="sf-callout sf-ink2">{doneNote}</p> : null}
         </div>
       </SetupShell>
       {liveRegion}

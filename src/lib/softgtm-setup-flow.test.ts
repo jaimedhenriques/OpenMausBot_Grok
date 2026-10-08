@@ -8,6 +8,7 @@ import {
   deriveRunView,
   detectProviders,
   firstResultMs,
+  SQUADMATES,
   formatClock,
   formatDuration,
   initialSetupState,
@@ -124,6 +125,7 @@ describe("setup flow copy", () => {
     "components/softgtm/setup/SetupFlow.tsx",
     "components/softgtm/setup/SetupParts.tsx",
     "components/softgtm/setup/primitives.tsx",
+    "components/softgtm/avatar-lab/BotAvatar.tsx",
     "setup-flow-preview.tsx",
   ].map((p) => readFileSync(join(root, p), "utf8"));
 
@@ -131,6 +133,19 @@ describe("setup flow copy", () => {
     for (const src of sources) {
       expect(src).not.toMatch(EM_DASH);
     }
+  });
+  it("shows true elapsed time only, one label per measure", () => {
+    const copy = JSON.stringify(COPY);
+    expect(copy).not.toMatch(/About \d|to go|Under \d|min to your/);
+    expect(COPY.cue.setup("0:42")).toBe("Setup time 0:42");
+    expect(COPY.cue.firstResult("1:39")).toBe("First result at 1:39 setup time");
+    expect(COPY.run.runTime("0:38")).toBe("Run time 0:38");
+    expect(COPY.done.subtitle("Researcher", "1 min 12 sec")).toContain("run time was 1 min 12 sec");
+    expect(COPY.done.subtitle("Researcher", "1 min 12 sec")).not.toContain("First result");
+  });
+  it("maps each launch squadmate to its own avatar-lab face", () => {
+    expect(SQUADMATES.map((m) => m.name)).toEqual(["Researcher", "Chief of Staff", "Content Writer", "Sales Assistant"]);
+    expect(new Set(SQUADMATES.map((m) => m.avatar.index)).size).toBe(4);
   });
   it("has no internal stamps in customer chrome", () => {
     for (const src of sources.slice(0, 4)) {

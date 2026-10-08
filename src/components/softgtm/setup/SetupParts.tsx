@@ -5,6 +5,17 @@ import type { ReactNode } from "react";
 import { Check, CircleAlert, CircleCheck, CircleDashed, Clock, Globe, LoaderCircle } from "lucide-react";
 import { cn } from "@/lib/cn";
 import { COPY, type RunRow, type Squadmate } from "@/lib/softgtm-setup-flow";
+import { BotAvatar, type BotAvatarState } from "@/components/softgtm/avatar-lab/BotAvatar";
+
+/** avatar-lab squad face, decorative (the name sits next to it). Faces only: no
+ *  phase labels, no status dot; motion stops under reduced motion. */
+export function SquadFace({ mate, size, state = "idle" }: { mate: Squadmate; size: number; state?: BotAvatarState }) {
+  return (
+    <span className="sf-face" aria-hidden="true">
+      <BotAvatar index={mate.avatar.index} color={mate.avatar.color} size={size} state={state} />
+    </span>
+  );
+}
 
 export type AsideMode = "hidden" | "compact" | "stack";
 
@@ -42,7 +53,8 @@ export function SetupShell({
   const cueNode = (size: number) => (
     <span
       className={cn("sf-cue", cueDone && "is-done")}
-      data-testid={cueDone ? "setup-timer" : undefined}
+      data-testid="setup-timer"
+      data-done={cueDone ? "true" : undefined}
       data-ms={timerMs ?? undefined}
     >
       <CueIcon size={size} strokeWidth={2} aria-hidden="true" />
@@ -52,7 +64,7 @@ export function SetupShell({
   return (
     <div className="sf" data-step={step} data-screen={screen}>
       <header className="sf-top">
-        <span className="sf-brand">{COPY.wordmark}</span>
+        <span className="sf-brand" translate="no">{COPY.wordmark}</span>
         <div className="sf-progress" role="group" aria-label={label}>
           <span className="sf-progress-label">{label}</span>
           <span className="sf-segs">{segments}</span>
@@ -96,7 +108,17 @@ function RowIcon({ state, size = 16 }: { state: RowState; size?: number }) {
   return <CircleDashed size={size} strokeWidth={2} className="sf-ic-muted" aria-hidden="true" />;
 }
 
-export function SquadCard({ mate, note, rows }: { mate: Squadmate; note: string; rows: CardRow[] }) {
+export function SquadCard({
+  mate,
+  note,
+  rows,
+  face = "idle",
+}: {
+  mate: Squadmate;
+  note: string;
+  rows: CardRow[];
+  face?: BotAvatarState;
+}) {
   return (
     <div className="sf-card sf-card--preview">
       <div className="sf-card-head">
@@ -104,7 +126,7 @@ export function SquadCard({ mate, note, rows }: { mate: Squadmate; note: string;
         <span>{note}</span>
       </div>
       <div className="sf-identity">
-        <span className="sf-avatar sf-avatar--lg" aria-hidden="true">{mate.letter}</span>
+        <SquadFace mate={mate} size={56} state={face} />
         <span className="sf-identity-text">
           <span className="sf-identity-name">{mate.name}</span>
           <span className="sf-callout sf-ink2">{mate.role}</span>
@@ -152,12 +174,15 @@ export function PlanCard({ rows }: { rows: RunRow[] }) {
 }
 
 export function LiveView({
-  name,
+  mate,
+  face,
   running,
   location,
   noun,
 }: {
-  name: string;
+  mate: Squadmate;
+  /** S-04 state on the face: thinking (no tool yet), working (using a tool), idle when stopped */
+  face: BotAvatarState;
   running: boolean;
   location: string;
   noun: string;
@@ -165,7 +190,10 @@ export function LiveView({
   return (
     <div className={cn("sf-card sf-card--preview sf-live", running && "is-running")}>
       <div className="sf-card-head">
-        <span>{COPY.run.computer(name)}</span>
+        <span className="sf-live-who">
+          <SquadFace mate={mate} size={32} state={face} />
+          {COPY.run.computer(mate.name)}
+        </span>
         <span className="sf-ink2">{running ? COPY.run.live : COPY.run.stopped}</span>
       </div>
       <div className="sf-location">

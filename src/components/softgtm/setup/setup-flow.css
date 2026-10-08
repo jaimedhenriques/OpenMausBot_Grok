@@ -20,6 +20,9 @@
 .sf *,
 .sf *::before,
 .sf *::after { box-sizing: border-box; }
+/* browser surfaces themed from the palette */
+.sf ::selection { background: var(--color-control); color: var(--color-ink); }
+.sf input, .sf textarea { caret-color: var(--color-ink); }
 /* zero-specificity reset so component classes (e.g. .sf-plan padding) win */
 :where(.sf) :where(p, h1, dl, dd, ol, ul) { margin: 0; padding: 0; }
 :where(.sf) :where(ol, ul) { list-style: none; }
@@ -35,7 +38,7 @@
 .sf :is(input, textarea):focus { outline: 2px solid var(--color-focus); outline-offset: 2px; }
 
 /* ── type ── */
-.sf-title { font-size: 40px; line-height: 44px; font-weight: 600; letter-spacing: -0.02em; }
+.sf-title { font-size: 40px; line-height: 44px; font-weight: 600; letter-spacing: -0.02em; text-wrap: balance; }
 .sf-subtitle { font-size: 17px; line-height: 26px; letter-spacing: -0.006em; color: var(--color-ink-secondary); }
 .sf-strong { font-size: 15px; line-height: 22px; font-weight: 500; letter-spacing: -0.004em; color: var(--color-ink); }
 .sf-callout { font-size: 13px; line-height: 18px; letter-spacing: -0.002em; }
@@ -106,11 +109,11 @@
 /* selected: 2px ink, drawn as an inset ring so the row does not shift */
 .sf-option.is-selected { border-color: var(--color-ink); box-shadow: inset 0 0 0 1px var(--color-ink); }
 .sf-option-text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
-.sf-avatar {
-  width: 44px; height: 44px; flex: none; display: grid; place-items: center; border-radius: 8px; background: var(--color-control);
-  font-size: 17px; line-height: 22px; font-weight: 600; letter-spacing: -0.008em; color: var(--color-ink);
-}
-.sf-avatar--lg { width: 56px; height: 56px; border-radius: 10px; font-size: 28px; line-height: 32px; letter-spacing: -0.015em; }
+/* avatar-lab squad faces (ported, see avatar-lab/BotAvatar.tsx): faces only, so the
+   status dot is hidden and no phase label is ever drawn */
+.sf-face { flex: none; display: inline-grid; place-items: center; }
+.sf-face .bot-avatar__status { display: none; }
+.sf-live-who { display: inline-flex; align-items: center; gap: 8px; }
 .sf-radio {
   width: 22px; height: 22px; flex: none; border-radius: 999px; display: grid; place-items: center;
   border: 1.5px solid var(--sf-muted); background: var(--color-raised); color: var(--color-accent-ink);
@@ -119,8 +122,8 @@
 .sf-radio.is-on { background: var(--color-ink); border-color: var(--color-ink); }
 
 .sf-card { background: var(--color-raised); border: 1px solid var(--color-hairline); border-radius: 10px; }
-.sf-card--preview { padding: 24px; display: flex; flex-direction: column; gap: 20px; box-shadow: var(--sf-elevation); }
-.sf-card-head { display: flex; justify-content: space-between; gap: 12px; font-size: 12px; line-height: 16px; font-weight: 500; color: var(--sf-muted); }
+.sf-card--preview { padding: 24px; display: flex; flex-direction: column; gap: 20px; box-shadow: var(--sf-elevation); border-color: transparent; }
+.sf-card-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; font-size: 12px; line-height: 16px; font-weight: 500; color: var(--sf-muted); }
 .sf-identity { display: flex; align-items: center; gap: 16px; }
 .sf-identity-text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
 .sf-identity-name { font-size: 17px; line-height: 22px; font-weight: 600; letter-spacing: -0.008em; }
@@ -141,15 +144,16 @@
   transition: border-color 0.2s var(--sf-ease), box-shadow 0.2s var(--sf-ease);
 }
 .sf-account.is-selected { border-color: var(--color-ink); box-shadow: inset 0 0 0 1px var(--color-ink); }
-.sf-account.is-error { border-color: var(--color-danger); box-shadow: inset 0 0 0 1px var(--color-danger); }
+/* error: hairline border kept; the wash + alert icon carry the state, message in ink */
+.sf-account.is-error { border-color: var(--color-hairline); box-shadow: none; }
 .sf-account-row { display: flex; align-items: center; gap: 16px; min-height: 44px; }
 .sf-status { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; line-height: 18px; font-weight: 500; color: var(--color-success); white-space: nowrap; }
 .sf-inline-error {
   display: flex; align-items: flex-start; gap: 8px; padding: 10px 12px; border-radius: 8px;
-  background: var(--sf-danger-wash); color: var(--color-danger); font-size: 13px; line-height: 18px;
+  background: var(--sf-danger-wash); color: var(--color-ink); font-size: 13px; line-height: 18px;
   animation: sf-fade 0.2s var(--sf-ease) both;
 }
-.sf-inline-error svg { flex: none; margin-top: 1px; }
+.sf-inline-error svg { flex: none; margin-top: 1px; color: var(--color-danger); }
 .sf-note { display: flex; align-items: flex-start; gap: 8px; font-size: 13px; line-height: 18px; color: var(--color-ink-secondary); }
 .sf-note svg { margin-top: 1px; }
 
@@ -166,6 +170,8 @@
 .sf-jobs .sf-list { gap: 10px; }
 .sf-job { min-height: 72px; }
 .sf-job:hover { border-color: var(--color-ink); }
+.sf-option:not(.is-selected):hover { border-color: var(--sf-muted); }
+.sf :is(button, a) { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
 .sf-job:hover .sf-tile { background: var(--color-raised); }
 .sf-tile {
   width: 40px; height: 40px; flex: none; display: grid; place-items: center; border-radius: 8px; background: var(--color-control); color: var(--color-ink);
@@ -212,8 +218,7 @@
 .sf-result-head { display: flex; align-items: center; gap: 12px; }
 .sf-sections { display: flex; flex-direction: column; gap: 12px; }
 .sf-sections > div { display: flex; flex-direction: column; gap: 2px; }
-.sf-followups { display: flex; flex-direction: column; gap: 6px; padding-top: 8px; }
-.sf-followup-links { display: flex; flex-wrap: wrap; gap: 4px 16px; margin-left: -8px; }
+.sf-action-note { flex-basis: 100%; margin: 0; font-size: 13px; line-height: 18px; color: var(--sf-muted); }
 
 /* ── under 1100px: preview drops under the main column ── */
 @media (max-width: 1099px) {
@@ -248,9 +253,11 @@
     padding: 16px 20px max(34px, env(safe-area-inset-bottom)); background: var(--color-app); border-top: 1px solid var(--color-hairline);
   }
   .sf-bar .sf-btn--primary { height: 50px; width: 100%; }
+  /* keep a focused field or control clear of the sticky bar */
+  .sf :is(input, textarea, button, a, [tabindex]) { scroll-margin-bottom: 200px; }
   .sf-bar .sf-btn--link, .sf-bar .sf-btn--back { align-self: center; }
   .sf-aside[data-mobile="hidden"] { display: none; }
-  .sf-card--preview { box-shadow: none; padding: 20px; }
+  .sf-card--preview { box-shadow: none; border-color: var(--color-hairline); padding: 20px; }
   .sf-aside[data-mobile="compact"] .sf-identity,
   .sf-aside[data-mobile="compact"] .sf-divider,
   .sf-aside[data-mobile="compact"] .sf-row:nth-child(n + 3) { display: none; }
@@ -266,6 +273,7 @@
   .sf-spin { animation: none; }
   .sf-live.is-running .sf-skel span { animation: none; background: var(--color-control); }
   .sf-btn:active, .sf-option:active, .sf-job:active { transform: none; }
+  .sf-face .bot-avatar__shell { animation: none; }
 }
 :root[data-reduced-motion="true"] .sf *, :root[data-reduced-motion="true"] .sf *::before, :root[data-reduced-motion="true"] .sf *::after {
   transition-property: opacity, color, background-color, border-color !important;
@@ -276,3 +284,4 @@
 :root[data-reduced-motion="true"] .sf-btn:active,
 :root[data-reduced-motion="true"] .sf-option:active,
 :root[data-reduced-motion="true"] .sf-job:active { transform: none; }
+:root[data-reduced-motion="true"] .sf-face .bot-avatar__shell { animation: none; }
